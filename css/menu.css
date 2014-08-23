@@ -1,0 +1,178 @@
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900&subset=latin-ext);
+#something{/*for file meanu.php*/
+    position:relative;
+    top:10em;
+}
+#top-menu-place-holder{
+	z-index:6;
+	position: absolute;
+	width:100%; /*important!*/
+	
+}
+#top-menu{
+	z-index:7;
+	
+}
+#top-menu-0{
+	position:absolute;
+	font-family: 'Titillium Web', sans-serif;
+	color:rgb(68,68,68);
+	cursor:pointer;
+	font-size:1.03em;
+	text-align:center;
+	z-index:9;
+	border-radius:5px;
+	right:14em;
+	top:-2.60em;
+	#background:red;
+}
+#top-menu-0  a {
+	position:relative;
+	top:-0.37em;
+	z-index:10;
+	float:left;
+	background: linear-gradient(to bottom, rgb(248,248,248) 0%,rgb(185,185,185) 100%); /* W3C */
+	padding: 0.8em 1.0em;
+	cursor:pointer;
+	text-transform:uppercase;
+	border-right:1px inset silver;
+}
+#top-menu-0  a:first-child{
+	border-top-left-radius:5px;
+	border-bottom-left-radius:5px;
+}
+#top-menu-0   a:nth-last-child(2){/*:nth-last-child(2) wybiera przedostatni*/
+	border-top-right-radius:5px;
+	border-bottom-right-radius:5px;
+	border-right:0px inset silver;
+}
+#top-menu-0  a:hover {
+	z-index:11;
+	color:#fff;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+}
+#bottom-line{
+	border-radius:5px;
+	position:absolute;
+	width:100%;
+	height:100%;
+}
+#top-menu-1:hover, #top-menu-1:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(90,112,206) 0%,rgb(62,86,189) 100%);
+}
+#top-menu-2:hover, #top-menu-2:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(225,0,122) 0%,rgb(182,0,99) 100%);
+}
+#top-menu-3:hover, #top-menu-3:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(56,155,217) 0%,rgb(2,114,184) 100%);
+}
+#top-menu-4:hover, #top-menu-4:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(255,215,0) 0%,rgb(230,164,0) 100%);
+}
+#top-menu-5:hover, #top-menu-5:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(16,72,160) 0%,rgb(3,24,129) 100%);
+}
+#top-menu-6:hover, #top-menu-6:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(169,218,0) 0%,rgb(133,173,0) 100%);
+}
+#top-menu-7:hover, #top-menu-7:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(187,97,213) 0%,rgb(151,34,185) 100%);
+}
+#top-menu-8:hover, #top-menu-8:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(45,209,228) 0%,rgb(2,177,188) 100%);
+}
+#top-menu-9:hover, #top-menu-9:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(35,190,254) 0%,rgb(3,145,204) 100%);
+}
+#top-menu-10:hover, #top-menu-10:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(7,52,120) 0%,rgb(6,15,92) 100%);
+}
+#top-menu-11:hover, #top-menu-11:hover ~ #bottom-line{
+	background: linear-gradient(to bottom, rgb(189,224,67) 0%,rgb(102,173,1) 100%);
+}
+/*left menu*/
+#left-menu-place-holder{
+	z-index:6;
+}
+#left-menu{
+	z-index:7;
+}
+#left-menu-0{
+	padding:0;
+	margin:0em 1em;
+	height:2em;
+	line-height:2em;
+	text-align:center;
+	text-transform:uppercase;
+	z-index:9;
+	width:9.4em;
+}
+#left-menu-0  input {
+	display:inline-block;
+	z-index:10;
+	background: linear-gradient(to bottom, rgb(248,248,248) 0%,rgb(185,185,185) 100%); /* W3C */  
+	padding: 0em 1.0em;
+	width:12.3em;
+	text-transform:uppercase;
+	cursor:pointer;
+    /**/
+    font-family: Arial,Helvetica,sans-serif;
+    font-weight:bold;
+    text-shadow: 1px 1px 0px #FFF;
+    /**/
+}
+#left-menu-0  input:first-child{
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+}
+#left-menu-0  input:last-child{
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+}
+#left-menu-0  input:hover {
+	z-index:11;
+	#border-top-left-radius:5px;
+	#border-top-right-radius:5px;
+    border-left:0.5em solid #84B10A;
+    /**/
+    color: #84B10A;
+    /**/
+}
+#lin{
+	z-index:8;
+	position:absolute;
+	bottom:-0.5em;
+	width:1000px;
+	right:0px;
+	height:0.5em;
+	background: transparent;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+}
+.left-menu.active {
+	color:orange;
+	#border-top-left-radius:5px;
+	#border-top-right-radius:5px;
+    border-left:0.5em solid orange;
+}
+#left-menu-title{
+	padding:0.8em 1em;
+}
+.leftmenu_a_button{
+	height:2em;
+	line-height:2em;
+	text-align:center;
+	width:10.4em;
+	display:inline-block;
+	z-index:10;
+	background: linear-gradient(to bottom, rgb(248,248,248) 0%,rgb(185,185,185) 100%); /* W3C */  
+	padding: 0em 1.0em;
+	text-transform:uppercase;
+	cursor:pointer;
+    
+    border-top-left-radius:5px;
+	border-top-right-radius:5px;
+    border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+}

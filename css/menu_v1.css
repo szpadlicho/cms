@@ -1,0 +1,106 @@
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900&subset=latin-ext);
+body{
+font-family: 'Titillium Web', sans-serif;
+color:rgb(68,68,68);
+}
+#place-holder {
+    width: 1200px;
+    min-height: 800px;
+    margin: 0px auto;
+	border: 1px dashed green;
+	position:relative;
+	background: rgba(58,100,140,0.8);
+	z-index:5;
+}
+#top-menu-place-holder{
+z-index:6;
+#background: rgba(58,100,0,0.5);
+}
+#top-menu{
+z-index:7;
+#background: rgba(0,100,140,0.2);
+}
+a{
+	text-decoration:none;
+	color:rgb(68,68,68);
+}
+ul{
+	list-style-type:none;
+	padding:0;
+	margin:0;
+	font-size:15px;
+	height:3em;
+	line-height:3em;
+	text-align:center;
+	text-transform:uppercase;
+	z-index:9;
+}
+ul > li {
+	z-index:10;
+	float:left;
+	background: linear-gradient(to bottom, #f8f8f8 0%,#b9b9b9 100%); /* W3C */
+	width:100px;
+	height:45;
+}
+ul > li:first-child{
+	border-top-left-radius:5px;
+	border-bottom-left-radius:5px;
+}
+ul > li:last-child{
+	border-top-right-radius:5px;
+	border-bottom-right-radius:5px;
+}
+ul a {
+	display:block;
+	text-decoration:none;
+	padding:0 5px;
+}
+ul > li > a:hover {
+	z-index:11;
+	color:#fff;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+}
+#top-menu-1>a:hover{
+	background: linear-gradient(to bottom, rgb(90,112,206) 0%,rgb(62,86,189) 100%);
+}
+#top-menu-2>a:hover{
+	background: linear-gradient(to bottom, rgb(225,0,122) 0%,rgb(182,0,99) 100%);
+}
+#top-menu-3>a:hover{
+	background: linear-gradient(to bottom, rgb(56,155,217) 0%,rgb(2,114,184) 100%);
+}
+#top-menu-4>a:hover{
+	background: linear-gradient(to bottom, rgb(255,215,0) 0%,rgb(230,164,0) 100%);
+}
+#top-menu-5>a:hover{
+	background: linear-gradient(to bottom, rgb(7,52,120) 0%,rgb(6,15,92) 100%);
+}
+#top-menu-6>a:hover{
+	background: linear-gradient(to bottom, rgb(16,72,160) 0%,rgb(3,24,129) 100%);
+}
+#top-menu-7>a:hover{
+	background: linear-gradient(to bottom, rgb(189,224,67) 0%,rgb(102,173,1) 100%);
+}
+#top-menu-8>a:hover{
+	background: linear-gradient(to bottom, rgb(169,218,0) 0%,rgb(133,173,0) 100%);
+}
+#top-menu-9>a:hover{
+	background: linear-gradient(to bottom, rgb(187,97,213) 0%,rgb(151,34,185) 100%);
+}
+#top-menu-10>a:hover{
+	background: linear-gradient(to bottom, rgb(45,209,228) 0%,rgb(2,177,188) 100%);
+}
+#top-menu-11>a:hover{
+	background: linear-gradient(to bottom, rgb(35,190,254) 0%,rgb(3,145,204) 100%);
+}
+#lin{
+	z-index:8;
+	#position:relative;
+	bottom:2px;
+	width:75.0%;
+	height:7px;
+	background: transparent;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
+}

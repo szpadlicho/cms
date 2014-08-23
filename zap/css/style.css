@@ -1,0 +1,99 @@
+@import url(http://fonts.googleapis.com/css?family=Dosis:200,300,400,500,600,700,800&subset=latin-ext);
+.input {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	/**/
+	outline: 0 none;
+	text-decoration: none;
+	background-color: transparent;
+}
+#debugged{position:; bottom:0px; right:0px; background-color:rgba(134,115,161,0.5); padding:10px; z-index:-1; width:80%;}
+.catch{position:fixed; bottom:0px; left:0px; background-color:rgba(134,115,161,0.5); padding:10px; z-index:-1;}
+.catch_span{display:block;}
+.center{text-align:center; width:300px; margin:0 auto;}
+/*szkielet*/
+body{
+	font-family: 'Dosis', sans-serif;
+	font-size: 14px;
+	font-weight: 300;
+	overflow-x:hidden;
+}
+h2{
+	font-size:2em;
+	line-height:1em;
+}
+#place-holder {
+    position:relative;
+    width: 85.71em;
+    min-height: 57.14em;
+    margin: 0em auto;
+}
+.table-bck{
+    margin:1em auto;
+    text-align:center;    
+}
+.table-bck tr{
+    background: rgba(255,255,255,0.5);
+}
+.table-bck tr:hover{   
+    background: rgba(240,240,240,0.5);
+}
+.table-bck th,
+.table-bck td{
+    vertical-align:middle; 
+}
+/*product list*/
+#table-list th,
+#table-list td{
+	padding:1em 1em 1em 1em;    
+    border:1px solid lime;
+}
+.mini_image_table_list{
+    width:5em;
+}
+/*category list*/
+.table-category{
+    width:70em;   
+}
+.table-category th,
+.table-category td{
+    padding:1em 1em 1em 1em;
+    border:1px solid aqua;
+}
+.table-bck .text-cls{
+    width:90%;
+}
+/*
+.table-bck .option-cls,
+.table-bck .submit-cls{
+    width:50em;
+    text-align:center;
+    height:2.0em;
+}
+/*
+.table-bck  textarea{
+	width:50em;
+	height:10em;
+}
+.table-bck .upload_td_div{
+    border:1px solid black;
+    width:50em;
+    text-align:left;
+}
+
+.table-category-main-edit, .table-category-sub-edit{
+    width:48em;
+}
+.seo-main{
+    #border:1px solid red;
+}
+.seo-main td, .seo-main th {
+    border-top:1px solid silver;
+    border-bottom:1px solid silver;
+    padding:0.5em;
+}
+*/

@@ -1,0 +1,6 @@
+RewriteEngine on
+
+#Redirect /index.html http://example.com/newdirectory/
+Redirect /htdocs/cms/index.php  http://localhost/htdocs/cms/home/index.php
+Redirect /index.php  http://www.atwork.szpadlic.bdl.pl/home/index.php
+#DirectoryIndex home/index.html
