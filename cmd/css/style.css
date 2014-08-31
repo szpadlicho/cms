@@ -236,7 +236,14 @@ input[type="checkbox"]:checked + .cmd_ico + .cmd_button+ .size_span+ .create_tim
 	background-image:url('../images/128/no.png');/* no-repeat;*/
 	background-size: 31px;
 }
-
+.preview_span{
+	position:absolute;
+	left:250px;
+    width:10em;
+}
+.preview_span a:hover{
+    text-decoration:underline;
+}
 .create_time_span{
 	position:absolute;
 	left:370px;
