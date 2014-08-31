@@ -27,68 +27,68 @@ body{
 	font-weight: 300;
 }
 #place-holder {
-    width: 1000px;
-    min-height: 600px;
-    margin: 0px auto;
+    width: 71.42em;
+    min-height: 42.85em;
+    margin: 0 auto;
 }
 div#buttons-place-holder{/*menu*/
 	position:fixed;
-	top:10px;
+	top:0.7em;
 	width:1000px;
 }
 div#buttons{/*menu*/
-	width:800px;
-	margin: 0px auto;
+	width:57.14em;
+	margin: 0 auto;
 	text-align:center;
 }
 div#files-place-holder{/*files*/
 	position:absolute;
-	top:160px;
-	width:1000px;
+	top:11.42em;
+	width:71.42em;
 }
 div#files-big{/*files*/
-	width:800px;
-	margin: 0px auto;
+	width:57.14em;
+	margin: 0 auto;
 }
 div#files{/*files*/
 	position:absolute;
-	margin: 0px auto;
+	margin: 0 auto;
 }
 div.line{
 	position:relative;
 	border-top:1px solid grey;
 }
 .one{
-	top:102px;
+	top:7.2em;
 }
 .two{
-	top:162px;
+	top:11.42em;
 }
 .upload-place-holder, .new-place-holder, .rename-place-holder{/*pojawiacze plh*/
 	display:none;
 	position:fixed;
-	top:90px;
-	width:1000px;
+	top:6.42em;
+	width:71.42em;
 	z-index:2;
 }
 .upload-form, .new-form, .rename-form{/*pojawiacze*/
-	width:500px;
-	margin: 0px auto;
+	width:35.71em;
+	margin: 0 auto;
 }
 /*wyglad*/
 .cmd_input_sub{/*menu*/
 	font-family: vezus_light;
 	color: rgb(203,0,42);
-	padding:40px 5px 10px 5px;
+	padding:2.85em 0.35em 0.71em 0.35em;
 	transition: 70ms;
 	background-color:rgba(134,115,161,0.5);
 }
 #przegladaj{
-	padding:36px 5px 6px 5px;
+	padding:2.57em 0.35em 0.42em 0.35em;
 }
 .cmd_input_sub:hover{/*menu*/
 	color: rgb(173,230,58);
-	padding:40px 5px 10px 5px;
+	padding:2.85em 0.35em 0.71em 0.35em;
 	-webkit-box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.10) inset;
 	-moz-box-shadow:    0px 0px 10px 0px rgba(255, 255, 255, 0.10) inset;
 	box-shadow:         0px 0px 10px 0px rgba(255, 255, 255, 0.10) inset;
@@ -106,15 +106,15 @@ div.line{
 .cmd_span{/*back*/
     display:inline-block;
     width:17em;
-	margin-left:3px;
+	margin-left:0.21em;
 }
 .cmd_button{/*foldery*/
 	border:0px;
 	background-color: transparent;
 	cursor:pointer;
 	text-align:left;
-	padding:0px;
-	margin:0px;
+	padding:0;
+	margin:0;
 	font-size: 100%;
 	vertical-align: baseline;
 	outline: 0 none;
@@ -130,14 +130,14 @@ div.line{
 	text-decoration:none;
 }
 .cmd_ico{/*ikony plików*/
-	width:20px;
-	height:20px;
+	width:1.42em;
+	height:1.42em;
 	vertical-align: top;
-	margin-left:6px;
+	margin-left:0.42em;
 }
-.preview_span{
+.preview_span{/*podglad*/
 	position:absolute;
-	left:290px;
+	left:20.71em;
     width:10em;
 }
 .preview_span a:hover{
@@ -145,25 +145,25 @@ div.line{
 }
 .create_time_span{
 	position:absolute;
-	left:370px;
+	left:26.42em;
 	width:10em;
 }
 .modified_time_span{
 	position:absolute;
-	left:550px;
+	left:39.28em;
 	width:10em;
 }
 .size_span{
 	position:absolute;
-	left:730px;
+	left:53.57em;
 	width:5em;
 }
 #cmd_ico_back{/*ikona back*/
-	margin-right:5px;
-	margin-top:12px;
+	margin-right:0.35em;
+	margin-top:0.85em;
 }
 #cmd_button_back{
-	font-size:2em;
+	font-size:0.14em;
 }
 /**/
 input[type="checkbox"]{
@@ -196,70 +196,70 @@ input[type="checkbox"]:checked + .cmd_ico + .cmd_button+ .size_span+ .create_tim
 .cmd_label_sub:before{
 	content:'';
 	display:inline-block;
-	height: 31px;
-	width: 31px;
+	height: 2.21em;
+	width: 2.21em;
 	position:absolute;
-	margin-top:5px;
+	margin-top:0.35em;
 }
 #cut_label:before{
 	margin-left:1.1em;
 	background-image:url('../images/128/cut.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #copy_label:before{
 	margin-left:1.1em;
 	background-image:url('../images/128/copy.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #paste_label:before{
 	margin-left:1.1em;
 	background-image:url('../images/128/paste.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #delete_label:before{
 	margin-left:1.1em;
 	background-image:url('../images/128/delete.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #new_label:before{
 	margin-left:1.1em;
 	background-image:url('../images/128/new.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #rename_label:before{
 	margin-left:3.1em;
 	background-image:url('../images/128/rename3.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #upload_label:before{
 	margin-left:2.4em;
 	background-image:url('../images/128/upload.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #download_label:before{
 	margin-left:1.6em;
 	background-image:url('../images/128/download.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #clear_label:before{
 	margin-left:0.9em;
 	background-image:url('../images/128/refresh2.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #ok_label:before, #ok_label2:before{
 	margin-left:0.3em;
 	background-image:url('../images/128/ok.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #ok_label3:before{
 	margin-left:1.3em;
 	background-image:url('../images/128/ok.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 #no_label:before, #no_label2:before, #no_label3:before{
 	margin-left:1.3em;
 	background-image:url('../images/128/no.png');/* no-repeat;*/
-	background-size: 31px;
+	background-size: 2.21em;
 }
 .right{
 	float:right;
