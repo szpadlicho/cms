@@ -142,6 +142,7 @@ div.line{
 }
 .preview_span a:hover{
     text-decoration:underline;
+    color:blue;
 }
 .create_time_span{
 	position:absolute;
@@ -163,7 +164,7 @@ div.line{
 	margin-top:0.85em;
 }
 #cmd_button_back{
-	font-size:0.14em;
+	font-size:2em;
 }
 /**/
 input[type="checkbox"]{
