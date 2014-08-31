@@ -104,6 +104,8 @@ div.line{
 	background-color:rgba(173,230,58,0.5);
 }
 .cmd_span{/*back*/
+    display:inline-block;
+    width:17em;
 	margin-left:3px;
 }
 .cmd_button{/*foldery*/
@@ -132,6 +134,29 @@ div.line{
 	height:20px;
 	vertical-align: top;
 	margin-left:6px;
+}
+.preview_span{
+	position:absolute;
+	left:290px;
+    width:10em;
+}
+.preview_span a:hover{
+    text-decoration:underline;
+}
+.create_time_span{
+	position:absolute;
+	left:370px;
+	width:10em;
+}
+.modified_time_span{
+	position:absolute;
+	left:550px;
+	width:10em;
+}
+.size_span{
+	position:absolute;
+	left:730px;
+	width:5em;
 }
 #cmd_ico_back{/*ikona back*/
 	margin-right:5px;
@@ -235,29 +260,6 @@ input[type="checkbox"]:checked + .cmd_ico + .cmd_button+ .size_span+ .create_tim
 	margin-left:1.3em;
 	background-image:url('../images/128/no.png');/* no-repeat;*/
 	background-size: 31px;
-}
-.preview_span{
-	position:absolute;
-	left:250px;
-    width:10em;
-}
-.preview_span a:hover{
-    text-decoration:underline;
-}
-.create_time_span{
-	position:absolute;
-	left:370px;
-	width:10em;
-}
-.modified_time_span{
-	position:absolute;
-	left:550px;
-	width:10em;
-}
-.size_span{
-	position:absolute;
-	left:730px;
-	width:5em;
 }
 .right{
 	float:right;
