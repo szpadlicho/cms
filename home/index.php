@@ -514,6 +514,7 @@ echo '</div>';
             var valu = $(this).attr('id');
             //$.post('../set_session.php', { 'value' : valu});                
             $.ajax({
+                async: false,
                 type: 'POST',
                 url: '../set_session.php',
                 data: {value : valu}                  
@@ -522,7 +523,7 @@ echo '</div>';
         $('a.top-menu').click( function () {
             var del = 'sub';
             $.ajax({ 
-              //async: false,
+              async: false,
               type: 'POST', 
               url: '../unset_session.php',
               data: {value : del}
@@ -532,7 +533,7 @@ echo '</div>';
         $('a#top-menu-1').click( function () {
             var del = 'all';
             $.ajax({ 
-              //async: false,
+              async: false,
               type: 'POST', 
               url: '../unset_session.php',
               data: {value : del}
