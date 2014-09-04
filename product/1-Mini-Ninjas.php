@@ -30,7 +30,7 @@
             public function metaData($id)
             {
                 $con=$this->connectDB();
-                $q = $con->query("SELECT `product_title`,`product_description`,`product_keywords` FROM `".$this->table."` WHERE `id`='$id'");/*zwraca false jesli tablica nie istnieje*/
+                $q = $con->query("SELECT `product_title`,`product_description`,`product_keywords` FROM `".$this->table."` WHERE `id`='".$id."'");/*zwraca false jesli tablica nie istnieje*/
                 unset ($con);
                 $q = $q->fetch(PDO::FETCH_ASSOC);
                 return $q;
@@ -51,7 +51,7 @@
         eval('?>'.$q['php_beafor_html'].'<?php ');
         eval('?>'.$q['html_p1'].'<?php ');
         //--
-        $product_now_display='26';
+        $product_now_display='1';
         //--
         $load->_setTable('product_tab');
         $meta = $load->metaData($product_now_display);
@@ -87,7 +87,7 @@
         eval('?>'.$q['head_p1'].'<?php ');
         eval('?>'.$q['html_p2'].'<?php ');
         //here
-        $product_now_display='26';
+        $product_now_display='1';
         eval('?>'.$q['html_p3'].'<?php ');
         eval('?>'.$q['html_p4'].'<?php ');
         ?>

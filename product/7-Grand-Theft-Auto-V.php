@@ -27,6 +27,22 @@
                 $q = $q->fetch(PDO::FETCH_ASSOC);
                 return $q;
             }
+            public function metaData($id)
+            {
+                $con=$this->connectDB();
+                $q = $con->query("SELECT `product_title`,`product_description`,`product_keywords` FROM `".$this->table."` WHERE `id`='".$id."'");/*zwraca false jesli tablica nie istnieje*/
+                unset ($con);
+                $q = $q->fetch(PDO::FETCH_ASSOC);
+                return $q;
+            }
+            public function globalMetaData()
+            {
+                $con=$this->connectDB();
+                $q = $con->query("SELECT * FROM `".$this->table."` WHERE `id`='1'");/*zwraca false jesli tablica nie istnieje*/
+                unset ($con);
+                $q = $q->fetch(PDO::FETCH_ASSOC);
+                return $q;
+            }
         }
         $load = new ConnectCls();
         $load->_setTable('index_pieces');
@@ -34,9 +50,39 @@
         
         eval('?>'.$q['php_beafor_html'].'<?php ');
         eval('?>'.$q['html_p1'].'<?php ');
-        eval('?>'.$q['head_title'].'<?php ');
-        eval('?>'.$q['head_description'].'<?php ');
-        eval('?>'.$q['head_keywords'].'<?php ');
+        //--
+        $product_now_display='7';
+        //--
+        $load->_setTable('product_tab');
+        $meta = $load->metaData($product_now_display);
+        //--
+        $load->_setTable('setting_seo');
+        $global = $load->globalMetaData();
+        //--
+        if($meta['product_title']!=null)
+        {
+            echo '<title>'.$meta['product_title'].'</title>';
+        }
+        else{
+            echo '<title>'.$global['global_title_product'].'</title>';
+        }
+        
+        if($meta['product_description']!=null)
+        {
+            echo '<meta name="description" content="'.$meta['product_description'].'" />';
+        }
+        else{
+            echo '<meta name="description" content="'.$global['global_description_product'].'" />';
+        }
+        
+        if($meta['product_keywords']!=null)
+        {
+            echo '<meta name="keywords" content="'.$meta['product_keywords'].'" />';
+        }
+        else{
+            echo '<meta name="keywords" content="'.$global['global_keywords_product'].'" />';
+        }
+        //---
         eval('?>'.$q['head_include'].'<?php ');
         eval('?>'.$q['head_p1'].'<?php ');
         eval('?>'.$q['html_p2'].'<?php ');

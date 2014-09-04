@@ -56,7 +56,7 @@
         $load->_setTable('product_tab');
         $meta = $load->metaData($product_now_display);
         //--
-        $load->_setTable('global_setting');
+        $load->_setTable('setting_seo');
         $global = $load->globalMetaData();
         //--
         if($meta['product_title']!=null)
