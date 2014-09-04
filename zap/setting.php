@@ -14,7 +14,7 @@ class GlobalSettingCls{
 	private $table;// ma miec
 	private $row;
 	private $path;
-	public function _setTable($tab_name)
+	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
@@ -120,7 +120,7 @@ class GlobalSettingCls{
             echo "<div class=\"center\" >Zapis: ERROR!</div>";
         }
     }
-    public function _getRow()
+    public function __getRow()
     {
         $con=$this->connectDB();
         $q = $con->query("SELECT * FROM `".$this->table."` WHERE `id`='1'");
@@ -139,7 +139,7 @@ class GlobalSettingCls{
 /**/
 $setting = new GlobalSettingCls();
 if(isset($_POST['save'])){//dodac usuwanie kodu html php itd......
-    $setting->_setTable('global_setting');
+    $setting->__setTable('global_setting');
     $setting->deleteTB();//jak sie bedzie tabela tworzyc z install to się pozmienia system i zostawi tylko update albo insert
     $setting->createTB();
     $setting->addRow('global_title_index');
@@ -176,8 +176,8 @@ echo '</div>';
 	<?php include ('menu_zap.php'); ?>
     <div>
         <?php 
-        $setting->_setTable('global_setting');
-        $get = $setting->_getRow();
+        $setting->__setTable('global_setting');
+        $get = $setting->__getRow();
         ?>
         <form enctype="multipart/form-data" action="" method="POST" >
             <table class="table-bck">

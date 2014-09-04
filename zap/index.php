@@ -20,7 +20,7 @@ class ProduktSetCls{
 		unset ($con);
 	}
 	public function show(){
-		/*zapis do tablei tylko raz*/
+		/*zapis do tabeli tylko raz*/
 		$con=$this->connectDB();
 	}
 }
@@ -43,8 +43,8 @@ echo '</div>';
 	</footer>
 	<div id="debugged">
 		<?php
-		echo "post";
-		var_dump (@$_POST);
+		//echo "post";
+		//var_dump (@$_POST);
 		//echo "session";
 		//var_dump ($_SESSION);
 		// echo "files";

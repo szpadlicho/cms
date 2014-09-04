@@ -65,7 +65,7 @@ class InstallCls{
 	}
 	public function createTB()
     {
-		/*tworze baze tylko raz zbedne ale for fun*/
+		/*tworze tabele tylko raz co pozwala klikać install bez konsekwencji*/
 		$con=$this->connectDB();
 		$res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	
 		if(!$res)
@@ -97,7 +97,7 @@ class InstallCls{
 	}
     public function createTBCategory($file_name_row, $title, $description, $keywords)
     {
-		/*tworze tabele tylko raz zbedne ale for fun*/
+		/*tworze tabele tylko raz co pozwala klikać install bez konsekwencji*/
 		$con=$this->connectDB();
 		$res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	
 		if(!$res)
@@ -121,7 +121,7 @@ class InstallCls{
 	}
     public function createForeignKey($pr)
     {
-        /*tworze tabele tylko raz zbedne ale for fun*/
+        /*tworze tabele tylko raz co pozwala klikać install bez konsekwencji*/
 		$con=$this->connectDB();
 		$res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	
 		if($res)
@@ -171,6 +171,47 @@ class InstallCls{
 		// }		
 		// unset ($con);	
 	// }
+    public function createTBDynamicRow($arr_row,$arr_val)
+    {
+        /*tworze tabele tylko raz co pozwala klikać install bez konsekwencji*/
+		$con=$this->connectDB();
+		$res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	
+		if(!$res)
+        {
+            $columns='';
+            foreach($arr_row as $name => $val){
+                $columns .= '`'.$name.'` '.$val.',';
+            }
+            // Create table
+			$result=$con->exec("CREATE TABLE IF NOT EXISTS `".$this->table."`(
+			`id` INTEGER AUTO_INCREMENT,            
+            ".$columns."
+            `mod` INT(10),
+			PRIMARY KEY(`id`)
+			)ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1");
+			echo "<div class=\"center\" >Utworzyłem tabelę: {$this->table}</div>";
+            
+            $field='';
+            $value='';
+            foreach($arr_val as $name => $val){
+                $field .= '`'.$name.'`,';
+                $value .= "'".$val."',";
+            }
+            // Create default record 
+            $res=$con->query("INSERT INTO `".$this->table."`(
+                ".$field."
+                `mod`
+                ) VALUES (
+                ".$value."
+                '0'
+                )");
+            
+		}
+		else
+        {
+			echo "<div class=\"center\" >Tabela już istnieje</div>";
+		}
+    }
 }
 $install = new InstallCls();
 if(isset($_POST['del']))
@@ -193,7 +234,11 @@ if(isset($_POST['crt']))
     
     //$install->_setTable('product_category_main');
     //$install->createForeignKey('product_tab');
-
+    
+    $install->_setTable('setting_img');
+    $arr_row = array('small_width'=>'TEXT', 'small_height'=>'TEXT', 'large_width'=>'TEXT', 'large_height'=>'TEXT');
+    $arr_val = array('small_width'=>'200',  'small_height'=>'300',  'large_width'=>'700',  'large_height'=>'700');
+	$install->createTBDynamicRow($arr_row, $arr_val);
 }
 //$install->check();
 ?>

@@ -1,4 +1,10 @@
 <?php
+include_once('../classes/img/set/size.php');
+$cls_img = new Img_Set_Size();
+$cls_img->__setTable('setting_img');
+$get = $cls_img->__getRow(1);
+?>
+<?php
 //mini image
 if(isset($_FILES["product_foto_mini"]))
 {
@@ -28,7 +34,7 @@ if(isset($_FILES["product_foto_mini"]))
         //--
         include_once('resize.php');
         $cls_resize = new ImageResize();
-        $cls_resize->resizeImage($_FILES["product_foto_mini"]["tmp_name"],200,300,$folder.$fileName);
+        $cls_resize->resizeImage($_FILES["product_foto_mini"]["tmp_name"],$get['small_width'],$get['small_height'],$folder.$fileName);
         //--
  		//move_uploaded_file($_FILES["product_foto_mini"]["tmp_name"],$folder.$fileName);
     	$ret[]= $fileName;
@@ -41,7 +47,7 @@ if(isset($_FILES["product_foto_mini"]))
 	  	$fileName = $_FILES["product_foto_mini"]["name"][$i];
         include_once('resize.php');
         $cls_resize = new ImageResize();
-        $cls_resize->resizeImage($_FILES["product_foto_mini"]["tmp_name"],200,300,$folder.$fileName);
+        $cls_resize->resizeImage($_FILES["product_foto_mini"]["tmp_name"],$get['small_width'],$get['small_height'],$folder.$fileName);
         //--
 		//move_uploaded_file($_FILES["product_foto_mini"]["tmp_name"][$i],$folder.$fileName);
 	  	$ret[] = $fileName;
@@ -70,7 +76,7 @@ if(isset($_FILES["product_foto_large"]))
  	 	$fileName = $_FILES["product_foto_large"]["name"];
         include_once('resize.php');
         $cls_resize = new ImageResize();
-        $cls_resize->resizeImage($_FILES["product_foto_large"]["tmp_name"],700,700,$folder.$fileName);
+        $cls_resize->resizeImage($_FILES["product_foto_large"]["tmp_name"],$get['large_width'],$get['large_height'],$folder.$fileName);
  		//move_uploaded_file($_FILES["product_foto_large"]["tmp_name"],$folder.$fileName);
     	$ret[]= $fileName;
 	}
@@ -82,7 +88,7 @@ if(isset($_FILES["product_foto_large"]))
 	  	$fileName = $_FILES["product_foto_large"]["name"][$i];
         include_once('resize.php');
         $cls_resize = new ImageResize();
-        $cls_resize->resizeImage($_FILES["product_foto_large"]["tmp_name"],700,700,$folder.$fileName);
+        $cls_resize->resizeImage($_FILES["product_foto_large"]["tmp_name"],$get['large_width'],$get['large_height'],$folder.$fileName);
 		//move_uploaded_file($_FILES["product_foto_large"]["tmp_name"][$i],$folder.$fileName);
 	  	$ret[]= $fileName;
 	  }
