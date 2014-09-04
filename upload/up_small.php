@@ -7,7 +7,7 @@ $(document).ready(function()
         dragDrop: true,
         fileName: 'product_foto_mini',
         allowedTypes: 'jpg,png,gif,jpeg',	
-        returnType: 'json',
+        returnType: 'html',//orginal 'json' ale jakis bład zaczeło pokazywac po dodaniu resize 
         uploadFolder: '../data/<?php echo $id; ?>/mini/',
         formData: {folder: '../data/<?php echo $id; ?>/mini/'},//dodalem       
         showPreview: true,

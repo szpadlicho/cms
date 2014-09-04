@@ -1,5 +1,6 @@
 <?php session_start(); ?>
 <?php $id = $_SESSION['id_post']; ?>
+<?php $id = 1; ?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
