@@ -109,7 +109,6 @@ if(isset($_POST['add2']))//dodane na kompie
     $upgrade->addRow('description');
     $upgrade->addRow('keywords');
 }
-
 echo '</div>';
 ?>
 <!DOCTYPE HTML>
