@@ -107,19 +107,15 @@ class ShowProductCls{
     {
         //losowy obrazek z katalogu                                           
         $dir_mini = '../data/'.$id.'/mini/';                                        
-        if(@opendir($dir_mini))//sprawdzam czy sciezka istnieje
-        {
+        if (@opendir($dir_mini)) {//sprawdzam czy sciezka istnieje
             $q = (count(glob($dir_mini."/*")) === 0) ? 'Empty' : 'Not empty';
-            if ($q=="Empty")
-            {
+            if ($q=="Empty") {
                 echo "Brak"; 
-            }
-            else
-            {
+            } else {
                 $folder = opendir($dir_mini);
                 $i = 0;
-                while(false !=($plik = readdir($folder))){
-                    if($plik != "." && $plik != ".."){
+                while (false !=($plik = readdir($folder))) {
+                    if ($plik != "." && $plik != "..") {
                         $obrazki[$i]= $plik;//tablica z obrazkami
                         $i++;
                     }
@@ -129,9 +125,7 @@ class ShowProductCls{
                 return $dir_mini.@$obrazki[$losowy];//link do obrazka 'src'
                 unset($obrazki);
             }                                               
-        }
-        else
-        {
+        } else {
             echo 'Brak';
         }
     }
@@ -175,17 +169,14 @@ class ShowProductCls{
         <?php
     }
 }
-if(isset($_POST['topmenu']))
-{
+if (isset($_POST['topmenu'])) {
 	$_SESSION['category'] = $_POST['topmenu'];
 	unset($_SESSION['sub']);
 }
-if(isset($_POST['leftmenu']))
-{
+if (isset($_POST['leftmenu'])) {
 	$_SESSION['sub'] = $_POST['leftmenu'];
 }
-if(@$_POST['topmenu']=='Home')
-{
+if (@$_POST['topmenu']=='Home') {
     //niema posta juz!!!!
 	//unset($_SESSION['sub']);
 	//unset($_SESSION['category']);
@@ -194,12 +185,10 @@ if(@$_POST['topmenu']=='Home')
 }
 //(@$_POST['topmenu']=='Sprzęt') ? header("location: zap/index.php") : 'błąd' ;//tymczasowo na zaplecze
 
-if(@$_POST['leftmenu']=='Wszystkie')
-{
+if (@$_POST['leftmenu']=='Wszystkie') {
     unset($_SESSION['sub']);
 }
-if(@$_POST['leftmenu']=='Powrót')
-{
+if (@$_POST['leftmenu']=='Powrót') {
     unset($_SESSION['sub']);
 }
 //ustawic jak sie kliknie back (back na poscie) to wtedy pojawia sie zmienna kategory i wraca dop categori jaka miał produkt !! :)
@@ -305,7 +294,7 @@ echo '</div>';
 <?php//html_p2?>
 <!--spot three begin section body-->
 <?php//html_p3?>
-<?php if(0==1){ ?>
+<?php if (0==1) { ?>
 	<!--poczatek-animcja-tła-->
 	<ul class="cb-slideshow">
 		<li><span class="image-bg">Image 01</span><div class="title-bg"><h3>1</h3></div></li>
@@ -326,10 +315,9 @@ echo '</div>';
 							<?php
 							$main = new ShowProductCls();
 							$main->_setTable('product_category_main');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
-							if($main->showCategoryMain())
-                            { 
+							if ($main->showCategoryMain()) { 
 								$i=2;
-								foreach($main->showCategoryMain() as $cat){ ?>
+								foreach ($main->showCategoryMain() as $cat) { ?>
                                     <?php $file_name = str_replace(" ", "-", $cat['product_category_main']);//zamieniam spacje ?><!--dodac kolumne nazwa kat do cd-->
 									<a id="top-menu-<?php echo $i; ?>" class="top-menu" href="../category/<?php echo $file_name.'.php'; ?>"><?php echo $cat['product_category_main'] ?></a>
 								<?php
@@ -357,12 +345,9 @@ echo '</div>';
                             //$category_now_display='PC';
                             //$product_now_display='7';
                             //------------------------------------------------
-                            if((isset($_POST['leftmenu']) || isset($_POST['leftmenu_up'])) && isset($product_now_display) && !isset($_SESSION['menu_id']))//pozwala wracac do home z karty towaru
-                            {
+                            if ((isset($_POST['leftmenu']) || isset($_POST['leftmenu_up'])) && isset($product_now_display) && !isset($_SESSION['menu_id'])) {//pozwala wracac do home z karty towaru
                                 unset($product_now_display);
-                            }
-                            else if((isset($_POST['leftmenu']) || isset($_POST['leftmenu_up'])) && isset($product_now_display) && isset($_SESSION['menu_id']))//pozwala wracac do categori z karty towaru
-                            {                           
+                            } elseif ((isset($_POST['leftmenu']) || isset($_POST['leftmenu_up'])) && isset($product_now_display) && isset($_SESSION['menu_id'])) {//pozwala wracac do categori z karty towaru
                                 $getcat = new ShowProductCls();
                                 $getcat->_setTable('product_tab');
                                 $category_pruduct_card=$getcat->showProduct($product_now_display);
@@ -372,40 +357,31 @@ echo '</div>';
                             //------------------------------------------------
 							$sub = new ShowProductCls();
 							$sub->_setTable('product_tab');
-                            if(isset($category_now_display))//sub dla kategori głównej
-                            {
-                                if($sub->showCategorySub($category_now_display))
-                                {
+                            if (isset($category_now_display)) {//sub dla kategori głównej
+                                if ($sub->showCategorySub($category_now_display)) {
                                     $is = $sub->showCategorySub($category_now_display)->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
                                     $i=1;                                
-                                    if($is)
-                                    {
+                                    if ($is) {
                                         ?><input id="left-menu-all" class="left-menu" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla home
                                     }
-                                    foreach($sub->showCategorySub($category_now_display) as $cat){								
+                                    foreach ($sub->showCategorySub($category_now_display) as $cat) {								
                                         ?><input id="left-menu-<?php echo $i; $i++?>" class="left-menu" type="submit" name="leftmenu" value="<?php echo $cat['product_category_sub']; ?>" /><?php							
                                     }
                                 }
                                 unset($sub);
-                            }                            
-                            else if(!isset($category_now_display) && !isset($product_now_display))//sub dla home
+                            } elseif (! isset($category_now_display) && ! isset($product_now_display))//sub dla home
                             {
                                 $is = $sub->showSubAll()->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
                                     $i=1;                                
-                                    if($is)
-                                    {
+                                    if ($is) {
                                         ?><input id="left-menu-all" class="left-menu" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla kategorii
                                     }
-                                    foreach($sub->showSubAll() as $cat){								
+                                    foreach ($sub->showSubAll() as $cat) {								
                                         ?><input id="left-menu-<?php echo $i; $i++?>" class="left-menu" type="submit" name="leftmenu" value="<?php echo $cat['product_category_sub']; ?>" /><?php							
                                     }
-                            }
-                            else if(isset($product_now_display) && !isset($_SESSION['sub']))//sub dla karty towaru z home
-                            {
+                            } elseif(isset($product_now_display) && ! isset($_SESSION['sub'])) {//sub dla karty towaru z home
                                 ?><input id="left-menu-back" class="left-menu" type="submit" name="leftmenu" value="Powrót" /><?php // dla karty towaru z home
-                            }
-                            else if(isset($product_now_display) && isset($_SESSION['sub']))//sub dla karty towaru z kategori
-                            {
+                            } elseif (isset($product_now_display) && isset($_SESSION['sub'])) {//sub dla karty towaru z kategori
                                 ?><input id="left-menu-back" class="left-menu" type="submit" name="leftmenu_up" value="Powrót2" /><?php // dla karty towaru z home
                             }
 							?>
@@ -417,65 +393,45 @@ echo '</div>';
                 <?php
                 $show = new ShowProductCls();
 				$show->_setTable('product_tab');			
-				if(!isset($category_now_display) && !isset($product_now_display) && !isset($_SESSION['sub']))
-                {
-					if($show->showAll())
-                    {
-						foreach($show->showAll() as $cat){
+				if (! isset($category_now_display) && ! isset($product_now_display) && ! isset($_SESSION['sub'])) {
+					if ($show->showAll()) {
+						foreach ($show->showAll() as $cat) {
                             echo $show->showSquare($cat);
 						}
 					}
-				}               
-				else if(isset($category_now_display) && !isset($_SESSION['sub']))
-                {
-					if($show->showAllCategory($category_now_display))
-                    {
-						foreach($show->showAllCategory($category_now_display) as $cat){
+				} elseif (isset($category_now_display) && ! isset($_SESSION['sub'])) {
+					if ($show->showAllCategory($category_now_display)) {
+						foreach ($show->showAllCategory($category_now_display) as $cat) {
                             echo $show->showSquare($cat);
 						}					
 					}
-				}
-                else if(!isset($category_now_display) && !isset($product_now_display) && isset($_SESSION['sub']))
-                {
-                    if($show->showAllSub($_SESSION['sub']))
-                    {
-						foreach($show->showAllSub($_SESSION['sub']) as $cat){
+				} elseif (! isset($category_now_display) && ! isset($product_now_display) && isset($_SESSION['sub'])) {
+                    if ($show->showAllSub($_SESSION['sub'])) {
+						foreach ($show->showAllSub($_SESSION['sub']) as $cat) {
                             echo $show->showSquare($cat);
 						}
 					}
-                }
-				else if(isset($category_now_display) && !isset($product_now_display) && isset($_SESSION['sub']))
-                {
-					if($show->showAllCategorySub($category_now_display, $_SESSION['sub']))
-                    {
-						foreach($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat){
+                } elseif (isset($category_now_display) && ! isset($product_now_display) && isset($_SESSION['sub'])) {
+					if ($show->showAllCategorySub($category_now_display, $_SESSION['sub'])) {
+						foreach ($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat) {
                             echo $show->showSquare($cat);
 						}					
 					}
-				}
-                else if(!isset($category_now_display) && isset($product_now_display) && isset($_SESSION['sub']))
-                {
-                    if($show->showProduct($product_now_display))
-                    {
-                        foreach($show->showProduct($product_now_display) as $cat){
+				} elseif (! isset($category_now_display) && isset($product_now_display) && isset($_SESSION['sub'])) {
+                    if ($show->showProduct($product_now_display)) {
+                        foreach ($show->showProduct($product_now_display) as $cat) {
                             echo $show->showFullSquare($cat);
                         }
                     }
-                }
-                else if(isset($category_now_display) && isset($product_now_display) && isset($_SESSION['sub']))
-                {
-                    if($show->showAllCategorySub($category_now_display, $_SESSION['sub']))
-                    {
-						foreach($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat){
+                } elseif (isset($category_now_display) && isset($product_now_display) && isset($_SESSION['sub'])) {
+                    if ($show->showAllCategorySub($category_now_display, $_SESSION['sub'])) {
+						foreach ($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat) {
                             echo $show->showSquare($cat);
 						}					
 					}
-                }
-                else if(isset($product_now_display))
-                {
-                    if($show->showProduct($product_now_display))
-                    {
-                        foreach($show->showProduct($product_now_display) as $cat){
+                } elseif (isset($product_now_display)) {
+                    if ($show->showProduct($product_now_display)) {
+                        foreach ($show->showProduct($product_now_display) as $cat) {
                             echo $show->showFullSquare($cat);
                         }
                     }

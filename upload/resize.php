@@ -1,6 +1,7 @@
 <?php
 include('ImageCreateFromBmp.php');
-Class ImageResize{
+Class ImageResize
+{
     private $src_img;
     private $dst_img;
     private $max_width;
@@ -19,11 +20,11 @@ Class ImageResize{
         // Get new sizes
         $max_width = $this->max_width;
         $max_height = $this->max_height;
-        if($width > $max_width){//dopasowywuje jeśli zaszerokie
+        if ($width > $max_width) {//dopasowywuje jeśli zaszerokie
             $proc = ($max_width / $width) * 100;
             $new_width = $max_width;
             $new_height = ($proc / 100) * $height;
-            if($new_height > $max_height){
+            if ($new_height > $max_height) {
                 $proc = ($max_height / $new_height) * 100;
                 $new_height = $max_height;
                 $new_width = ($proc / 100) * $new_width;        
@@ -31,11 +32,11 @@ Class ImageResize{
         } else {
             $new_width = $width;
         }        
-        if($height > $max_height){//dopasowywuje jesli zawysokie
+        if ($height > $max_height) {//dopasowywuje jesli zawysokie
             $proc = ($max_height / $height) * 100;
             $new_height = $max_height;
             $new_width = ($proc / 100) * $width;
-            if($new_width > $max_width){
+            if ($new_width > $max_width) {
                 $proc = ($max_width / $new_width) * 100;
                 $new_width = $max_width;
                 $new_height = ($proc / 100) * $new_height;        

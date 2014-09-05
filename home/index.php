@@ -3,7 +3,8 @@
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 echo '<div class="catch">';
-class ShowProductCls{
+class ShowProductCls
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -101,19 +102,15 @@ class ShowProductCls{
     {
         //losowy obrazek z katalogu                                           
         $dir_mini = '../data/'.$id.'/mini/';                                        
-        if(@opendir($dir_mini))//sprawdzam czy sciezka istnieje
-        {
+        if (@opendir($dir_mini)) {//sprawdzam czy sciezka istnieje
             $q = (count(glob($dir_mini."/*")) === 0) ? 'Empty' : 'Not empty';
-            if ($q=="Empty")
-            {
+            if ($q=="Empty") {
                 echo "Brak"; 
-            }
-            else
-            {
+            } else {
                 $folder = opendir($dir_mini);
                 $i = 0;
-                while(false !=($plik = readdir($folder))){
-                    if($plik != "." && $plik != ".."){
+                while (false !=($plik = readdir($folder))) {
+                    if ($plik != "." && $plik != "..") {
                         $obrazki[$i]= $plik;//tablica z obrazkami
                         $i++;
                     }
@@ -123,29 +120,24 @@ class ShowProductCls{
                 return $dir_mini.@$obrazki[$losowy];//link do obrazka 'src'
                 unset($obrazki);
             }                                               
-        }
-        else
-        {
+        } else {
             echo 'Brak';
         }
     }
-    public function showAllImg($id){
+    public function showAllImg($id)
+    {
         //wszystkie orazki z katalogu                                         
         $dir_all = '../data/'.$id.'/';                                        
-        if(@opendir($dir_all))//sprawdzam czy sciezka istnieje
-        {
+        if (@opendir($dir_all)) {//sprawdzam czy sciezka istnieje
             $q = (count(glob($dir_all."/*")) === 1) ? 'Empty' : 'Not empty';
-            if ($q=="Empty")
-            {
+            if ($q=="Empty") {
                 //echo "Chwilowo Brak";
                 return false;
-            }
-            else
-            {
+            } else {
                 $folder = opendir($dir_all);
                 $i = 0;
-                while(false !=($plik = readdir($folder))){
-                    if($plik != "." && $plik != ".." && $plik != "mini"){
+                while (false !=($plik = readdir($folder))) {
+                    if ($plik != "." && $plik != ".." && $plik != "mini") {
                         $obrazki[$i]= $dir_all.$plik;//tablica z obrazkami
                         $i++;
                     }
@@ -155,9 +147,7 @@ class ShowProductCls{
                 return $obrazki;//link do obrazka 'src'
                 unset($obrazki);
             }                                               
-        }
-        else
-        {
+        } else {
             //echo 'Brak';
             return false;
         }
@@ -203,8 +193,8 @@ class ShowProductCls{
                 <div class="full-gallery-container color">
                     <?php
                     $img_tab = $this->showAllImg($cat['id']);
-                    if($img_tab){
-                        foreach($img_tab as $img){
+                    if ($img_tab) {
+                        foreach ($img_tab as $img) {
                             ?>
                             <div class="full-img-gallery">
                                 <img class="mini-image-pr-list" src="<?php echo $img; ?>" alt="<?php echo $cat['product_name']; ?>" />
@@ -221,21 +211,17 @@ class ShowProductCls{
         <?php
     }
 }
-if(isset($_POST['topmenu']))
-{
+if (isset($_POST['topmenu'])) {
 	$_SESSION['category'] = $_POST['topmenu'];
 	unset($_SESSION['sub']);
 }
-if(isset($_POST['leftmenu']))
-{
+if (isset($_POST['leftmenu'])) {
 	$_SESSION['sub'] = $_POST['leftmenu'];
 }
-if(@$_POST['leftmenu']=='Wszystkie')
-{
+if (@$_POST['leftmenu']=='Wszystkie') {
     unset($_SESSION['sub']);
 }
-if(@$_POST['topmenu']=='Home')
-{
+if (@$_POST['topmenu']=='Home') {
     //niema posta juz!!!!
 	//unset($_SESSION['sub']);
 	//unset($_SESSION['category']);
@@ -324,7 +310,7 @@ echo '</div>';
 <?php //html_p2 ?>
 <![CDATA[spot three begin section body]]>
 <?php //html_p3 ?>
-<?php if(0==1){ ?>
+<?php if (0==1) { ?>
 	<!--poczatek-animcja-tła
 	<ul class="cb-slideshow">
 		<li><span class="image-bg">Image 01</span><div class="title-bg"><h3>1</h3></div></li>
@@ -347,10 +333,9 @@ echo '</div>';
                             //------------------------------------------------
 							$main = new ShowProductCls();
 							$main->_setTable('product_category_main');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
-							if($main->showCategoryMain())
-                            { 
+							if ($main->showCategoryMain()) { 
 								$i=2;
-								foreach($main->showCategoryMain() as $cat){ ?>
+								foreach ($main->showCategoryMain() as $cat) { ?>
                                     <?php $file_name = str_replace(" ", "-", $cat['product_category_main']);//zamieniam spacje ?><!--dodac kolumne nazwa kat do cd-->
 									<a id="top-menu-<?php echo $i; ?>" class="top-menu" href="../category/<?php echo $file_name.'.php'; ?>"><?php echo $cat['product_category_main'] ?></a>
 								<?php
@@ -383,32 +368,27 @@ echo '</div>';
 							$sub->_setTable('product_tab');
                             //-index
                             //------------------------------------------------
-                            if(!isset($category_now_display) && !isset($product_now_display))//sub dla home
-                            {
+                            if (! isset($category_now_display) && ! isset($product_now_display)) {//sub dla home
                                 $is = $sub->showSubAll()->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
                                 $i=1;                                
-                                if($is)
-                                {
+                                if ($is) {
                                     ?><input id="left-menu-all" class="left-menu<?php if(!isset($_SESSION['sub'])){echo ' active';}?>" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla kategorii
                                 }
-                                foreach($sub->showSubAll() as $cat){								
+                                foreach ($sub->showSubAll() as $cat) {								
                                     ?><input id="left-menu-<?php echo $i; $i++?>" class="left-menu<?php if(@$cat['product_category_sub']==@$_SESSION['sub']){echo ' active';}?>" type="submit" name="leftmenu" value="<?php echo $cat['product_category_sub']; ?>" /><?php							
                                 }
                             }
                             //------------------------------------------------
                             //-category
                             //------------------------------------------------
-                            else if(isset($category_now_display))
-                            {
-                                if($sub->showCategorySub($category_now_display))
-                                {
+                            elseif (isset($category_now_display)) {
+                                if ($sub->showCategorySub($category_now_display)) {
                                     $is = $sub->showCategorySub($category_now_display)->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
                                     $i=1;                                
-                                    if($is)
-                                    {
+                                    if ($is) {
                                         ?><input id="left-menu-all" class="left-menu<?php if(!isset($_SESSION['sub'])){echo ' active';}?>" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla home
                                     }
-                                    foreach($sub->showCategorySub($category_now_display) as $cat){								
+                                    foreach ($sub->showCategorySub($category_now_display) as $cat) {								
                                         ?><input id="left-menu-<?php echo $i; $i++?>" class="left-menu<?php if(@$cat['product_category_sub']==@$_SESSION['sub']){echo ' active';}?>" type="submit" name="leftmenu" value="<?php echo $cat['product_category_sub']; ?>" /><?php							
                                     }
                                 }
@@ -417,12 +397,9 @@ echo '</div>';
                             //------------------------------------------------
                             //-product card
                             //------------------------------------------------
-                            else if(isset($product_now_display) && !isset($_SESSION['menu_id']))//dla karty towaru z home
-                            {
+                            elseif (isset($product_now_display) && !isset($_SESSION['menu_id'])) {//dla karty towaru z home
                                 ?><a class="leftmenu_a_button" href="../home/index.php">Powrót</a><?php 
-                            }
-                            else if(isset($product_now_display) && isset($_SESSION['menu_id']))// dla karty towaru z kategorii
-                            {                               
+                            } elseif (isset($product_now_display) && isset($_SESSION['menu_id'])) {// dla karty towaru z kategorii   
                                 ?><a class="leftmenu_a_button" href="../category/<?php echo $sub->_getCatMainFileName($product_now_display); ?>.php">Powrót</a><?php 
                             }
                             //------------------------------------------------
@@ -437,20 +414,15 @@ echo '</div>';
 				$show->_setTable('product_tab');
                 //-index
                 //------------------------------------------------
-				if(!isset($category_now_display) && !isset($product_now_display) && !isset($_SESSION['sub']))//all
-                {
-					if($show->showAll())
-                    {
-						foreach($show->showAll() as $cat){
+				if (! isset($category_now_display) && ! isset($product_now_display) && ! isset($_SESSION['sub'])) {//all
+					if ($show->showAll()) {
+						foreach ($show->showAll() as $cat) {
                             echo $show->showSquare($cat);
 						}
 					}
-				}
-                else if(!isset($category_now_display) && !isset($product_now_display) && isset($_SESSION['sub']))//sub
-                {
-                    if($show->showAllSub($_SESSION['sub']))
-                    {
-						foreach($show->showAllSub($_SESSION['sub']) as $cat){
+				} elseif (! isset($category_now_display) && ! isset($product_now_display) && isset($_SESSION['sub'])) {//sub
+                    if ($show->showAllSub($_SESSION['sub'])) {
+						foreach ($show->showAllSub($_SESSION['sub']) as $cat) {
                             echo $show->showSquare($cat);
 						}
 					}
@@ -458,20 +430,15 @@ echo '</div>';
                 //------------------------------------------------
                 //-category
                 //------------------------------------------------
-				else if(isset($category_now_display) && !isset($_SESSION['sub']))//all
-                {
-					if($show->showAllCategory($category_now_display))
-                    {
-						foreach($show->showAllCategory($category_now_display) as $cat){
+				elseif (isset($category_now_display) && !isset($_SESSION['sub'])) {//all
+					if ($show->showAllCategory($category_now_display)) {
+						foreach ($show->showAllCategory($category_now_display) as $cat) {
                             echo $show->showSquare($cat);
 						}					
 					}
-				}
-                else if(isset($category_now_display) && isset($_SESSION['sub']))
-                {
-                    if($show->showAllCategorySub($category_now_display, $_SESSION['sub']))
-                    {
-						foreach($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat){
+				} elseif (isset($category_now_display) && isset($_SESSION['sub'])) {
+                    if ($show->showAllCategorySub($category_now_display, $_SESSION['sub'])) {
+						foreach ($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat) {
                             echo $show->showSquare($cat);
 						}					
 					}
@@ -479,11 +446,9 @@ echo '</div>';
                 //------------------------------------------------
                 //-product card
                 //------------------------------------------------              
-                else if(isset($product_now_display))
-                {
-                    if($show->showProduct($product_now_display))
-                    {
-                        foreach($show->showProduct($product_now_display) as $cat){
+                elseif (isset($product_now_display)) {
+                    if ($show->showProduct($product_now_display)) {
+                        foreach ($show->showProduct($product_now_display) as $cat) {
                             echo $show->showFullSquare($cat);
                         }
                     }
