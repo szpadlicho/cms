@@ -235,9 +235,9 @@ if(isset($_POST['delete']))
     $del->rrmdir('../data/'.$_SESSION['id_post']);
     unset($_SESSION['id_post']);
     //ob_start();
-    //header('Location: list.php');
+    //header('Location: product_list.php');
     //ob_end_flush();
-    echo("<script>location.href = 'list.php';</script>");
+    echo("<script>location.href = 'product_list.php';</script>");
 }
 echo '</div>';
 ?>
