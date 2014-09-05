@@ -2,27 +2,21 @@
 session_start();
 
 /*curl for fun*/
-if(isset($_POST['imie']))
-{
+if(isset($_POST['imie'])) {
 	echo 'lol';
 }
-if(isset($_POST['nazwisko']))
-{
+if(isset($_POST['nazwisko'])) {
 	echo 'LOL';
 }
 /*download*/
-if(isset($_POST['download']) && (!empty($_POST['files']) || !empty($_POST['folders'])))
-{
+if (isset($_POST['download']) && (! empty($_POST['files']) || ! empty($_POST['folders']))) {
 	include_once ('download_files.php');
 	include_once ('create_zip.php');
-	if(!empty($_POST['files']) && (count($_POST['files'])==1) && empty($_POST['folders']))
-    {
+	if (! empty($_POST['files']) && (count($_POST['files'])==1) && empty($_POST['folders'])) {
 		$download=new Download($_POST['files'][0]);
 		$download->set_header();
 		$download->get_file();	
-	}	
-	else if(!empty($_POST['files']) && (count($_POST['files'])>1) && empty($_POST['folders']))
-    {
+	} elseif (! empty($_POST['files']) && (count($_POST['files'])>1) && empty($_POST['folders'])) {
 		@unlink('multi_files.zip');
 		foreach ($_POST['files'] as $file) {
 			HZip::zipFile($file, 'multi_files.zip'); 
@@ -30,9 +24,7 @@ if(isset($_POST['download']) && (!empty($_POST['files']) || !empty($_POST['folde
 		$download=new Download('multi_files.zip');
 		$download->set_header();
 		$download->get_file();
-	}
-	else if(!empty($_POST['folders']) && empty($_POST['files']))
-    {
+	} elseif (! empty($_POST['folders']) && empty($_POST['files'])) {
 		@unlink('multi_files.zip');		
 		foreach ($_POST['folders'] as $folder) {
 			HZip::zipDir($folder, 'multi_files.zip'); 
@@ -40,16 +32,13 @@ if(isset($_POST['download']) && (!empty($_POST['files']) || !empty($_POST['folde
 		$download=new Download('multi_files.zip');
 		$download->set_header();
 		$download->get_file();
-	}
-	else if(!empty($_POST['folders']) && !empty($_POST['files']))
-    {
+	} elseif (! empty($_POST['folders']) && ! empty($_POST['files'])) {
 		@unlink('multi_files.zip');	
 		$all_files=array_merge($_POST['folders'],$_POST['files']);
 		foreach ($all_files as $all_file) {
-			if(is_file($all_file)){
+			if (is_file($all_file)){
 				HZip::zipFile($all_file, 'multi_files.zip'); 
-			}
-			else if(is_dir($all_file)){
+			} elseif (is_dir($all_file)) {
 				HZip::zipDir($all_file, 'multi_files.zip'); 
 			}
 		}
@@ -57,8 +46,7 @@ if(isset($_POST['download']) && (!empty($_POST['files']) || !empty($_POST['folde
 		$download->set_header();
 		$download->get_file();		
 	
-	}
-	else{
+	} else {
 		echo "else";
 	}
 }
@@ -66,74 +54,58 @@ if(isset($_POST['download']) && (!empty($_POST['files']) || !empty($_POST['folde
 echo '<div class="catch">';
 include ('cmdcls.php');//class file
 $cmdcls=new CmdCls();
-if(isset($_POST['clear']) || !isset($_SESSION['cmd']))
-{
+if (isset($_POST['clear']) || ! isset($_SESSION['cmd'])) {
 	$cmdcls->set('data');//folder startowy// miejsce do ograniczania wychodzenie do góry poza wyznaczony folder 1z2
 	unset($_POST);
 }
-if(isset($_POST['catalog']))
-{
+if (isset($_POST['catalog'])) {
 	$cmdcls->set($cmdcls->get()."/".$_POST['catalog']);
 }
-if(isset($_POST['back']))
-{
+if (isset($_POST['back'])) {
 	$cmdcls->back();
 }
 $cmd=$cmdcls->get();
 //action
-if(isset($_POST['delete']) && !empty($_POST['folders']))
-{
+if (isset($_POST['delete']) && ! empty($_POST['folders'])) {
 	include_once ('delete.php');/*inlude_one*/
 	$del->delete_folder($_POST['folders']);
 }
-if(isset($_POST['delete']) && !empty($_POST['files']))
-{
+if (isset($_POST['delete']) && ! empty($_POST['files'])) {
 	include_once ('delete.php');
 	$del->delete_file($_POST['files']);
 }
-if(isset($_POST['copy']) && !empty($_POST['files']))
-{
+if (isset($_POST['copy']) && ! empty($_POST['files'])) {
 	$cmdcls->set_copy_p(0);
 }
-if(isset($_POST['cut']) && !empty($_POST['files']))
-{
+if (isset($_POST['cut']) && ! empty($_POST['files'])) {
 	$cmdcls->set_copy_p(1);
 }
-if(isset($_POST['copy']) && !empty($_POST['folders']))
-{
+if (isset($_POST['copy']) && ! empty($_POST['folders'])) {
 	$cmdcls->set_copy_f(2);
 }
-if(isset($_POST['cut']) && !empty($_POST['folders']))
-{
+if (isset($_POST['cut']) && ! empty($_POST['folders'])) {
 	$cmdcls->set_copy_f(3);
 }
-if(isset($_POST['paste']) && (!empty($_SESSION['file']) || !empty($_SESSION['folder'])))
-{
+if (isset($_POST['paste']) && (! empty($_SESSION['file']) || ! empty($_SESSION['folder']))) {
 	$cmdcls->paste();
 }
-if(isset($_POST['session_file']) && !empty($_POST['session_file']))
-{
+if (isset($_POST['session_file']) && ! empty($_POST['session_file'])) {
 	$_SESSION['file']=$_POST['session_file'];
 }
-if(isset($_POST['session_folder']) && !empty($_POST['session_folder']))
-{
+if (isset($_POST['session_folder']) && ! empty($_POST['session_folder'])) {
 	$_SESSION['folder']=$_POST['session_folder'];
 }
-if(isset($_POST['ok_r']) && !empty($_POST['rename_text']) && isset($_POST['files'][0]))
-{
+if (isset($_POST['ok_r']) && ! empty($_POST['rename_text']) && isset($_POST['files'][0])) {
 	$cmdcls->rename(@$_POST['files'], $_POST['rename_text']);
 }
-if(isset($_POST['ok_r']) && !empty($_POST['rename_text']) && isset($_POST['folders'][0]))
-{
+if (isset($_POST['ok_r']) && ! empty($_POST['rename_text']) && isset($_POST['folders'][0])) {
 	$cmdcls->rename(@$_POST['folders'], $_POST['rename_text']);
 }
-if(isset($_POST['ok_n']) && !empty($_POST['new_text']))
-{
+if (isset($_POST['ok_n']) && ! empty($_POST['new_text'])) {
 	$cmdcls->mk_new($_POST['new_text']);
 }
 /*upload files*/
-if(@$_FILES['files']['error'][0]!=4 && @$_FILES['files']['error'][0]==0)
-{
+if (@$_FILES['files']['error'][0]!=4 && @$_FILES['files']['error'][0]==0) {
 	require ('upload_files.php');
 	$upload_and_check_file->upLoad($cmd);/*$cmd gdzie ma wkleić*/
 }
@@ -173,19 +145,19 @@ echo '</div>';
 						<?php
 						$var1=glob($cmd."/*", GLOB_ONLYDIR);
 						$f=0;
-						function foldersize($path) {//rozmiar foldera
+						function foldersize($path) //rozmiar foldera
+                        {
 							$total_size = 0;
 							$files = scandir($path);
 							$cleanPath = rtrim($path, '/'). '/';
 
-							foreach($files as $t) {
+							foreach ($files as $t) {
 								if ($t<>"." && $t<>"..") {
 									$currentFile = $cleanPath . $t;
 									if (is_dir($currentFile)) {
 										$size = foldersize($currentFile);
 										$total_size += $size;
-									}
-									else {
+									} else {
 										$size = filesize($currentFile);
 										$total_size += $size;
 									}
@@ -193,17 +165,18 @@ echo '</div>';
 							}
 							return $total_size;
 						}
-						function filesize_formatted2($size){/*wielkos pliku plus jednostka*/
+						function filesize_formatted2($size)/*wielkos pliku plus jednostka*/
+                        {
 							//$size = filesize($path);
 							$units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 							$power = $size > 0 ? floor(log($size, 1024)) : 0;
 							return '<span class="left">'.number_format($size / pow(1024, $power), 2, '.', ',') . '</span><span class="right">' . $units[$power]."</span>";
 						}
-						foreach($var1 as $cat){
-						$f++;
+						foreach ($var1 as $cat) {
+                            $f++;
 							$foo=explode("/",$cat);
 							$foo=array_reverse($foo);
-							if($cat != '.' && $cat != '..'){
+							if ($cat != '.' && $cat != '..') {
 								?>
 								<script type="text/javascript" >
 								$(document).ready(function(){//po kliknieciu
@@ -232,7 +205,7 @@ echo '</div>';
 									}
 								});
 								</script>
-								<label class="label_all"><input id="fc<?php echo $f; ?>" class="cmd_check" type="checkbox" multiple name="folders[]" value="<?php echo $cat; ?>" <?php if(@in_array($cat, @$_POST['folders']) && (isset($_POST['copy']) || isset($_POST['cut']))){ echo "checked='checked'"; } ?> /><img class="cmd_ico" src="images/32/fod.png" />
+								<label class="label_all"><input id="fc<?php echo $f; ?>" class="cmd_check" type="checkbox" multiple name="folders[]" value="<?php echo $cat; ?>" <?php if (@in_array($cat, @$_POST['folders']) && (isset($_POST['copy']) || isset($_POST['cut']))) { echo "checked='checked'"; } ?> /><img class="cmd_ico" src="images/32/fod.png" />
 								<input id="fs<?php echo $f; ?>" class="cmd_button" type="submit" name="catalog" value="<?php echo $foo['0']; ?>" />
 								<span class="size_span"><?php echo filesize_formatted2(foldersize($cat)); ?></span>
 								<span class="create_time_span">
@@ -279,14 +252,15 @@ echo '</div>';
 						$arr_wav = array ('wav');
 						$arr_xml = array ('xml');
 						$arr_ico = array ('ico');
-						function filesize_formatted($path){/*wielkos pliku plus jednostka*/
+						function filesize_formatted($path)*wielkos pliku plus jednostka*/
+                        {/
 							$size = filesize($path);
 							$units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 							$power = $size > 0 ? floor(log($size, 1024)) : 0;
 							return '<span class="left">'.number_format($size / pow(1024, $power), 2, '.', ',') . '</span><span class="right">' . $units[$power]."</span>";
 						}
 						foreach ($var2 as $fil) {
-							if($fil!="FILES"){
+							if ($fil!="FILES") {
 								//echo $type_info=$file_info->file($fil, FILEINFO_MIME_TYPE);
 								$foo=explode("/",$fil);
 								$foo=array_reverse($foo);
@@ -294,124 +268,69 @@ echo '</div>';
 								$type=array_reverse($type);//odwracam tablice żeby mieć rozszerzenie pod index [0]
 								//echo $type[0];
 								?>
-								<label class="label_all"><input class="cmd_check" type="checkbox" multiple name="files[]" value="<?php echo $fil; ?>" <?php if(@in_array($fil, @$_POST['files']) && (isset($_POST['copy']) || isset($_POST['cut']))){ echo "checked='checked'"; } ?> /><img class="cmd_ico" title="ico" alt="ico"
+								<label class="label_all"><input class="cmd_check" type="checkbox" multiple name="files[]" value="<?php echo $fil; ?>" <?php if (@in_array($fil, @$_POST['files']) && (isset($_POST['copy']) || isset($_POST['cut']))) { echo "checked='checked'"; } ?> /><img class="cmd_ico" title="ico" alt="ico"
 								<?php
-									if(in_array($type[0], $arr_txt))
-                                    {
+									if (in_array($type[0], $arr_txt)) {
 										echo 'src="images/32/txt.png"';
-									}
-									else if(in_array($type[0], $arr_rtf))
-                                    {
+									} elseif (in_array($type[0], $arr_rtf)) {
 										echo 'src="images/32/rtf.png"';
-									}
-									else if(in_array($type[0], $arr_doc))
-                                    {
+									} elseif (in_array($type[0], $arr_doc)) {
 										echo 'src="images/32/dok.png"';
-									}
-									else if(in_array($type[0], $arr_php))
-                                    {
+									} elseif (in_array($type[0], $arr_php)) {
 										echo 'src="images/32/php.png"';
-									}
-									else if(in_array($type[0], $arr_html))
-                                    {
+									} elseif (in_array($type[0], $arr_html)) {
 										echo 'src="images/32/html.png"';
-									}
-									else if(in_array($type[0], $arr_css))
-                                    {
+									} elseif (in_array($type[0], $arr_css)) {
 										echo 'src="images/32/css.png"';
-									}
-									else if(in_array($type[0], $arr_js))
-                                    {
+									} elseif (in_array($type[0], $arr_js)) {
 										echo 'src="images/32/js.png"';
-									}
-									else if(in_array($type[0], $arr_jpg))
-                                    {
+									} elseif (in_array($type[0], $arr_jpg)) {
 										echo 'src="images/32/jpg.png"';
-									}
-									else if(in_array($type[0], $arr_bmp))
-                                    {
+									} elseif (in_array($type[0], $arr_bmp)) {
 										echo 'src="images/32/bmp.png"';
-									}
-									else if(in_array($type[0], $arr_gif))
-                                    {
+									} elseif (in_array($type[0], $arr_gif)) {
 										echo 'src="images/32/gif.png"';
-									}
-									else if(in_array($type[0], $arr_png))
-                                    {
+									} elseif (in_array($type[0], $arr_png)) {
 										echo 'src="images/32/png.png"';
-									}
-									else if(in_array($type[0], $arr_psd))
-                                    {
+									} elseif (in_array($type[0], $arr_psd)) {
 										echo 'src="images/32/psd.png"';
-									}
-									else if(in_array($type[0], $arr_tiff))
-                                    {
+									} elseif (in_array($type[0], $arr_tiff)) {
 										echo 'src="images/32/tiff.png"';
-									}
-									else if(in_array($type[0], $arr_rar))
-                                    {
+									} elseif (in_array($type[0], $arr_rar)) {
 										echo 'src="images/32/rar.png"';
-									}
-									else if(in_array($type[0], $arr_zip))
-                                    {
+									} elseif (in_array($type[0], $arr_zip)) {
 										echo 'src="images/32/zip.png"';
-									}
-									else if(in_array($type[0], $arr_pdf))
-                                    {
+									} elseif (in_array($type[0], $arr_pdf)) {
 										echo 'src="images/32/pdf.png"';
-									}
-									else if(in_array($type[0], $arr_exe))
-                                    {
+									} elseif (in_array($type[0], $arr_exe)) {
 										echo 'src="images/32/exe.png"';
-									}
-									else if(in_array($type[0], $arr_avi))
-                                    {
+									} elseif (in_array($type[0], $arr_avi)) {
 										echo 'src="images/32/avi.png"';
-									}
-									else if(in_array($type[0], $arr_mpg))
-                                    {
+									} elseif (in_array($type[0], $arr_mpg)) {
 										echo 'src="images/32/mpg.png"';
-									}
-									else if(in_array($type[0], $arr_mp3))
-                                    {
+									} elseif (in_array($type[0], $arr_mp3)) {
 										echo 'src="images/32/mp3.png"';
-									}
-									else if(in_array($type[0], $arr_mp4))
-                                    {
+									} elseif (in_array($type[0], $arr_mp4)) {
 										echo 'src="images/32/mp4.png"';
-									}
-									else if(in_array($type[0], $arr_sql))
-                                    {
+									} elseif (in_array($type[0], $arr_sql)) {
 										echo 'src="images/32/sql.png"';
-									}
-									else if(in_array($type[0], $arr_tga))
-                                    {
+									} elseif (in_array($type[0], $arr_tga)) {
 										echo 'src="images/32/tga.png"';
-									}
-									else if(in_array($type[0], $arr_tgz))
-                                    {
+									} elseif (in_array($type[0], $arr_tgz)) {
 										echo 'src="images/32/tgz.png"';
-									}
-									else if(in_array($type[0], $arr_wav))
-                                    {
+									} elseif (in_array($type[0], $arr_wav)) {
 										echo 'src="images/32/wav.png"';
-									}
-									else if(in_array($type[0], $arr_xml))
-                                    {
+									} elseif (in_array($type[0], $arr_xml)) {
 										echo 'src="images/32/xml.png"';
-									}
-									else if(in_array($type[0], $arr_ico))
-                                    {
+									} elseif (in_array($type[0], $arr_ico)) {
 										echo 'src="images/32/ico.png"';
-									}
-									else
-                                    {
+									} else {
 										echo 'src="images/32/blank.png"';
 									}
 								?>
 								/>
 								<div class="cmd_span"><?php echo $foo['0']; ?></div>
-                                <?php if(in_array($type[0], array('jpg','jpeg','gif','bmp','txt','html','htm','xls','ico','png'))){ //pozwolenie na pokazanie podglądu?>
+                                <?php if (in_array($type[0], array('jpg','jpeg','gif','bmp','txt','html','htm','xls','ico','png'))) { //pozwolenie na pokazanie podglądu?>
                                     <span class="preview_span"><a href="<?php echo $_SESSION['cmd'].'/'.$foo['0'];?>" target="_blank" >podgląd</a></span>
                                 <?php } ?>
 								<span class="size_span"><?php echo filesize_formatted($fil); ?></span>

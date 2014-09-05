@@ -1,5 +1,6 @@
 <?php
-class Img_Set_Size{
+class Img_Set_Size
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -9,10 +10,12 @@ class Img_Set_Size{
 	private $table;
 	private $admin;
 	private $autor;
-	public function __setTable($tab_name){
+	public function __setTable($tab_name)
+    {
 		$this->table=$tab_name;
 	}
-	public function connectDB(){
+	public function connectDB()
+    {
 		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
 		return $con;
 		unset ($con);
@@ -20,7 +23,7 @@ class Img_Set_Size{
     public function __setRow($arr_val, $id)
     {
         $record='';
-        foreach($arr_val as $name => $val){
+        foreach ($arr_val as $name => $val) {
             $record .= '`'.$name.'` = '.$val.',';
         }
         /*zapis*/
@@ -32,12 +35,9 @@ class Img_Set_Size{
 			WHERE
             `id` = '".$id."'
             ");
-        if($res)
-        {
+        if ($res) {
             echo "<div class=\"center\" >Zapis: OK!</div>";
-        }
-        else
-        {
+        } else {
             echo "<div class=\"center\" >Zapis: ERROR!</div>";
         }
     }
@@ -46,13 +46,10 @@ class Img_Set_Size{
         $con=$this->connectDB();
         $q = $con->query("SELECT * FROM `".$this->table."` WHERE `id`='".$id."'");
         unset ($con);
-        if($q)
-        {
+        if ($q) {
             $q = $q->fetch(PDO::FETCH_ASSOC);
             return $q;
-        }
-        else 
-        {
+        } else {
             echo 'ERROR SELECT __getRow()';
         }
     }
