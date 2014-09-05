@@ -4,7 +4,8 @@ ini_set('xdebug.var_display_max_children', -1);
 ini_set('xdebug.var_display_max_data', -1);
 header('Content-Type: text/html; charset=utf-8');
 echo '<div class="catch">';
-class UpdateIndexCls{
+class UpdateIndexCls
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -36,21 +37,15 @@ class UpdateIndexCls{
     {
 		$con=$this->connectDB();
         $res = $con->query("SELECT 1 FROM ".$this->table);//zwraca false jesli tablica nie istnieje	        
-		if(!$res)
-        {
+		if (!$res) {
             unset ($con);
             echo "<div class=\"center\" >Tabela nie istnieje więc nie można jej usunąć</div>";
-        }
-        else
-        {
+        } else {
             $result=$con->query("DROP TABLE `".$this->table."`"); //usowanie
             unset ($con);
-            if($result)
-            {
+            if ($result) {
                 echo "<div class=\"center\" >Delete: {$this->table} OK!</div>";
-            }
-            else
-            {
+            } else {
                 echo "<div class=\"center\" >Delete: {$this->table} ERROR!</div>";
             }
         }
@@ -59,14 +54,12 @@ class UpdateIndexCls{
     {
 		$con=$this->connectDB();
 		$res = $con->query("SELECT 1 FROM ".$this->table);//zwraca false jesli tablica nie istnieje	
-		if(!$res)
-        {
+		if (!$res) {
 			$result=$con->query("CREATE TABLE IF NOT EXISTS `".$this->table."`(
 			`id` INTEGER AUTO_INCREMENT,
 			PRIMARY KEY(`id`)
 			)ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1");
-            if($result)
-            {
+            if ($result) {
                 echo "<div class=\"center\" >Tworzenie tabeli: {$this->table} OK!</div>";
                 //inicjacja tabeli
                 $res=$con->query("ALTER TABLE `".$this->table."` ADD `empty` TEXT ");
@@ -75,14 +68,10 @@ class UpdateIndexCls{
                 ) VALUES (
                 'for initiate id'
                 )");               
-            }
-            else
-            {
+            } else {
                 echo "<div class=\"center\" >Tworzenie tabeli: {$this->table} ERROR!</div>";
             }
-		}
-		else
-        {
+		} else {
 			echo "<div class=\"center\" >Tabela już istnieje !</div>";
 		}
 	}
@@ -91,12 +80,9 @@ class UpdateIndexCls{
         $this->_setRow($name);
         $con=$this->connectDB();
         $res=$con->query("ALTER TABLE `".$this->table."` ADD `".$this->row."` TEXT ");
-        if($res)
-        {
+        if($res) {
             echo "<div class=\"center\" >Dodanie kolumny: {$this->row} OK!</div>";
-        }
-        else
-        {
+        } else {
             echo "<div class=\"center\" >Dodanie kolumny: {$this->row} ERROR!</div>";
         }
     }
@@ -110,13 +96,10 @@ class UpdateIndexCls{
 			WHERE
             `id` = '1'
             ");
-        if($res)
-        {
+        if($res) {
             echo "<div class=\"center\" >Zapis: OK!</div>";
             echo "<div class=\"center\" >Last id: ".$con->lastInsertId()."</div>";
-        }
-        else
-        {
+        } else {
             echo "<div class=\"center\" >Zapis: ERROR!</div>";
         }
         unset($con);

@@ -2,7 +2,8 @@
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 echo '<div class="catch">';
-class ProduktSetCls {
+class ProduktSetCls 
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -101,7 +102,8 @@ class ProduktSetCls {
     public function createFile($rec)// $rec=$next_id_is
     {
         $content='<?php
-        class ConnectCls {
+        class ConnectCls 
+        {
             private $host=\'sql.bdl.pl\';
             private $port=\'\';
             private $dbname=\'szpadlic_cms\';

@@ -4,7 +4,8 @@ echo '<div class="catch">';
 // if(isset($_POST['id_post'])){
 	// $_SESSION['id_post']=$_POST['id_post'];
 // }
-class ProduktGetCls{
+class ProduktGetCls
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -36,19 +37,15 @@ class ProduktGetCls{
     {
         //losowy obrazek z katalogu                                           
         $dir_mini = '../data/'.$id.'/mini/';                                        
-        if(@opendir($dir_mini))//sprawdzam czy sciezka istnieje
-        {
+        if (@opendir($dir_mini)) {//sprawdzam czy sciezka istnieje
             $q = (count(glob($dir_mini."/*")) === 0) ? 'Empty' : 'Not empty';
-            if ($q=="Empty")
-            {
+            if ($q=="Empty") {
                 echo "Brak"; 
-            }
-            else
-            {
+            } else {
                 $folder = opendir($dir_mini);
                 $i = 0;
-                while(false !=($plik = readdir($folder))){
-                    if($plik != "." && $plik != ".."){
+                while (false !=($plik = readdir($folder))) {
+                    if ($plik != "." && $plik != "..") {
                         $obrazki[$i]= $plik;//tablica z obrazkami
                         $i++;
                     }
@@ -58,9 +55,7 @@ class ProduktGetCls{
                 echo '<img class="mini_image_table_list" src="'.$dir_mini.@$obrazki[$losowy].'" alt="mini image" /><br />';
                 unset($obrazki);
             }                                               
-        }
-        else
-        {
+        } else {
             echo 'Brak';
         }
     }
@@ -84,7 +79,7 @@ echo '</div>';
 		<?php include ('menu_zap.php'); ?>
 		<div>
 					<?php
-					if($produkt->showAll()){ ?>
+					if ($produkt->showAll()) { ?>
 						<table id="table-list" class="table-bck">
 							<tr>
 								<th>
@@ -114,7 +109,7 @@ echo '</div>';
 							</tr>
 							<?php
                             
-							foreach($produkt->showAll() as $wyn){ ?>
+							foreach ($produkt->showAll() as $wyn) { ?>
 								<form enctype="multipart/form-data" action="product_edit.php" method="POST" >
 								<?php
 									echo '<tr>';

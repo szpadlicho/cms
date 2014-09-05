@@ -1,7 +1,8 @@
 <?php
 session_start();
 echo '<div class="catch">';
-class ProduktSetCls{
+class ProduktSetCls 
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -11,15 +12,18 @@ class ProduktSetCls{
 	private $table;
 	private $admin;
 	private $autor;
-	public function _setTable($tab_name){
+	public function _setTable($tab_name)
+    {
 		$this->table=$tab_name;
 	}
-	public function connectDB(){
+	public function connectDB()
+    {
 		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
 		return $con;
 		unset ($con);
 	}
-	public function show(){
+	public function show()
+    {
 		/*zapis do tabeli tylko raz*/
 		$con=$this->connectDB();
 	}

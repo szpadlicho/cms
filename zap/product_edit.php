@@ -5,7 +5,8 @@ echo '<div class="catch">';
 if (isset($_POST['id_post'])) {
 	$_SESSION['id_post']=$_POST['id_post'];
 }
-class ProduktEditCls {
+class ProduktEditCls 
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -66,7 +67,8 @@ class ProduktEditCls {
         //unset ($con); 
         return $id.'-'.$file_name;
     }
-	public function updateREC($what){
+	public function updateREC($what)
+    {
 		/*zapis do tablei tylko raz*/
         $_POST['seo_setting']=='title_true' ? $mod=1 : $mod=0 ;
         isset($_POST['title']) ? $title = $_POST['title'] : $title = null ;
@@ -97,7 +99,8 @@ class ProduktEditCls {
 		echo "<div class=\"center\" >zapis udany</div>";	
 		unset ($con);	
 	}
-	public function showCategory(){
+	public function showCategory()
+    {
 		$con=$this->connectDB();
 		$q = $con->query("SELECT `".$this->table."` FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
@@ -106,7 +109,8 @@ class ProduktEditCls {
     public function createFile($rec)// $rec=$next_id_is
     {
         $content='<?php
-        class ConnectCls{
+        class ConnectCls
+        {
             private $host=\'sql.bdl.pl\';
             private $port=\'\';
             private $dbname=\'szpadlic_cms\';

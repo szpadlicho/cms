@@ -4,7 +4,8 @@ ini_set('xdebug.var_display_max_children', -1);
 ini_set('xdebug.var_display_max_data', -1);
 header('Content-Type: text/html; charset=utf-8');
 echo '<div class="catch">';
-class UpgradeCls{
+class UpgradeCls
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -33,12 +34,9 @@ class UpgradeCls{
         $this->_setRow($name);
         $con=$this->connectDB();
         $res=$con->query("ALTER TABLE `".$this->table."` ADD `".$this->row."` TEXT ");
-        if($res)
-        {
+        if ($res) {
             echo "<div class=\"center\" >Dodanie kolumny: {$this->row} OK!</div>";
-        }
-        else
-        {
+        } else {
             echo "<div class=\"center\" >Dodanie kolumny: {$this->row} ERROR!</div>";
         }
     }
@@ -52,13 +50,10 @@ class UpgradeCls{
 			WHERE
             `id` = '1'
             ");
-        if($res)
-        {
+        if ($res) {
             echo "<div class=\"center\" >Zapis: OK!</div>";
             echo "<div class=\"center\" >Last id: ".$con->lastInsertId()."</div>";
-        }
-        else
-        {
+        } else {
             echo "<div class=\"center\" >Zapis: ERROR!</div>";
         }
         unset($con);
@@ -71,13 +66,10 @@ class UpgradeCls{
             SET
 			`".$this->row."` = '".$value."'
             ");
-        if($res)
-        {
+        if ($res) {
             echo "<div class=\"center\" >Zapis: OK!</div>";
             echo "<div class=\"center\" >Last id: ".$con->lastInsertId()."</div>";
-        }
-        else
-        {
+        } else {
             echo "<div class=\"center\" >Zapis: ERROR!</div>";
         }
         unset($con);
@@ -85,15 +77,13 @@ class UpgradeCls{
 }
 //
 $upgrade = new UpgradeCls();
-if(isset($_POST['add1']))//dodane na kompie
-{
+if (isset($_POST['add1'])) {//dodane na kompie
     $upgrade->_setTable('product_tab'); 
     $upgrade->addRow('product_title');
     $upgrade->addRow('product_description');
     $upgrade->addRow('product_keywords');
 }
-if(isset($_POST['add2']))//dodane na kompie
-{
+if (isset($_POST['add2'])) {//dodane na kompie
     $upgrade->_setTable('product_category_main'); 
     $upgrade->addRow('mod');
     $upgrade->_setRow('mod');

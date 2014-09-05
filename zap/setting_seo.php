@@ -4,7 +4,8 @@
 //ini_set('xdebug.var_display_max_data', -1);
 header('Content-Type: text/html; charset=utf-8');
 echo '<div class="catch">';
-class GlobalSettingCls{
+class GlobalSettingCls
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -123,7 +124,7 @@ class GlobalSettingCls{
     public function __setRow($arr_val, $id)
     {
         $value ='';
-        foreach($arr_val as $name => $val){
+        foreach ($arr_val as $name => $val) {
             $value .= "`".$name."` = '".trim($val)."',";
         }
         /*zapis*/
@@ -135,12 +136,9 @@ class GlobalSettingCls{
 			WHERE
             `id` = '".$id."'
             ");
-        if($res)
-        {
+        if ($res) {
             echo "<div class=\"center\" >Zapis: OK!</div>";
-        }
-        else
-        {
+        } else {
             echo "<div class=\"center\" >Zapis: ERROR!</div>";
         }
     }
@@ -149,13 +147,10 @@ class GlobalSettingCls{
         $con=$this->connectDB();
         $q = $con->query("SELECT * FROM `".$this->table."` WHERE `id`='".$id."'");
         unset ($con);
-        if($q)
-        {
+        if ($q) {
             $q = $q->fetch(PDO::FETCH_ASSOC);
             return $q;
-        }
-        else 
-        {
+        } else {
             echo 'nie ustawione';
         }
     }
@@ -163,7 +158,7 @@ class GlobalSettingCls{
 /**/
 $setting_seo = new GlobalSettingCls();
 $setting_seo->__setTable('setting_seo');
-if(isset($_POST['save'])){//dodac usuwanie kodu html php itd......    
+if (isset($_POST['save'])) {//dodac usuwanie kodu html php itd......    
     $arr_val = array('global_title_index'=>$_POST['global_title_index'],
                     'global_keywords_index'=>$_POST['global_keywords_index'],
                     'global_description_index'=>$_POST['global_description_index'],

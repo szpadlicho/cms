@@ -1,6 +1,7 @@
 <html lang="pl">
 <?php
-class DatabaseInstall{
+class DatabaseInstall
+{
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -38,15 +39,12 @@ class DatabaseInstall{
 	}
 	public function createDb()
     {
-		if($this->checkDb()==0)
-        {
+		if ($this->checkDb()==0) {
 			$con=$this->connect();		
 			$con->exec("CREATE DATABASE IF NOT EXISTS ".$this->dbname." charset=".$this->charset);
 			unset ($con);
 			echo "<div class=\"center\" >Utworzyłem bazę</div>";
-		}
-		else if($this->checkDb()==1)
-        {
+		} elseif($this->checkDb()==1) {
 			echo "<div class=\"center\" >Baza istnieje</div>";
 		}
 	}
@@ -55,11 +53,9 @@ class DatabaseInstall{
 		$con=$this->connect();
 		$result=$con->exec("DROP DATABASE `".$this->dbname."`"); //usowanie
 		unset ($con);
-		if($result)
-        {
+		if($result) {
 			echo "<div class=\"center\" >Deleted ({$result})</div>";
-		}
-		else{
+		} else {
 			echo "<div class=\"center\" >Error ({$result})</div>";
 		}
 	}
@@ -68,10 +64,9 @@ class DatabaseInstall{
         /*tworze tabele tylko raz co pozwala klikać install bez konsekwencji*/
 		$con=$this->connectDB();
 		$res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	
-		if(!$res)
-        {
+		if (!$res) {
             $columns='';
-            foreach($arr_row as $name => $val){
+            foreach ($arr_row as $name => $val) {
                 $columns .= '`'.$name.'` '.$val.',';
             }
             // Create table
@@ -83,11 +78,10 @@ class DatabaseInstall{
                 )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1");
                 echo "<div class=\"center\" >Utworzyłem tabelę: {$this->table}</div>";
             
-            if(!empty($arr_val))
-            {
+            if (!empty($arr_val)) {
                 $field='';
                 $value='';
-                foreach($arr_val as $name => $val){
+                foreach ($arr_val as $name => $val) {
                     $field .= '`'.$name.'`,';
                     $value .= "'".$val."',";
                 }
@@ -100,20 +94,16 @@ class DatabaseInstall{
                     '0'
                     )");
             }
-		}
-		else
-        {
+		} else {
 			echo "<div class=\"center\" >Tabela już istnieje</div>";
 		}
     }
 }
 $cls_install = new DatabaseInstall;
-if(isset($_POST['del']))
-{
+if (isset($_POST['del'])) {
 	$cls_install->deleteDb();
 }
-if(isset($_POST['crt']))
-{
+if (isset($_POST['crt'])) {
     $cls_install->createDb();      
 	
 	$cls_install->__setTable('product_tab');

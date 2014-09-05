@@ -3,11 +3,11 @@ echo '<div class="catch">';
 include_once('../classes/img/set/size.php');
 $cls_img = new Img_Set_Size();
 $cls_img->__setTable('setting_img');
-if(isset($_POST['small_save'])){
+if (isset($_POST['small_save'])) {
     $arr_val= array('small_width'=>$_POST['small_width'],  'small_height'=>$_POST['small_height']);
     $cls_img->__setRow($arr_val, 1);
 }
-if(isset($_POST['large_save'])){
+if (isset($_POST['large_save'])) {
     $arr_val= array('large_width'=>$_POST['large_width'],  'large_height'=>$_POST['large_height']);
     $cls_img->__setRow($arr_val, 1);
 }
