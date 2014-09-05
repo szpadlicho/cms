@@ -15,7 +15,7 @@ class UpgradeCls
 	private $table;
 	private $row;
 	private $path;
-	public function _setTable($tab_name)
+	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
@@ -73,18 +73,45 @@ class UpgradeCls
             echo "<div class=\"center\" >Zapis: ERROR!</div>";
         }
         unset($con);
+    }   
+    public function addRowDynamic($arr_row)
+    {
+        $con=$this->connectDB();
+        $content = '';
+        foreach ($arr_row as $name => $value) {
+            $content .= 'ADD COLUMN `'.$name.'` '.$value.',';
+        }       
+        $res=$con->query("ALTER TABLE `".$this->table."` ".$content." ADD COLUMN `mod2` TEXT");
+        if ($res) {
+            echo "<div class=\"center\" >Dodanie kolumny: add OK!</div>";
+        } else {
+            echo "<div class=\"center\" >Dodanie kolumny: add ERROR!</div>";
+        }
+    }
+    public function addRowDynamic2($arr_row)
+    {
+        $con=$this->connectDB();
+        foreach ($arr_row as $name => $value) {
+            $res=$con->query("ALTER TABLE `".$this->table."` ADD COLUMN `".$name."` ".$value."");
+            if ($res) {
+                echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." OK!</div>";
+            } else {
+                echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." ERROR!</div>";
+            }
+        }
     }
 }
 //
 $upgrade = new UpgradeCls();
+/*
 if (isset($_POST['add1'])) {//dodane na kompie
-    $upgrade->_setTable('product_tab'); 
+    $upgrade->__setTable('product_tab'); 
     $upgrade->addRow('product_title');
     $upgrade->addRow('product_description');
     $upgrade->addRow('product_keywords');
 }
 if (isset($_POST['add2'])) {//dodane na kompie
-    $upgrade->_setTable('product_category_main'); 
+    $upgrade->__setTable('product_category_main'); 
     $upgrade->addRow('mod');
     $upgrade->_setRow('mod');
     $upgrade->recRowAll('0');
@@ -98,6 +125,25 @@ if (isset($_POST['add2'])) {//dodane na kompie
     $upgrade->addRow('title');
     $upgrade->addRow('description');
     $upgrade->addRow('keywords');
+}
+*/
+if (isset($_POST['add3'])) {//dodane na kompie
+    $upgrade->__setTable('setting_img');
+    $arr_row = array('product_name'             =>'TEXT', 
+                    'product_price'             =>'VARCHAR(10)', 
+                    'product_number'            =>'INTEGER(10)', 
+                    'product_category_main'     =>'TEXT',
+                    'product_category_sub'      =>'TEXT',
+                    'product_description_small' =>'TEXT',
+                    'product_description_large' =>'TEXT',
+                    'product_foto_mini'         =>'TEXT',
+                    'product_foto_large'        =>'TEXT',
+                    'file_name'                 =>'TEXT',
+                    'product_title'             =>'TEXT',
+                    'product_description'       =>'TEXT',
+                    'product_keywords'          =>'TEXT'
+                    );
+    //$upgrade->addRowDynamic2($arr_row);
 }
 echo '</div>';
 ?>
@@ -114,8 +160,11 @@ echo '</div>';
         <?php include ('menu_zap.php'); ?>
         <div class="center">
             <form method="POST">
+                <!--
                 <input type="submit" name="add1" value="product_meta_data" />
                 <input type="submit" name="add2" value="category_meta_data" />
+                -->
+                <input type="submit" name="add3" value="setting_seo_for_fun" />
             </form>
         </div>
     </section>
