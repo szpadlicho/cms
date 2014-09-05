@@ -234,9 +234,10 @@ if(isset($_POST['delete']))
     //$del->delete_folder($nr);
     $del->rrmdir('../data/'.$_SESSION['id_post']);
     unset($_SESSION['id_post']);
-    ob_start();
-    header('Location: list.php');
-    ob_end_flush();
+    //ob_start();
+    //header('Location: list.php');
+    //ob_end_flush();
+    echo("<script>location.href = 'list.php';</script>");
 }
 echo '</div>';
 ?>

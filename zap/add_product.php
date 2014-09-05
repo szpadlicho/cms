@@ -214,9 +214,10 @@ if(isset($_POST['save'])){
 	$product->_setTable('product_tab');
 	$product->createREC($next_id);
 	$product->createFile($next_id);
-    ob_start();
-    header('Location: list.php');
-    ob_end_flush();
+    //ob_start();
+    //header('Location: list.php');
+    //ob_end_flush();
+    echo("<script>location.href = 'list.php';</script>");
 }
 //echo 'next id is: '.$next_id;
 echo '</div>';
