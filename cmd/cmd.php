@@ -252,8 +252,8 @@ echo '</div>';
 						$arr_wav = array ('wav');
 						$arr_xml = array ('xml');
 						$arr_ico = array ('ico');
-						function filesize_formatted($path)*wielkos pliku plus jednostka*/
-                        {/
+						function filesize_formatted($path) /*wielkos pliku plus jednostka*/
+                        {
 							$size = filesize($path);
 							$units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
 							$power = $size > 0 ? floor(log($size, 1024)) : 0;
