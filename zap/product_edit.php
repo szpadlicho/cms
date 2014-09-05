@@ -229,7 +229,7 @@ if(isset($_POST['delete']))
     $product->deleteOldFile();
     $product->deleteREC();        
     //dodac usuwanie galeri
-    include_once('delete.php');
+    include_once('product_delete.php');
     //$nr=array('../data/'.$_SESSION['id_post']);//musi byc array dla delete.php
     //$del->delete_folder($nr);
     $del->rrmdir('../data/'.$_SESSION['id_post']);

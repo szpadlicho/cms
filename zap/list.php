@@ -115,7 +115,7 @@ echo '</div>';
 							<?php
                             
 							foreach($produkt->showAll() as $wyn){ ?>
-								<form enctype="multipart/form-data" action="edit_product.php" method="POST" >
+								<form enctype="multipart/form-data" action="product_edit.php" method="POST" >
 								<?php
 									echo '<tr>';
 										echo '<td>';
