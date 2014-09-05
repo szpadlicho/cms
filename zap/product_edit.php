@@ -2,10 +2,10 @@
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 echo '<div class="catch">';
-if(isset($_POST['id_post'])){
+if (isset($_POST['id_post'])) {
 	$_SESSION['id_post']=$_POST['id_post'];
 }
-class ProduktEditCls{
+class ProduktEditCls {
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -13,15 +13,18 @@ class ProduktEditCls{
 	private $user='szpadlic_baza';
 	private $pass='haslo';
 	private $table;// ma miec
-	public function _setTable($tab_name){
+	public function _setTable($tab_name)
+    {
 		$this->table=$tab_name;
 	}
-	public function connectDB(){
+	public function connectDB()
+    {
 		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
 		return $con;
 		unset ($con);
 	}
-	public function showOne(){
+	public function showOne()
+    {
 		/**/
 		$con=$this->connectDB();
 		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `id`='".$_SESSION['id_post']."'");/*zwraca false jesli tablica nie istnieje*/
@@ -168,27 +171,21 @@ class ProduktEditCls{
         $load->_setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
-        if($meta[\'product_title\']!=null)
-        {
+        if ($meta[\'product_title\']!=null) {
             echo \'<title>\'.$meta[\'product_title\'].\'</title>\';
-        }
-        else{
+        } else {
             echo \'<title>\'.$global[\'global_title_product\'].\'</title>\';
         }
         
-        if($meta[\'product_description\']!=null)
-        {
+        if ($meta[\'product_description\']!=null) {
             echo \'<meta name="description" content="\'.$meta[\'product_description\'].\'" />\';
-        }
-        else{
+        } else {
             echo \'<meta name="description" content="\'.$global[\'global_description_product\'].\'" />\';
         }
         
-        if($meta[\'product_keywords\']!=null)
-        {
+        if ($meta[\'product_keywords\']!=null) {
             echo \'<meta name="keywords" content="\'.$meta[\'product_keywords\'].\'" />\';
-        }
-        else{
+        } else {
             echo \'<meta name="keywords" content="\'.$global[\'global_keywords_product\'].\'" />\';
         }
         //---
@@ -206,7 +203,8 @@ class ProduktEditCls{
         fclose($out_file);
     }
     //-----------------------------------------
-    public function showAll(){
+    public function showAll()
+    {
 		$con=$this->connectDB();
 		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `id` = '1'");/*zwraca false jesli tablica nie istnieje*/
         $q = $q->fetch(PDO::FETCH_ASSOC);
@@ -217,15 +215,13 @@ class ProduktEditCls{
 }
 $product = new ProduktEditCls();
 $product->_setTable('product_tab');
-if(isset($_POST['update']))
-{
+if (isset($_POST['update'])) {
     $product->deleteOldFile();
 	$product->updateREC($_SESSION['id_post']);
     //$product->addFileName($_SESSION['id_post']);    
     $product->createFile($_SESSION['id_post']);
 }
-if(isset($_POST['delete']))
-{
+if (isset($_POST['delete'])) {
     $product->deleteOldFile();
     $product->deleteREC();        
     //dodac usuwanie galeri
@@ -260,7 +256,7 @@ echo '</div>';
         //var_dump($dir);       
         ?>
 		<div>
-				<?php foreach ($product->showOne() as $wyn){ ?>
+				<?php foreach ($product->showOne() as $wyn) { ?>
 				<form enctype="multipart/form-data" action="" method="POST" >
 					<table class="table-bck">
                         <tr>
@@ -308,10 +304,10 @@ echo '</div>';
 								<?php
 								$main= new ProduktEditCls();
 								$main->_setTable('product_category_main');
-								if($main->showCategory()){
-									foreach($main->showCategory() as $cat){
+								if ($main->showCategory()) {
+									foreach ($main->showCategory() as $cat) {
 										echo '<option value="'.$cat['product_category_main'].'"';
-										if($cat['product_category_main']==$wyn['product_category_main']){
+										if ($cat['product_category_main']==$wyn['product_category_main']) {
 											echo ' selected ';
 										}
 										echo '">';
@@ -333,10 +329,10 @@ echo '</div>';
 								<?php
 								$sub = new ProduktEditCls();
 								$sub->_setTable('product_category_sub');
-								if($sub->showCategory()){
-									foreach($sub->showCategory() as $cat){
+								if ($sub->showCategory()) {
+									foreach ($sub->showCategory() as $cat) {
 										echo '<option value="'.$cat['product_category_sub'].'"'; 
-										if($cat['product_category_sub']==$wyn['product_category_sub']){
+										if ($cat['product_category_sub']==$wyn['product_category_sub']) {
 											echo ' selected ';
 										}									
 										echo '>';

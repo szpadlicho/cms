@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 echo '<div class="catch">';
-class ProduktSetCls{
+class ProduktSetCls {
 	private $host='sql.bdl.pl';
 	private $port='';
 	private $dbname='szpadlic_cms';
@@ -101,7 +101,7 @@ class ProduktSetCls{
     public function createFile($rec)// $rec=$next_id_is
     {
         $content='<?php
-        class ConnectCls{
+        class ConnectCls {
             private $host=\'sql.bdl.pl\';
             private $port=\'\';
             private $dbname=\'szpadlic_cms\';
@@ -166,27 +166,21 @@ class ProduktSetCls{
         $load->_setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
-        if($meta[\'product_title\']!=null)
-        {
+        if ($meta[\'product_title\']!=null) {
             echo \'<title>\'.$meta[\'product_title\'].\'</title>\';
-        }
-        else{
+        } else {
             echo \'<title>\'.$global[\'global_title_product\'].\'</title>\';
         }
         
-        if($meta[\'product_description\']!=null)
-        {
+        if ($meta[\'product_description\']!=null) {
             echo \'<meta name="description" content="\'.$meta[\'product_description\'].\'" />\';
-        }
-        else{
+        } else {
             echo \'<meta name="description" content="\'.$global[\'global_description_product\'].\'" />\';
         }
         
-        if($meta[\'product_keywords\']!=null)
-        {
+        if ($meta[\'product_keywords\']!=null) {
             echo \'<meta name="keywords" content="\'.$meta[\'product_keywords\'].\'" />\';
-        }
-        else{
+        } else {
             echo \'<meta name="keywords" content="\'.$global[\'global_keywords_product\'].\'" />\';
         }
         //---
@@ -209,7 +203,7 @@ $next_id_is->_setTable('product_tab');
 $next_is = $next_id_is->_getLastId();
 $next_id = $next_is['AUTO_INCREMENT'];
 $id = $next_id;//for upload system
-if(isset($_POST['save'])){
+if (isset($_POST['save'])) {
 	$product = new ProduktSetCls();
 	$product->_setTable('product_tab');
 	$product->createREC($next_id);
@@ -284,8 +278,8 @@ echo '</div>';
                             <?php
                             $main= new ProduktSetCls();
                             $main->_setTable('product_category_main');
-                            if($main->showCategory()){
-                                foreach($main->showCategory() as $cat){
+                            if ($main->showCategory()) {
+                                foreach ($main->showCategory() as $cat) {
                                     echo '<option value="'.$cat['product_category_main'].'">';
                                     echo $cat['product_category_main'];
                                     echo '</option>';
@@ -305,8 +299,8 @@ echo '</div>';
                             <?php
                             $sub = new ProduktSetCls();
                             $sub->_setTable('product_category_sub');
-                            if($sub->showCategory()){
-                                foreach($sub->showCategory() as $cat){
+                            if ($sub->showCategory()) {
+                                foreach ($sub->showCategory() as $cat) {
                                     echo '<option value="'.$cat['product_category_sub'].'">';
                                     echo $cat['product_category_sub'];
                                     echo '</option>';
