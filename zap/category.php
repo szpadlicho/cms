@@ -143,7 +143,7 @@ class CategorySetCls{
         $load->_setTable(\'product_category_main\');
         $meta = $load->metaData($category_now_display);
         //--
-        $load->_setTable(\'global_setting\');
+        $load->_setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
         if($meta[\'title\']!=null)

@@ -7,7 +7,7 @@ $(document).ready(function()
         dragDrop: true,
         fileName: 'product_foto_large',
         allowedTypes: 'jpg,png,gif,jpeg',	
-        returnType: 'json',
+        returnType: 'html',//orginal 'json' ale jakis bład zaczeło pokazywac po dodaniu resize 
         uploadFolder: '../data/<?php echo $id; ?>/',
         formData: {folder: '../data/<?php echo $id; ?>/'},//dodalem       
         showPreview: true,
@@ -34,8 +34,8 @@ $(document).ready(function()
                 }
             });
         },
-         afterUploadAll:function(obj)
-         {
+        afterUploadAll:function(obj)
+        {
              // $.ajax({
                 // cache: false,
                 // type: "POST",
@@ -51,7 +51,7 @@ $(document).ready(function()
                 // }
             // });
             
-         },
+        },
         onSuccess:function(files,data,xhr)
         {
            //alert((data));

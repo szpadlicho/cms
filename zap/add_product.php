@@ -163,7 +163,7 @@ class ProduktSetCls{
         $load->_setTable(\'product_tab\');
         $meta = $load->metaData($product_now_display);
         //--
-        $load->_setTable(\'global_setting\');
+        $load->_setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
         if($meta[\'product_title\']!=null)
@@ -206,18 +206,19 @@ class ProduktSetCls{
 }
 $next_id_is = new ProduktSetCls();
 $next_id_is->_setTable('product_tab');
-$next_id = $next_id_is->_getLastId()['AUTO_INCREMENT'];
-//var_dump($next_id_is);
+$next_is = $next_id_is->_getLastId();
+$next_id = $next_is['AUTO_INCREMENT'];
 $id = $next_id;//for upload system
-echo 'next id is: '.$next_id;
 if(isset($_POST['save'])){
 	$product = new ProduktSetCls();
 	$product->_setTable('product_tab');
 	$product->createREC($next_id);
 	$product->createFile($next_id);
+    ob_start();
     header('Location: list.php');
+    ob_end_flush();
 }
-
+//echo 'next id is: '.$next_id;
 echo '</div>';
 ?>
 <!DOCTYPE HTML>

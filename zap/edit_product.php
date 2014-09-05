@@ -1,11 +1,10 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-//include ('upload_one.php');
+echo '<div class="catch">';
 if(isset($_POST['id_post'])){
 	$_SESSION['id_post']=$_POST['id_post'];
 }
-echo '<div class="catch">';
 class ProduktEditCls{
 	private $host='sql.bdl.pl';
 	private $port='';
@@ -166,7 +165,7 @@ class ProduktEditCls{
         $load->_setTable(\'product_tab\');
         $meta = $load->metaData($product_now_display);
         //--
-        $load->_setTable(\'global_setting\');
+        $load->_setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
         if($meta[\'product_title\']!=null)
@@ -235,7 +234,9 @@ if(isset($_POST['delete']))
     //$del->delete_folder($nr);
     $del->rrmdir('../data/'.$_SESSION['id_post']);
     unset($_SESSION['id_post']);
+    ob_start();
     header('Location: list.php');
+    ob_end_flush();
 }
 echo '</div>';
 ?>

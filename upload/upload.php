@@ -1,4 +1,11 @@
 <?php
+include_once('../classes/img/set/size.php');
+$cls_img = new Img_Set_Size();
+$cls_img->__setTable('setting_img');
+$get = $cls_img->__getRow(1);
+?>
+<?php
+//mini image
 if(isset($_FILES["product_foto_mini"]))
 {
     //$folder = "uploads/1/";
@@ -17,15 +24,19 @@ if(isset($_FILES["product_foto_mini"]))
 	{
  	 	$fileName = $_FILES["product_foto_mini"]["name"];
         //--kasuje zawartość co by zawsze był tylko jeden
-        // $dir = opendir($folder);//do kasacji zawartości folderu mini
-        // while( $path = readdir($dir)){
-            // if( $path!='.' && $path!='..'){
-               // //echo $folder.'/'.$path;
-               // unlink($folder.'/'.$path);
-            // }
-        // }
+        $dir = opendir($folder);//do kasacji zawartości folderu mini
+        while( $path = readdir($dir)){
+            if( $path!='.' && $path!='..'){
+               //echo $folder.'/'.$path;
+               unlink($folder.'/'.$path);
+            }
+        }
         //--
- 		move_uploaded_file($_FILES["product_foto_mini"]["tmp_name"],$folder.$fileName);
+        include_once('resize.php');
+        $cls_resize = new ImageResize();
+        $cls_resize->resizeImage($_FILES["product_foto_mini"]["tmp_name"],$get['small_width'],$get['small_height'],$folder.$fileName);
+        //--
+ 		//move_uploaded_file($_FILES["product_foto_mini"]["tmp_name"],$folder.$fileName);
     	$ret[]= $fileName;
 	}
 	else  //Multiple files, file[]
@@ -34,14 +45,18 @@ if(isset($_FILES["product_foto_mini"]))
 	  for($i=0; $i < $fileCount; $i++)
 	  {
 	  	$fileName = $_FILES["product_foto_mini"]["name"][$i];
-		move_uploaded_file($_FILES["product_foto_mini"]["tmp_name"][$i],$folder.$fileName);
-	  	$ret[]= $fileName;
+        include_once('resize.php');
+        $cls_resize = new ImageResize();
+        $cls_resize->resizeImage($_FILES["product_foto_mini"]["tmp_name"],$get['small_width'],$get['small_height'],$folder.$fileName);
+        //--
+		//move_uploaded_file($_FILES["product_foto_mini"]["tmp_name"][$i],$folder.$fileName);
+	  	$ret[] = $fileName;
 	  }
 	
 	}
     echo json_encode($ret);
 }
-//------
+//large files
 if(isset($_FILES["product_foto_large"]))
 {
     //$folder = "uploads/2/";
@@ -59,7 +74,10 @@ if(isset($_FILES["product_foto_large"]))
 	if(!is_array($_FILES["product_foto_large"]["name"])) //single file
 	{
  	 	$fileName = $_FILES["product_foto_large"]["name"];
- 		move_uploaded_file($_FILES["product_foto_large"]["tmp_name"],$folder.$fileName);
+        include_once('resize.php');
+        $cls_resize = new ImageResize();
+        $cls_resize->resizeImage($_FILES["product_foto_large"]["tmp_name"],$get['large_width'],$get['large_height'],$folder.$fileName);
+ 		//move_uploaded_file($_FILES["product_foto_large"]["tmp_name"],$folder.$fileName);
     	$ret[]= $fileName;
 	}
 	else  //Multiple files, file[]
@@ -68,7 +86,10 @@ if(isset($_FILES["product_foto_large"]))
 	  for($i=0; $i < $fileCount; $i++)
 	  {
 	  	$fileName = $_FILES["product_foto_large"]["name"][$i];
-		move_uploaded_file($_FILES["product_foto_large"]["tmp_name"][$i],$folder.$fileName);
+        include_once('resize.php');
+        $cls_resize = new ImageResize();
+        $cls_resize->resizeImage($_FILES["product_foto_large"]["tmp_name"],$get['large_width'],$get['large_height'],$folder.$fileName);
+		//move_uploaded_file($_FILES["product_foto_large"]["tmp_name"][$i],$folder.$fileName);
 	  	$ret[]= $fileName;
 	  }
 	
