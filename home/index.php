@@ -105,7 +105,7 @@ class ShowProductCls
         if (@opendir($dir_mini)) {//sprawdzam czy sciezka istnieje
             $q = (count(glob($dir_mini."/*")) === 0) ? 'Empty' : 'Not empty';
             if ($q=="Empty") {
-                echo "Brak"; 
+                echo "Brak"; // mozna by tu dodac fotke ze braz fotki
             } else {
                 $folder = opendir($dir_mini);
                 $i = 0;
@@ -121,7 +121,7 @@ class ShowProductCls
                 unset($obrazki);
             }                                               
         } else {
-            echo 'Brak';
+            echo 'Brak';//mozna by tu dodac fotke ze braz fotki
         }
     }
     public function showAllImg($id)

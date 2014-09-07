@@ -17,6 +17,7 @@ $(document).ready(function()
         //showQueueDiv: "output",
         previewWidth: "10em",
         previewHeight: "auto",
+        showError: false,
         onLoad:function(obj)
         {
             $.ajax({
