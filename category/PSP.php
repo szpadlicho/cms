@@ -9,7 +9,7 @@
                 private $table;// ma miec
                 private $row;
                 private $path;
-                public function _setTable($tab_name)
+                public function __setTable($tab_name)
                 {
                     $this->table=$tab_name;
                 }
@@ -29,7 +29,7 @@
                 }
             }
             $load = new ConnectCls();
-            $load->_setTable('index_pieces');
+            $load->__setTable('index_pieces');
             $q = $load->loadIndex();
             
             eval('?>'.$q['php_beafor_html'].'<?php ');

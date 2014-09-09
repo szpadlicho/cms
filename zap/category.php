@@ -11,7 +11,7 @@ class CategorySetCls
 	private $user='szpadlic_baza';
 	private $pass='haslo';
 	private $table;// ma miec
-	public function _setTable($tab_name)
+	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
@@ -95,7 +95,7 @@ class CategorySetCls
             private $table;// ma miec
             private $row;
             private $path;
-            public function _setTable($tab_name)
+            public function __setTable($tab_name)
             {
                 $this->table=$tab_name;
             }
@@ -131,7 +131,7 @@ class CategorySetCls
             }
         }
         $load = new ConnectCls();
-        $load->_setTable(\'index_pieces\');
+        $load->__setTable(\'index_pieces\');
         $q = $load->loadIndex();
         ';// title = category
         //description
@@ -142,10 +142,10 @@ class CategorySetCls
         //--
         $category_now_display=\''.$rec.'\';
         //--
-        $load->_setTable(\'product_category_main\');
+        $load->__setTable(\'product_category_main\');
         $meta = $load->metaData($category_now_display);
         //--
-        $load->_setTable(\'setting_seo\');
+        $load->__setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
         if ($meta[\'title\']!=null) {
@@ -216,37 +216,37 @@ class CategorySetCls
 /**/
 $produkt = new CategorySetCls();
 if (isset($_POST['save_main'])) {
-	$produkt->_setTable('product_category_main');
+	$produkt->__setTable('product_category_main');
 	$produkt->createREC($_POST['product_add_category_main'],'file_name_category_main');
     $produkt->createFile($_POST['product_add_category_main']);//tu
 }
 if (isset($_POST['save_sub'])) {
-	$produkt->_setTable('product_category_sub');
+	$produkt->__setTable('product_category_sub');
 	$produkt->createREC($_POST['product_add_category_sub'],'file_name_category_sub');
 }
 if (isset($_POST['delete_rec_main'])) {
-	$produkt->_setTable('product_category_main');
+	$produkt->__setTable('product_category_main');
 	$produkt->deleteREC($_POST['hidden_old_rec_main']);
     $produkt->deleteFile($_POST['hidden_old_rec_main']);
 }
 if (isset($_POST['delete_rec_sub'])) {
-	$produkt->_setTable('product_category_sub');
+	$produkt->__setTable('product_category_sub');
 	$produkt->deleteREC($_POST['hidden_old_rec_sub']);
 }
 if (isset($_POST['ok_main'])) {    
-	$produkt->_setTable('product_category_main');
+	$produkt->__setTable('product_category_main');
     $produkt->deleteFile($_POST['hidden_old_rec_main']);
 	$produkt->updateREC($_POST['update_txt'],$_POST['hidden_old_rec_main'],'file_name_category_main');
     $produkt->createFile($_POST['update_txt']);//tu
     //set change on product tab
-    $produkt->_setTable('product_tab');
+    $produkt->__setTable('product_tab');
     $produkt->updateAllRecProductTab($_POST['update_txt'],$_POST['hidden_old_rec_main'],'product_category_main');
 }
 if (isset($_POST['ok_sub'])) {
-	$produkt->_setTable('product_category_sub');
+	$produkt->__setTable('product_category_sub');
 	$produkt->updateREC($_POST['update_txt'],$_POST['hidden_old_rec_sub'],'file_name_category_sub');
     //set change on product tab
-    $produkt->_setTable('product_tab');
+    $produkt->__setTable('product_tab');
     $produkt->updateAllRecProductTab($_POST['update_txt'],$_POST['hidden_old_rec_sub'],'product_category_sub');  
 }
 echo '</div>';
@@ -370,7 +370,7 @@ echo '</div>';
         <br />
 		<div>
 		<?php
-		$produkt->_setTable('product_category_main');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
+		$produkt->__setTable('product_category_main');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
 		if ($produkt->showCategory()) { ?>
             <!--MAIN-->            
             <?php foreach ($produkt->showCategory() as $cat) { ?>
@@ -483,7 +483,7 @@ echo '</div>';
         <!--SUB-->
 		<div>
 		<?php
-		$produkt->_setTable('product_category_sub');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
+		$produkt->__setTable('product_category_sub');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
 		if ($produkt->showCategory()) { ?>
             <table class="table-bck table-category">
             <?php foreach ($produkt->showCategory() as $cat) { ?>			

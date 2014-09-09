@@ -11,7 +11,7 @@ class ProduktSetCls
 	private $user='szpadlic_baza';
 	private $pass='haslo';
 	private $table;// ma miec
-	public function _setTable($tab_name)
+	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
@@ -113,7 +113,7 @@ class ProduktSetCls
             private $table;// ma miec
             private $row;
             private $path;
-            public function _setTable($tab_name)
+            public function __setTable($tab_name)
             {
                 $this->table=$tab_name;
             }
@@ -149,7 +149,7 @@ class ProduktSetCls
             }
         }
         $load = new ConnectCls();
-        $load->_setTable(\'index_pieces\');
+        $load->__setTable(\'index_pieces\');
         $q = $load->loadIndex();
         ';
         //'. PHP_EOL .' nowa linia
@@ -162,10 +162,10 @@ class ProduktSetCls
         //--
         $product_now_display=\''.$rec.'\';
         //--
-        $load->_setTable(\'product_tab\');
+        $load->__setTable(\'product_tab\');
         $meta = $load->metaData($product_now_display);
         //--
-        $load->_setTable(\'setting_seo\');
+        $load->__setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
         if ($meta[\'product_title\']!=null) {
@@ -201,13 +201,13 @@ class ProduktSetCls
     }
 }
 $next_id_is = new ProduktSetCls();
-$next_id_is->_setTable('product_tab');
+$next_id_is->__setTable('product_tab');
 $next_is = $next_id_is->_getLastId();
 $next_id = $next_is['AUTO_INCREMENT'];
 $id = $next_id;//for upload system
 if (isset($_POST['save'])) {
 	$product = new ProduktSetCls();
-	$product->_setTable('product_tab');
+	$product->__setTable('product_tab');
 	$product->createREC($next_id);
 	$product->createFile($next_id);
     //ob_start();
@@ -279,7 +279,7 @@ echo '</div>';
                                 <option></option>
                             <?php
                             $main= new ProduktSetCls();
-                            $main->_setTable('product_category_main');
+                            $main->__setTable('product_category_main');
                             if ($main->showCategory()) {
                                 foreach ($main->showCategory() as $cat) {
                                     echo '<option value="'.$cat['product_category_main'].'">';
@@ -300,7 +300,7 @@ echo '</div>';
                                 <option></option>
                             <?php
                             $sub = new ProduktSetCls();
-                            $sub->_setTable('product_category_sub');
+                            $sub->__setTable('product_category_sub');
                             if ($sub->showCategory()) {
                                 foreach ($sub->showCategory() as $cat) {
                                     echo '<option value="'.$cat['product_category_sub'].'">';

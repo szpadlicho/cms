@@ -3,7 +3,7 @@
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 echo '<div class="catch">';
-class ShowProductCls
+class ProductDisplay
 {
 	private $host='sql.bdl.pl';
 	private $port='';
@@ -11,8 +11,8 @@ class ShowProductCls
 	private $charset='utf8';
 	private $user='szpadlic_baza';
 	private $pass='haslo';
-	private $table;// ma miec
-	public function _setTable($tab_name)
+	private $table;
+	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
@@ -78,7 +78,7 @@ class ShowProductCls
 		unset ($con);
 		return $q;
 	}
-    public function _getCatMain($id)
+    public function __getCatMain($id)
     {
 		$con=$this->connectDB();
 		$q = $con->query("SELECT `product_category_main` FROM `".$this->table."` WHERE `id` = '".$id."'");/*zwraca false jesli tablica nie istnieje*/
@@ -86,10 +86,10 @@ class ShowProductCls
 		unset ($con);
 		return $q;
 	}
-    public function _getCatMainFileName($id)
+    public function __getCatMainFileName($id)
     {
-        $this->_setTable('product_tab');
-        $cat = $this->_getCatMain($id);
+        $this->__setTable('product_tab');
+        $cat = $this->__getCatMain($id);
 		$cat = $cat['product_category_main'];
         //return $cat;
         $con=$this->connectDB();
@@ -331,8 +331,8 @@ echo '</div>';
 							<?php
                             //top menu
                             //------------------------------------------------
-							$main = new ShowProductCls();
-							$main->_setTable('product_category_main');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
+							$main = new ProductDisplay();
+							$main->__setTable('product_category_main');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
 							if ($main->showCategoryMain()) { 
 								$i=2;
 								foreach ($main->showCategoryMain() as $cat) { ?>
@@ -364,8 +364,8 @@ echo '</div>';
                             //$product_now_display='6';
                             //left menu
                             //------------------------------------------------
-							$sub = new ShowProductCls();
-							$sub->_setTable('product_tab');
+							$sub = new ProductDisplay();
+							$sub->__setTable('product_tab');
                             //-index
                             //------------------------------------------------
                             if (! isset($category_now_display) && ! isset($product_now_display)) {//sub dla home
@@ -400,7 +400,7 @@ echo '</div>';
                             elseif (isset($product_now_display) && !isset($_SESSION['menu_id'])) {//dla karty towaru z home
                                 ?><a class="leftmenu_a_button" href="../home/index.php">Powrót</a><?php 
                             } elseif (isset($product_now_display) && isset($_SESSION['menu_id'])) {// dla karty towaru z kategorii   
-                                ?><a class="leftmenu_a_button" href="../category/<?php echo $sub->_getCatMainFileName($product_now_display); ?>.php">Powrót</a><?php 
+                                ?><a class="leftmenu_a_button" href="../category/<?php echo $sub->__getCatMainFileName($product_now_display); ?>.php">Powrót</a><?php 
                             }
                             //------------------------------------------------
 							?>
@@ -410,8 +410,8 @@ echo '</div>';
 			</nav>
 			<div id="wrapper4">               
                 <?php               
-                $show = new ShowProductCls();
-				$show->_setTable('product_tab');
+                $show = new ProductDisplay();
+				$show->__setTable('product_tab');
                 //-index
                 //------------------------------------------------
 				if (! isset($category_now_display) && ! isset($product_now_display) && ! isset($_SESSION['sub'])) {//all
@@ -454,8 +454,8 @@ echo '</div>';
                     }
                 }
                 //------------------------------------------------
-                //$sub = new ShowProductCls();
-                //$sub->_setTable('product_tab');
+                //$sub = new ProductDisplay();
+                //$sub->__setTable('product_tab');
                 //$is = $sub->showCategorySub(@$_SESSION['category'])->fetch(PDO::FETCH_ASSOC);
                 //$id = $id->fetch(PDO::FETCH_ASSOC);
                 //var_dump($id);

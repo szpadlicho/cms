@@ -14,7 +14,7 @@ class ProduktEditCls
 	private $user='szpadlic_baza';
 	private $pass='haslo';
 	private $table;// ma miec
-	public function _setTable($tab_name)
+	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
@@ -120,7 +120,7 @@ class ProduktEditCls
             private $table;// ma miec
             private $row;
             private $path;
-            public function _setTable($tab_name)
+            public function __setTable($tab_name)
             {
                 $this->table=$tab_name;
             }
@@ -156,7 +156,7 @@ class ProduktEditCls
             }
         }
         $load = new ConnectCls();
-        $load->_setTable(\'index_pieces\');
+        $load->__setTable(\'index_pieces\');
         $q = $load->loadIndex();
         ';
         //'. PHP_EOL .' nowa linia
@@ -169,10 +169,10 @@ class ProduktEditCls
         //--
         $product_now_display=\''.$rec.'\';
         //--
-        $load->_setTable(\'product_tab\');
+        $load->__setTable(\'product_tab\');
         $meta = $load->metaData($product_now_display);
         //--
-        $load->_setTable(\'setting_seo\');
+        $load->__setTable(\'setting_seo\');
         $global = $load->globalMetaData();
         //--
         if ($meta[\'product_title\']!=null) {
@@ -218,7 +218,7 @@ class ProduktEditCls
     //----------------------------------------
 }
 $product = new ProduktEditCls();
-$product->_setTable('product_tab');
+$product->__setTable('product_tab');
 if (isset($_POST['update'])) {
     $product->deleteOldFile();
 	$product->updateREC($_SESSION['id_post']);
@@ -337,7 +337,7 @@ echo '</div>';
 									<option></option>
 								<?php
 								$main= new ProduktEditCls();
-								$main->_setTable('product_category_main');
+								$main->__setTable('product_category_main');
 								if ($main->showCategory()) {
 									foreach ($main->showCategory() as $cat) {
 										echo '<option value="'.$cat['product_category_main'].'"';
@@ -362,7 +362,7 @@ echo '</div>';
 									<option></option>
 								<?php
 								$sub = new ProduktEditCls();
-								$sub->_setTable('product_category_sub');
+								$sub->__setTable('product_category_sub');
 								if ($sub->showCategory()) {
 									foreach ($sub->showCategory() as $cat) {
 										echo '<option value="'.$cat['product_category_sub'].'"'; 
