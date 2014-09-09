@@ -1,7 +1,9 @@
 <!DOCTYPE HTML>
 <head>
+<!--
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
+-->
 <style>
 form { display: block; margin: 20px auto; background: #eee; border-radius: 10px; padding: 15px }
 #progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
@@ -57,7 +59,6 @@ $(document).ready(function()
     error: function()
     {
         $("#message").html("<font color='red'> ERROR: unable to upload files</font>");
- 
     }
  
 };
