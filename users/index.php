@@ -81,19 +81,34 @@ class Users
                     $value .= "'".$val."',";
                 }
                 // Create default record 
-                $res=$con->query("INSERT INTO `".$this->table."`(
+                $res = $con->query("INSERT INTO `".$this->table."`(
                     ".$field."
                     `mod`
                     ) VALUES (
                     ".$value."
                     '0'
                     )");
+        }
+    }
+    public function updateUser($arr_val, $id)
+    {
+        $con = $this->connectDB();
+        if (!empty($arr_val)) {
+            $commit='';
+            foreach ($arr_val as $name => $val) {
+                $commit .= "`".$name."` = '".$val."',";
             }
+            $res = $con->query(" UPDATE `".$this->table."` SET 
+                ".$commit."
+                `mod` = '0'
+                WHERE 
+                `id` = '".$id."'");
+        }
     }
 }
 
 $obj_users = new Users;
-if (isset($_POST['installTb'])) {
+if (isset($_POST['createTb'])) {
     $obj_users->__setTable('users');
     $arr_row = array('login'  =>'VARCHAR(50) NOT NULL', 
                     'password'  =>'VARCHAR(50) NOT NULL', 
@@ -109,6 +124,10 @@ if (isset($_POST['installTb'])) {
                     );
     $arr_val = array();
     $obj_users->createTbDynamicRow($arr_row, $arr_val);
+}
+if (isset($_POST['dropTb'])) {
+    $obj_users->__setTable('users');
+    $obj_users->deleteTb();
 }
 if (isset($_POST['addUser'])) {
     $obj_users->__setTable('users');
@@ -126,9 +145,21 @@ if (isset($_POST['addUser'])) {
                     );
     $obj_users->addUser($arr_val);
 }
-if (isset($_POST['dropTb'])) {
+if (isset($_POST['updateUser'])) {
     $obj_users->__setTable('users');
-    $obj_users->deleteTb();
+    $arr_val = array('login'  =>'2user', 
+                    'password'  =>'2user', 
+                    'email'   =>'2email@gmail.com',                     
+                    'create_data'  => date('Y-m-d H:i:s'),
+                    'first_name'  =>'2Piotrek',
+                    'last_name'  =>'2Szpanelewski',
+                    'phone'  =>'2888958277',
+                    'country'  =>'2Polska',
+                    'town'  =>'2Częstochowa',
+                    'post_code'  =>'242-200',
+                    'street'  =>'2Garibaldiego 16 m. 23'
+                    );
+    $obj_users->updateUser($arr_val, 1);
 }
 ?>
 <!DOCTYPE HTML>
@@ -139,9 +170,10 @@ if (isset($_POST['dropTb'])) {
 </head>
 <body>
     <form method="POST" >
-        <input type="submit" name="installTb" value="install" />
+        <input type="submit" name="createTb" value="create" />
         <input type="submit" name="addUser" value="add" />
         <input type="submit" name="dropTb" value="drop" />
+        <input type="submit" name="updateUser" value="update" />
     </form>
 </body>
 </html>
