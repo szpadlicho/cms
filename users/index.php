@@ -151,9 +151,9 @@ if (isset($_POST['addUser'])) {
 }
 if (isset($_POST['updateUser'])) {
     $obj_users->__setTable('users');
-    $arr_val = array('login'  =>'user', 
+    $arr_val = array('login'  =>'user2', 
                     'password'  =>'user', 
-                    'email'   =>'email@gmail.com',                     
+                    'email'   =>'email2@gmail.com',                     
                     'create_data'  => date('Y-m-d H:i:s'),
                     'first_name'  =>'Piotrek',
                     'last_name'  =>'Szpanelewski',
