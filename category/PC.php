@@ -9,7 +9,7 @@
             private $table;// ma miec
             private $row;
             private $path;
-            public function _setTable($tab_name)
+            public function __setTable($tab_name)
             {
                 $this->table=$tab_name;
             }
@@ -45,7 +45,7 @@
             }
         }
         $load = new ConnectCls();
-        $load->_setTable('index_pieces');
+        $load->__setTable('index_pieces');
         $q = $load->loadIndex();
         
         eval('?>'.$q['php_beafor_html'].'<?php ');
@@ -53,10 +53,10 @@
         //--
         $category_now_display='PC';
         //--
-        $load->_setTable('product_category_main');
+        $load->__setTable('product_category_main');
         $meta = $load->metaData($category_now_display);
         //--
-        $load->_setTable('setting_seo');
+        $load->__setTable('setting_seo');
         $global = $load->globalMetaData();
         //--
         if($meta['title']!=null)

@@ -99,14 +99,14 @@ class DatabaseInstall
 		}
     }
 }
-$cls_install = new DatabaseInstall;
+$obj_install = new DatabaseInstall;
 if (isset($_POST['del'])) {
-	$cls_install->deleteDb();
+	$obj_install->deleteDb();
 }
 if (isset($_POST['crt'])) {
-    $cls_install->createDb();      
+    $obj_install->createDb();      
 	
-	$cls_install->__setTable('product_tab');
+	$obj_install->__setTable('product_tab');
     $arr_row = array('product_name'             =>'TEXT', 
                     'product_price'             =>'VARCHAR(10)', 
                     'product_number'            =>'INTEGER(10)', 
@@ -122,9 +122,9 @@ if (isset($_POST['crt'])) {
                     'product_keywords'          =>'TEXT'
                     );
     $arr_val = array();
-	$cls_install->createTbDynamicRow($arr_row, $arr_val);
+	$obj_install->createTbDynamicRow($arr_row, $arr_val);
 
-	$cls_install->__setTable('product_category_main');
+	$obj_install->__setTable('product_category_main');
     $arr_row = array('product_category_main'     =>'TEXT', 
                     'file_name_category_main'    =>'TEXT', 
                     'title'                      =>'TEXT', 
@@ -132,9 +132,9 @@ if (isset($_POST['crt'])) {
                     'keywords'                   =>'TEXT'
                     );
     $arr_val = array();
-	$cls_install->createTbDynamicRow($arr_row, $arr_val);
+	$obj_install->createTbDynamicRow($arr_row, $arr_val);
 
-	$cls_install->__setTable('product_category_sub');
+	$obj_install->__setTable('product_category_sub');
     $arr_row = array('product_category_sub'     =>'TEXT', 
                     'file_name_category_sub'    =>'TEXT', 
                     'title'                     =>'TEXT', 
@@ -142,9 +142,9 @@ if (isset($_POST['crt'])) {
                     'keywords'                  =>'TEXT'
                     );
     $arr_val = array();
-	$cls_install->createTbDynamicRow($arr_row, $arr_val);
+	$obj_install->createTbDynamicRow($arr_row, $arr_val);
     
-    $cls_install->__setTable('setting_img');
+    $obj_install->__setTable('setting_img');
     $arr_row = array('small_width'  =>'INT(4)', 
                     'small_height'  =>'INT(4)', 
                     'large_width'   =>'INT(4)', 
@@ -155,9 +155,9 @@ if (isset($_POST['crt'])) {
                     'large_width'   =>700,  
                     'large_height'  =>700
                     );
-	$cls_install->createTbDynamicRow($arr_row, $arr_val);
+	$obj_install->createTbDynamicRow($arr_row, $arr_val);
     
-    $cls_install->__setTable('setting_seo');
+    $obj_install->__setTable('setting_seo');
     $arr_row = array('global_title_index'           =>'TEXT', 
                     'global_keywords_index'         =>'TEXT', 
                     'global_description_index'      =>'TEXT', 
@@ -178,9 +178,9 @@ if (isset($_POST['crt'])) {
                     'global_keywords_product'       =>'globalne,słowa,keywords,strony,towaru',
                     'global_description_product'    =>'Globalny opis strony towaru dodać max znaków'
                     );
-	$cls_install->createTbDynamicRow($arr_row, $arr_val);
+	$obj_install->createTbDynamicRow($arr_row, $arr_val);
 }
-//$cls_install->check();
+//$obj_install->check();
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">

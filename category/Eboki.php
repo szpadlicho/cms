@@ -1,5 +1,6 @@
 <?php
-        class ConnectCls{
+        class ConnectCls
+        {
             private $host='sql.bdl.pl';
             private $port='';
             private $dbname='szpadlic_cms';
@@ -9,7 +10,7 @@
             private $table;// ma miec
             private $row;
             private $path;
-            public function _setTable($tab_name)
+            public function __setTable($tab_name)
             {
                 $this->table=$tab_name;
             }
@@ -45,7 +46,7 @@
             }
         }
         $load = new ConnectCls();
-        $load->_setTable('index_pieces');
+        $load->__setTable('index_pieces');
         $q = $load->loadIndex();
         
         eval('?>'.$q['php_beafor_html'].'<?php ');
@@ -53,33 +54,27 @@
         //--
         $category_now_display='Eboki';
         //--
-        $load->_setTable('product_category_main');
+        $load->__setTable('product_category_main');
         $meta = $load->metaData($category_now_display);
         //--
-        $load->_setTable('global_setting');
+        $load->__setTable('setting_seo');
         $global = $load->globalMetaData();
         //--
-        if($meta['title']!=null)
-        {
+        if ($meta['title']!=null) {
             echo '<title>'.$meta['title'].'</title>';
-        }
-        else{
+        } else {
             echo '<title>'.$global['global_title_category'].'</title>';
         }
         
-        if($meta['description']!=null)
-        {
+        if ($meta['description']!=null) {
             echo '<meta name="description" content="'.$meta['description'].'" />';
-        }
-        else{
+        } else {
             echo '<meta name="description" content="'.$global['global_description_category'].'" />';
         }
         
-        if($meta['keywords']!=null)
-        {
+        if ($meta['keywords']!=null) {
             echo '<meta name="keywords" content="'.$meta['keywords'].'" />';
-        }
-        else{
+        } else {
             echo '<meta name="keywords" content="'.$global['global_keywords_category'].'" />';
         }
         //---
