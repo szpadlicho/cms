@@ -3,7 +3,7 @@
         $load = new Connect_Load;
         $load->__setTable('index_pieces');
         $q = $load->loadIndex();
-        $product_now_display='6';
+        $product_now_display='';
         
         eval('?>'.$q['php_beafor_html'].'<?php ');
         eval('?>'.$q['html_p1'].'<?php ');

@@ -2,7 +2,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-echo '<div class="catch">';
+include_once '../classes/connect/load.php';
 class ProductDisplay
 {
 	private $host='sql.bdl.pl';
@@ -229,7 +229,9 @@ if (@$_POST['topmenu']=='Home') {
 	//session_unset();
 }
 //(@$_POST['topmenu']=='Sprzęt') ? header("location: zap/index.php") : 'błąd' ;//tymczasowo na zaplecze
-echo '</div>';
+$objload = new Connect_Load();
+$objload->__setTable('setting_seo');
+$global = $objload->globalMetaData();
 ?>
 <?php //php_beafor_html ?>
 <?php //html_p1 ?>
@@ -239,11 +241,13 @@ echo '</div>';
 <?php //html_p1 ?>
 <![CDATA[spot one begin section head]]>
 <?php //head_title ?>
-	<title>Index</title>
+	<?php echo '<title>'.$global['global_title_index'].'</title>'; ?>
 <?php //head_title ?>
 <?php //head_description ?>
+    <?php echo '<meta name="description" content="'.$global['global_description_index'].'" />'; ?>
 <?php //head_description ?>
 <?php //head_keywords ?>
+    <?php echo '<meta name="keywords" content="'.$global['global_keywords_index'].'" />'; ?>
 <?php //head_keywords ?>
 <?php //head_include ?>
 	<?php include ("../meta5.html"); ?>
@@ -350,6 +354,7 @@ echo '</div>';
 				</div>	
 			</nav>	
 			<div id="wrapper2">
+            <a style="float:right; font-size:2em; margin: 1em 1em;" href="../users/register.php" >register</a>
 			</div>
 			<div id="wrapper1-1"></div>
 		</div>
@@ -360,107 +365,114 @@ echo '</div>';
 					<div id="left-menu-0">
 						<form method="POST">                     
 							<?php
-                            //$category_now_display='PC';
-                            //$product_now_display='6';
-                            //left menu
-                            //------------------------------------------------
-							$sub = new ProductDisplay();
-							$sub->__setTable('product_tab');
-                            //-index
-                            //------------------------------------------------
-                            if (! isset($category_now_display) && ! isset($product_now_display)) {//sub dla home
-                                $is = $sub->showSubAll()->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
-                                $i=1;                                
-                                if ($is) {
-                                    ?><input id="left-menu-all" class="left-menu<?php if(!isset($_SESSION['sub'])){echo ' active';}?>" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla kategorii
-                                }
-                                foreach ($sub->showSubAll() as $cat) {								
-                                    ?><input id="left-menu-<?php echo $i; $i++?>" class="left-menu<?php if(@$cat['product_category_sub']==@$_SESSION['sub']){echo ' active';}?>" type="submit" name="leftmenu" value="<?php echo $cat['product_category_sub']; ?>" /><?php							
-                                }
-                            }
-                            //------------------------------------------------
-                            //-category
-                            //------------------------------------------------
-                            elseif (isset($category_now_display)) {
-                                if ($sub->showCategorySub($category_now_display)) {
-                                    $is = $sub->showCategorySub($category_now_display)->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
+                            if (! isset($register) && ! isset($basket)) {//co by nic nie wyswietlało kiedy wywołam register user edit albo basket
+                                //$category_now_display='PC';
+                                //$product_now_display='6';
+                                //left menu
+                                //------------------------------------------------
+                                $sub = new ProductDisplay();
+                                $sub->__setTable('product_tab');
+                                //-index
+                                //------------------------------------------------
+                                if (! isset($category_now_display) && ! isset($product_now_display)) {//sub dla home
+                                    $is = $sub->showSubAll()->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
                                     $i=1;                                
                                     if ($is) {
-                                        ?><input id="left-menu-all" class="left-menu<?php if(!isset($_SESSION['sub'])){echo ' active';}?>" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla home
+                                        ?><input id="left-menu-all" class="left-menu<?php if(!isset($_SESSION['sub'])){echo ' active';}?>" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla kategorii
                                     }
-                                    foreach ($sub->showCategorySub($category_now_display) as $cat) {								
+                                    foreach ($sub->showSubAll() as $cat) {								
                                         ?><input id="left-menu-<?php echo $i; $i++?>" class="left-menu<?php if(@$cat['product_category_sub']==@$_SESSION['sub']){echo ' active';}?>" type="submit" name="leftmenu" value="<?php echo $cat['product_category_sub']; ?>" /><?php							
                                     }
                                 }
-                                unset($sub);
+                                //------------------------------------------------
+                                //-category
+                                //------------------------------------------------
+                                elseif (isset($category_now_display)) {
+                                    if ($sub->showCategorySub($category_now_display)) {
+                                        $is = $sub->showCategorySub($category_now_display)->fetch(PDO::FETCH_ASSOC);//sprawdzam czy cos ma sub kategorie jesli tak to pokazuje button wszystkie
+                                        $i=1;                                
+                                        if ($is) {
+                                            ?><input id="left-menu-all" class="left-menu<?php if(!isset($_SESSION['sub'])){echo ' active';}?>" type="submit" name="leftmenu" value="Wszystkie" /><?php //dla home
+                                        }
+                                        foreach ($sub->showCategorySub($category_now_display) as $cat) {								
+                                            ?><input id="left-menu-<?php echo $i; $i++?>" class="left-menu<?php if(@$cat['product_category_sub']==@$_SESSION['sub']){echo ' active';}?>" type="submit" name="leftmenu" value="<?php echo $cat['product_category_sub']; ?>" /><?php							
+                                        }
+                                    }
+                                    unset($sub);
+                                }
+                                //------------------------------------------------
+                                //-product card
+                                //------------------------------------------------
+                                elseif (isset($product_now_display) && !isset($_SESSION['menu_id'])) {//dla karty towaru z home
+                                    ?><a class="leftmenu_a_button" href="../home/index.php">Powrót</a><?php 
+                                } elseif (isset($product_now_display) && isset($_SESSION['menu_id'])) {// dla karty towaru z kategorii   
+                                    ?><a class="leftmenu_a_button" href="../category/<?php echo $sub->__getCatMainFileName($product_now_display); ?>.php">Powrót</a><?php 
+                                }
+                                //------------------------------------------------
                             }
-                            //------------------------------------------------
-                            //-product card
-                            //------------------------------------------------
-                            elseif (isset($product_now_display) && !isset($_SESSION['menu_id'])) {//dla karty towaru z home
-                                ?><a class="leftmenu_a_button" href="../home/index.php">Powrót</a><?php 
-                            } elseif (isset($product_now_display) && isset($_SESSION['menu_id'])) {// dla karty towaru z kategorii   
-                                ?><a class="leftmenu_a_button" href="../category/<?php echo $sub->__getCatMainFileName($product_now_display); ?>.php">Powrót</a><?php 
-                            }
-                            //------------------------------------------------
 							?>
 						</form>
 					</div>	
 				</div>	
 			</nav>
 			<div id="wrapper4">               
-                <?php               
-                $show = new ProductDisplay();
-				$show->__setTable('product_tab');
-                //-index
-                //------------------------------------------------
-				if (! isset($category_now_display) && ! isset($product_now_display) && ! isset($_SESSION['sub'])) {//all
-					if ($show->showAll()) {
-						foreach ($show->showAll() as $cat) {
-                            echo $show->showSquare($cat);
-						}
-					}
-				} elseif (! isset($category_now_display) && ! isset($product_now_display) && isset($_SESSION['sub'])) {//sub
-                    if ($show->showAllSub($_SESSION['sub'])) {
-						foreach ($show->showAllSub($_SESSION['sub']) as $cat) {
-                            echo $show->showSquare($cat);
-						}
-					}
-                }
-                //------------------------------------------------
-                //-category
-                //------------------------------------------------
-				elseif (isset($category_now_display) && !isset($_SESSION['sub'])) {//all
-					if ($show->showAllCategory($category_now_display)) {
-						foreach ($show->showAllCategory($category_now_display) as $cat) {
-                            echo $show->showSquare($cat);
-						}					
-					}
-				} elseif (isset($category_now_display) && isset($_SESSION['sub'])) {
-                    if ($show->showAllCategorySub($category_now_display, $_SESSION['sub'])) {
-						foreach ($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat) {
-                            echo $show->showSquare($cat);
-						}					
-					}
-                }
-                //------------------------------------------------
-                //-product card
-                //------------------------------------------------              
-                elseif (isset($product_now_display)) {
-                    if ($show->showProduct($product_now_display)) {
-                        foreach ($show->showProduct($product_now_display) as $cat) {
-                            echo $show->showFullSquare($cat);
+                <?php
+                if (! isset($register) && ! isset($basket)) {//co by nic nie wyswietlało kiedy wywołam register user edit albo basket
+                    //------------------------------------------------
+                    $show = new ProductDisplay();
+                    $show->__setTable('product_tab');
+                    //-index
+                    //------------------------------------------------
+                    if (! isset($category_now_display) && ! isset($product_now_display) && ! isset($_SESSION['sub'])) {//all
+                        if ($show->showAll()) {
+                            foreach ($show->showAll() as $cat) {
+                                echo $show->showSquare($cat);
+                            }
+                        }
+                    } elseif (! isset($category_now_display) && ! isset($product_now_display) && isset($_SESSION['sub'])) {//sub
+                        if ($show->showAllSub($_SESSION['sub'])) {
+                            foreach ($show->showAllSub($_SESSION['sub']) as $cat) {
+                                echo $show->showSquare($cat);
+                            }
                         }
                     }
+                    //------------------------------------------------
+                    //-category
+                    //------------------------------------------------
+                    elseif (isset($category_now_display) && !isset($_SESSION['sub'])) {//all
+                        if ($show->showAllCategory($category_now_display)) {
+                            foreach ($show->showAllCategory($category_now_display) as $cat) {
+                                echo $show->showSquare($cat);
+                            }					
+                        }
+                    } elseif (isset($category_now_display) && isset($_SESSION['sub'])) {
+                        if ($show->showAllCategorySub($category_now_display, $_SESSION['sub'])) {
+                            foreach ($show->showAllCategorySub($category_now_display, $_SESSION['sub']) as $cat) {
+                                echo $show->showSquare($cat);
+                            }					
+                        }
+                    }
+                    //------------------------------------------------
+                    //-product card
+                    //------------------------------------------------              
+                    elseif (isset($product_now_display)) {
+                        if ($show->showProduct($product_now_display)) {
+                            foreach ($show->showProduct($product_now_display) as $cat) {
+                                echo $show->showFullSquare($cat);
+                            }
+                        }
+                    }
+                    //------------------------------------------------
+                    //$sub = new ProductDisplay();
+                    //$sub->__setTable('product_tab');
+                    //$is = $sub->showCategorySub(@$_SESSION['category'])->fetch(PDO::FETCH_ASSOC);
+                    //$id = $id->fetch(PDO::FETCH_ASSOC);
+                    //var_dump($id);
+                    //echo @$category_now_display;
+                    //echo @$product_now_display;
+                } elseif (isset($register) && ! isset($basket)) {
+                    Register::registerForm();
                 }
-                //------------------------------------------------
-                //$sub = new ProductDisplay();
-                //$sub->__setTable('product_tab');
-                //$is = $sub->showCategorySub(@$_SESSION['category'])->fetch(PDO::FETCH_ASSOC);
-                //$id = $id->fetch(PDO::FETCH_ASSOC);
-                //var_dump($id);
-                //echo @$category_now_display;
-                //echo @$product_now_display;
 				?>
             <!--
 			<br />
@@ -496,11 +508,11 @@ echo '</div>';
             //alert('asdasd');
         });
         $('a#top-menu-1').click( function () {
-            var del = 'all';
+            var del = 'main';
             $.ajax({ 
               async: false,
               type: 'POST', 
-              url: '../unset_session.php',
+              url: '../unset_session.php',//if home click 
               data: {value : del}
             });
             //alert('asdasd');
