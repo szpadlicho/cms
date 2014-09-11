@@ -193,7 +193,7 @@ h2{
 }
 .full-click{
     cursor:pointer;
-    border-top-left-radius:25px;
+    border-top-right-radius:25px;
     text-align:center;
 }
 .full-click.active{
