@@ -112,12 +112,13 @@ class Users
 }
 
 $obj_users = new Users;
-if (isset($_POST['createTb'])) {
+if (isset($_POST['createTb'])) {// To do instalacji przenieść !!
     $obj_users->__setTable('users');
     $arr_row = array('login'  =>'VARCHAR(50) NOT NULL UNIQUE', 
                     'password'  =>'VARCHAR(50) NOT NULL', 
                     'email'   =>'VARCHAR(50) NOT NULL UNIQUE',                     
                     'create_data'  =>'DATETIME NOT NULL',
+                    'update_data'  =>'DATETIME NOT NULL',
                     'first_name'  =>'VARCHAR(50) NOT NULL',
                     'last_name'  =>'VARCHAR(50) NOT NULL',
                     'phone'  =>'VARCHAR(50) NOT NULL',
@@ -139,6 +140,7 @@ if (isset($_POST['addUser'])) {
                     'password'  =>'user', 
                     'email'   =>'email@gmail.com',                     
                     'create_data'  => date('Y-m-d H:i:s'),
+                    'update_data'  => date('Y-m-d H:i:s'),
                     'first_name'  =>'Piotrek',
                     'last_name'  =>'Szpanelewski',
                     'phone'  =>'888958277',
@@ -154,7 +156,7 @@ if (isset($_POST['updateUser'])) {
     $arr_val = array('login'  =>'user2', 
                     'password'  =>'user', 
                     'email'   =>'email2@gmail.com',                     
-                    'create_data'  => date('Y-m-d H:i:s'),
+                    'update_data'  => date('Y-m-d H:i:s'),
                     'first_name'  =>'Piotrek',
                     'last_name'  =>'Szpanelewski',
                     'phone'  =>'888958277',
