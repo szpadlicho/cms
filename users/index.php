@@ -16,14 +16,7 @@ class Users
 	}
 	public function connectDB()
     {
-		$con = new PDO("
-            mysql:host=".$this->host."; 
-            port=".$this->port."; 
-            dbname=".$this->dbname."; 
-            charset=".$this->charset,
-            $this->user,
-            $this->pass
-            );
+		$con = new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset, $this->user, $this->pass );
 		return $con;
 		unset ($con);
 	}
@@ -37,7 +30,10 @@ class Users
     {
         // Tworze tabele tylko raz co pozwala klikać install bez konsekwencji
 		$con = $this->connectDB();
-		$res = $con->query("SELECT 1 FROM ".$this->table);// Zwraca false jesli tablica nie istnieje
+		$res = $con->query(
+            "SELECT 1 
+            FROM ".$this->table
+            );// Zwraca false jesli tablica nie istnieje
 		if (!$res) {
             $columns='';
             foreach ($arr_row as $name => $val) {
@@ -78,15 +74,21 @@ class Users
     }
     public function addUser($arr_val)
     {
-        if (!empty($arr_val)) {
+        $con = $this->connectDB();
+        $res = $con->query(
+            "SELECT `email` 
+            FROM ".$this->table." 
+            WHERE `email` = '".$arr_val['email']."'"
+            );// sprawdzam czy już istniej jeśli nie zwraca false
+        $res = $res->fetch(PDO::FETCH_ASSOC);
+        if (!empty($arr_val) && ! $res) {
             $field='';
             $value='';
             foreach ($arr_val as $name => $val) {
                 $field .= '`'.$name.'`,';
                 $value .= "'".$val."',";
             }
-            // Create default record
-            $con = $this->connectDB();
+            // Create record
             $res = $con->query(
                 "INSERT INTO `".$this->table."`(
                 ".$field."
@@ -96,12 +98,18 @@ class Users
                 '0' )"
                 );
             return $res ? true : false;
+        } else {
+            return false;
         }
+        unset ($con);
     }
     public function updateUser($arr_val, $id)
     {
         $con = $this->connectDB();
-		$res = $con->query("SELECT 1 FROM ".$this->table);// Zwraca false jeśli tablica nie istnieje
+		$res = $con->query(
+            "SELECT 1 
+            FROM ".$this->table
+            );// Zwraca false jeśli tablica nie istnieje
         if (!empty($arr_val) && $res != false) {
             $commit='';
             foreach ($arr_val as $name => $val) {

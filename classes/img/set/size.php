@@ -28,13 +28,11 @@ class Img_Set_Size
         }
         /*zapis*/
 		$con=$this->connectDB();
-		$res=$con->exec("UPDATE `".$this->table."` 
-            SET
-            ".$record."
-			`mod` = '0'
-			WHERE
-            `id` = '".$id."'
-            ");
+		$res=$con->exec(
+            "UPDATE `".$this->table."` 
+            SET ".$record." `mod` = '0'
+			WHERE `id` = '".$id."' "
+            );
         if ($res) {
             echo "<div class=\"center\" >Zapis: OK!</div>";
         } else {
@@ -44,7 +42,11 @@ class Img_Set_Size
     public function __getRow($id)
     {
         $con=$this->connectDB();
-        $q = $con->query("SELECT * FROM `".$this->table."` WHERE `id`='".$id."'");
+        $q = $con->query(
+            "SELECT * 
+            FROM `".$this->table."` 
+            WHERE `id`='".$id."'"
+            );
         unset ($con);
         if ($q) {
             $q = $q->fetch(PDO::FETCH_ASSOC);
