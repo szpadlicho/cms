@@ -13,11 +13,26 @@ class Register
     {
     ?>
         <form method="POST">
-            <input id="" class="register-field text" type="text" name="" value="" />
-            <input id="" class="register-field text" type="text" name="" value="" />
-            <input id="" class="register-field text" type="text" name="" value="" />
-            <input id="" class="register-field text" type="text" name="" value="" />
-            <input id="" class="register-field button" type="submit" name="" value="Zapisz" />
+            <div class="full-square">
+                <p>Account</p>
+                <div class="line"></div>
+                <div class="inline" ><span class="">Login:</span><input id="" class="register-field text" type="text" name="login" value="user" />*</div>
+                <div class="inline" ><span class="">Adres email:</span><input id="" class="register-field text" type="text" name="email" value="user@gmail.com" />*</div>
+                <div class="inline" ><span class="">Powtórz adres email:</span><input id="" class="register-field text" type="text" name="email" value="user@gmail.com" />*</div>
+                <div class="inline" ><span class="">Hasło:</span><input id="" class="register-field text" type="text" name="user" value="user" />*</div>
+                <div class="inline" ><span class="">Powtórz hasło:</span><input id="" class="register-field text" type="text" name="user" value="user" />*</div>
+                <p>Personal info</p>
+                <div class="line"></div>
+                <div class="inline" ><span class="">Imię:</span><input id="" class="register-field text" type="text" name="first_name" value="Piotr" />*</div>
+                <div class="inline" ><span class="">Nazwisko:</span><input id="" class="register-field text" type="text" name="last_name" value="Szpanelewski" />*</div>
+                <div class="inline" ><span class="">Telefon:</span><input id="" class="register-field text" type="text" name="phone" value="888958277" />*</div>
+                <div class="inline" ><span class="">Miasto:</span><input id="" class="register-field text" type="text" name="town" value="Częstochowa" />*</div>
+                <div class="inline" ><span class="">Kod pocztowy:</span><input id="" class="register-field text" type="text" name="post_code" value="42-200" />*</div>
+                <div class="inline" ><span class="">Ulica i nr domu:</span><input id="" class="register-field text" type="text" name="street" value="Garibaldiego 16 m. 23" />*</div>
+                <p>Confirm</p>
+                <div class="line"></div>
+                <div class="inline" ><span class=""></span><input id="" class="register-field button" type="submit" name="" value="Zapisz" /></div>
+            </div>
         </form>
     <?php
     }

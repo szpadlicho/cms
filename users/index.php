@@ -16,7 +16,14 @@ class Users
 	}
 	public function connectDB()
     {
-		$con = new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
+		$con = new PDO("
+            mysql:host=".$this->host."; 
+            port=".$this->port."; 
+            dbname=".$this->dbname."; 
+            charset=".$this->charset,
+            $this->user,
+            $this->pass
+            );
 		return $con;
 		unset ($con);
 	}
@@ -37,7 +44,8 @@ class Users
                 $columns .= '`'.$name.'` '.$val.',';
             }
             // Create table
-			$res = $con->query("CREATE TABLE IF NOT EXISTS `".$this->table."`(
+			$res = $con->query(
+                "CREATE TABLE IF NOT EXISTS `".$this->table."`(
                 `id` INTEGER AUTO_INCREMENT,            
                 ".$columns."
                 `mod` INTEGER(10),
@@ -53,7 +61,8 @@ class Users
                     $value .= "'".$val."',";
                 }
                 // Create default record 
-                $res = $con->query("INSERT INTO `".$this->table."`(
+                $res = $con->query(
+                    "INSERT INTO `".$this->table."`(
                     ".$field."
                     `mod`
                     ) VALUES (
@@ -78,7 +87,8 @@ class Users
             }
             // Create default record
             $con = $this->connectDB();
-            $res = $con->query("INSERT INTO `".$this->table."`(
+            $res = $con->query(
+                "INSERT INTO `".$this->table."`(
                 ".$field."
                 `mod`
                 ) VALUES (
@@ -97,7 +107,8 @@ class Users
             foreach ($arr_val as $name => $val) {
                 $commit .= "`".$name."` = '".$val."',";
             }
-            $res = $con->query(" UPDATE `".$this->table."` SET 
+            $res = $con->query(
+                "UPDATE `".$this->table."` SET 
                 ".$commit."
                 `mod` = '0'
                 WHERE 
@@ -114,19 +125,20 @@ class Users
 $obj_users = new Users;
 if (isset($_POST['createTb'])) {// To do instalacji przenieść !!
     $obj_users->__setTable('users');
-    $arr_row = array('login'  =>'VARCHAR(50) NOT NULL UNIQUE', 
-                    'password'  =>'VARCHAR(50) NOT NULL', 
-                    'email'   =>'VARCHAR(50) NOT NULL UNIQUE',                     
-                    'create_data'  =>'DATETIME NOT NULL',
-                    'update_data'  =>'DATETIME NOT NULL',
-                    'first_name'  =>'VARCHAR(50) NOT NULL',
-                    'last_name'  =>'VARCHAR(50) NOT NULL',
-                    'phone'  =>'VARCHAR(50) NOT NULL',
-                    'country'  =>'VARCHAR(50) NOT NULL',
-                    'town'  =>'VARCHAR(50) NOT NULL',
-                    'post_code'  =>'VARCHAR(50) NOT NULL',
-                    'street'  =>'VARCHAR(50) NOT NULL'
-                    );
+    $arr_row = array(
+        'login'  =>'VARCHAR(50) NOT NULL UNIQUE', 
+        'password'  =>'VARCHAR(50) NOT NULL', 
+        'email'   =>'VARCHAR(50) NOT NULL UNIQUE',                     
+        'create_data'  =>'DATETIME NOT NULL',
+        'update_data'  =>'DATETIME NOT NULL',
+        'first_name'  =>'VARCHAR(50) NOT NULL',
+        'last_name'  =>'VARCHAR(50) NOT NULL',
+        'phone'  =>'VARCHAR(50) NOT NULL',
+        'country'  =>'VARCHAR(50) NOT NULL',
+        'town'  =>'VARCHAR(50) NOT NULL',
+        'post_code'  =>'VARCHAR(50) NOT NULL',
+        'street'  =>'VARCHAR(50) NOT NULL'
+        );
     $arr_val = array();
     $return = $obj_users->createTbDynamicRow($arr_row, $arr_val);
 }
@@ -136,35 +148,37 @@ if (isset($_POST['dropTb'])) {
 }
 if (isset($_POST['addUser'])) {
     $obj_users->__setTable('users');
-    $arr_val = array('login'  =>'user', 
-                    'password'  =>'user', 
-                    'email'   =>'email@gmail.com',                     
-                    'create_data'  => date('Y-m-d H:i:s'),
-                    'update_data'  => date('Y-m-d H:i:s'),
-                    'first_name'  =>'Piotrek',
-                    'last_name'  =>'Szpanelewski',
-                    'phone'  =>'888958277',
-                    'country'  =>'Polska',
-                    'town'  =>'Częstochowa',
-                    'post_code'  =>'42-200',
-                    'street'  =>'Garibaldiego 16 m. 23'
-                    );
+    $arr_val = array(
+        'login'  =>'user', 
+        'password'  =>'user', 
+        'email'   =>'email@gmail.com',                     
+        'create_data'  => date('Y-m-d H:i:s'),
+        'update_data'  => date('Y-m-d H:i:s'),
+        'first_name'  =>'Piotrek',
+        'last_name'  =>'Szpanelewski',
+        'phone'  =>'888958277',
+        'country'  =>'Polska',
+        'town'  =>'Częstochowa',
+        'post_code'  =>'42-200',
+        'street'  =>'Garibaldiego 16 m. 23'
+        );
     $return = $obj_users->addUser($arr_val);
 }
 if (isset($_POST['updateUser'])) {
     $obj_users->__setTable('users');
-    $arr_val = array('login'  =>'user2', 
-                    'password'  =>'user', 
-                    'email'   =>'email2@gmail.com',                     
-                    'update_data'  => date('Y-m-d H:i:s'),
-                    'first_name'  =>'Piotrek',
-                    'last_name'  =>'Szpanelewski',
-                    'phone'  =>'888958277',
-                    'country'  =>'Polska',
-                    'town'  =>'Częstochowa',
-                    'post_code'  =>'42-200',
-                    'street'  =>'Garibaldiego 16 m. 23'
-                    );
+    $arr_val = array(
+        'login'  =>'user2', 
+        'password'  =>'user', 
+        'email'   =>'email2@gmail.com',                     
+        'update_data'  => date('Y-m-d H:i:s'),
+        'first_name'  =>'Piotrek',
+        'last_name'  =>'Szpanelewski',
+        'phone'  =>'888958277',
+        'country'  =>'Polska',
+        'town'  =>'Częstochowa',
+        'post_code'  =>'42-200',
+        'street'  =>'Garibaldiego 16 m. 23'
+        );
     $return = $obj_users->updateUser($arr_val, 1);    
 }
 if (isset($return)) {

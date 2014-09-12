@@ -1,11 +1,32 @@
+.full-square{
+    padding:2em;
+}
+.line{
+    border:1px solid silver;
+    margin:0.5em;
+}
+.inline{
+    position:relative;
+    width:10em;
+    #margin:0 auto;
+    margin:0 10em;
+    font-weight:bold;
+    #border:1px solid lime;
+}
 .register-field{
     background: rgba(255,255,255,0.8);
     line-height:2em;
     vertical-align:middle;
-    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     padding: 0 0 0 0.2em;
+    position:absolute;
+    left:20em;
 }
 .register-field.button{
     background:silver;
     padding: 0 0.5em;
+}
+div.inline{
+    display:inline-box;
+    padding:1em;
 }

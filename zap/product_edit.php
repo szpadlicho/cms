@@ -3,7 +3,7 @@ header('Content-Type: text/html; charset=utf-8');
 session_start();
 echo '<div class="catch">';
 if (isset($_POST['id_post'])) {
-	$_SESSION['id_post']=$_POST['id_post'];
+	$_SESSION['id_post']=(int)$_POST['id_post'];
 }
 class ProduktEditCls 
 {
