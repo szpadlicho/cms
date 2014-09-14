@@ -395,6 +395,12 @@ class Connect_Basket extends Connect
         $res = $con->query('DROP TABLE `'.$table.'`');
         return $res ? true : false;
     }
+    public function basketItemDrop($table, $id)
+    {
+        $con = $this->connectDB();
+        $res = $con->query("DELETE FROM `".$table."` WHERE `id` = '".$id."'");
+        return $res ? true : false;
+    }
     public function basketGet($table)
     {
         $con = $this->connectDB();
@@ -416,7 +422,7 @@ class Connect_Basket extends Connect
         $wyn = $this->basketSelect('product_tab', $pr_id);
         $min_img = new ProductDisplay; 
         ?>
-        <a class="square-link" href="../product/<?php echo $wyn['file_name'].'.php'; ?>">
+        
             <div class="bs-square">
                 <div class="bs-sq img">
                     <img class="mini-image-bs-list" src="<?php echo $min_img->showMiniImg($wyn['id']); ?>" alt="mini image" />
@@ -424,14 +430,18 @@ class Connect_Basket extends Connect
                 <div class="bs-sq price">
                     Cena: <?php echo $wyn['product_price']; ?>
                 </div>
+                <!--
                 <div class="bs-sq cat-main">
                     <?php echo $wyn['product_category_main']; ?>
                 </div>
                 <div class="bs-sq cat-sub">
                     <?php echo $wyn['product_category_sub']; ?>
                 </div>
+                -->
                 <div class="bs-sq name">
-                    <?php echo $wyn['product_name']; ?>
+                    <a class="square-link" href="../product/<?php echo $wyn['file_name'].'.php'; ?>">
+                        <?php echo $wyn['product_name']; ?>
+                    </a>
                 </div>
                 <div class="bs-sq amount">
                     Ilość: <?php echo $amount; ?>
@@ -439,14 +449,13 @@ class Connect_Basket extends Connect
                 <div class="bs-sq suma">
                     Suma: <?php echo $wyn['product_price']*$amount; ?>
                 </div>
+                <div class="bs-sq del">
+                    <form method="POST">
+                        <input class="basket-field button" type="submit" name="basket_item_drop" value="Usuń" />
+                        <input type="hidden" name="basket_item_drop_id" value="<?php echo $id; ?>" />
+                    </form>
+                </div>
             </div>
-        </a>
-        <div class="bs-sq del">
-            <form method="POST">
-                <input type="submit" name="basket_item_drop" value="Usuń" />
-                <input type="hidden" name="basket_item_drop_id" value="<?php echo $id; ?>" />
-            </form>
-        </div>
         <?php
     }
 }
@@ -459,6 +468,10 @@ if (isset($_POST['basket_drop'])) {
     $obj_basket_add = new Connect_Basket;
     $drop = $obj_basket_add->basketDrop($_SESSION['user_id']);
     header('location: ../home/index.php');
+}
+if (isset($_POST['basket_item_drop'])) {
+    $obj_basket_add = new Connect_Basket;
+    $drop = $obj_basket_add->basketItemDrop($_SESSION['user_id'], $_POST['basket_item_drop_id']);
 }
 ?>
 <?php //php_beafor_html ?>
@@ -687,7 +700,7 @@ if (isset($_POST['basket_drop'])) {
                     }
                     ?>
                     <form method="POST">
-                        <input class="basket-field button" type="submit" name="basket_drop" value="Opróżnij koszyk" />
+                        <input class="basket-field button bs-sq drop" type="submit" name="basket_drop" value="Opróżnij koszyk" />
                     </form>
                     <?php                    
                 }

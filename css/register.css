@@ -86,15 +86,15 @@ div.inline{
     width:1em;
 }
 /*basket square*/
-.square-ling{
-    display:inline-block;
+.square-link:hover{
+    text-decoration:underline;
 }
 .bs-square{
-    display:block;
+    display:inline-block;
     margin:0.25em 0em 0.25em 0.5em;
     text-align: center;
-    width:90%;
-    height:10em;
+    width:57em;
+    #height:10em;
     border:1px solid rgba(255,255,255,0.5);
     vertical-align:middle;/*dziwne*//*nie dziwne tylko inline-block*/
     position:relative;
@@ -113,17 +113,40 @@ div.inline{
     width:5em;
     float:left;
 }
-.bs-sq.price{}
 .bs-sq.cat-main{}
 .bs-sq.cat-sub{}
 .bs-sq.name{
-    display:block;
+    display:inline-block;
     position:absolute;
-    bottom:0.0em;
+    top:0.0em;
+    left:6em;
     font-weight:600;
     padding:0.5em;
 }
-.bs-mini-img{
-    width:5em;
-    height:auto;
+.bs-sq.price{
+    display:inline-block;
+    position:absolute;
+    top:2.5em;
+    left:6em;
+}
+.bs-sq.amount{
+    display:inline-block;
+    position:absolute;
+    top:2.5em;
+    left:22em;
+}
+.bs-sq.suma{
+    display:inline-block;
+    position:absolute;
+    top:2.5em;
+    left:32em;
+}
+.bs-sq.del{
+    display:inline-block;
+    position:absolute;
+    top:2.5em;
+    right:2em;
+}
+.bs-sq.drop{
+    margin-left:50em;
 }
