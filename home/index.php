@@ -389,7 +389,13 @@ class Connect_Basket extends Connect
         //$q = $q->fetch(PDO::FETCH_ASSOC);
 		unset ($con);
     }
-    public function basketSelect($table)
+    public function basketDrop($table)
+    {
+        $con = $this->connectDB();
+        $res = $con->query('DROP TABLE `'.$table.'`');
+        return $res ? true : false;
+    }
+    public function basketGet($table)
     {
         $con = $this->connectDB();
         $q = $con->query("SELECT * FROM `".$table."`");
@@ -397,7 +403,7 @@ class Connect_Basket extends Connect
         return $q;
 		unset ($con);
     }
-    public function basketShow($table, $id)
+    public function basketSelect($table, $id)
     {
         $con = $this->connectDB();
         $q = $con->query("SELECT * FROM `".$table."` WHERE `id`='".$id."'");
@@ -405,21 +411,53 @@ class Connect_Basket extends Connect
         return $q;
 		unset ($con);
     }
-    public function basketDrop($table)
+    public function basketShow($id, $pr_id, $amount)
     {
-        $con = $this->connectDB();
-        $res = $con->query('DROP TABLE `'.$table.'`');
-        return $res ? true : false;
+        $wyn = $this->basketSelect('product_tab', $pr_id);
+        $min_img = new ProductDisplay; 
+        ?>
+        <a class="square-link" href="../product/<?php echo $wyn['file_name'].'.php'; ?>">
+            <div class="bs-square">
+                <div class="bs-sq img">
+                    <img class="mini-image-bs-list" src="<?php echo $min_img->showMiniImg($wyn['id']); ?>" alt="mini image" />
+                </div>
+                <div class="bs-sq price">
+                    Cena: <?php echo $wyn['product_price']; ?>
+                </div>
+                <div class="bs-sq cat-main">
+                    <?php echo $wyn['product_category_main']; ?>
+                </div>
+                <div class="bs-sq cat-sub">
+                    <?php echo $wyn['product_category_sub']; ?>
+                </div>
+                <div class="bs-sq name">
+                    <?php echo $wyn['product_name']; ?>
+                </div>
+                <div class="bs-sq amount">
+                    Ilość: <?php echo $amount; ?>
+                </div>
+                <div class="bs-sq suma">
+                    Suma: <?php echo $wyn['product_price']*$amount; ?>
+                </div>
+            </div>
+        </a>
+        <div class="bs-sq del">
+            <form method="POST">
+                <input type="submit" name="basket_item_drop" value="Usuń" />
+                <input type="hidden" name="basket_item_drop_id" value="<?php echo $id; ?>" />
+            </form>
+        </div>
+        <?php
     }
 }
 
 if (isset($_POST['add_to_basket']) && isset($_SESSION['user_id'])) {
-    $obj_basketAdd = new Connect_Basket;
-    $obj_basketAdd->basketAdd($_SESSION['user_id'], $_POST['pr_id'], $_POST['amount']);
+    $obj_basket_add = new Connect_Basket;
+    $obj_basket_add->basketAdd($_SESSION['user_id'], $_POST['pr_id'], $_POST['amount']);
 }
 if (isset($_POST['basket_drop'])) {
-    $obj_basketAdd = new Connect_Basket;
-    $drop = $obj_basketAdd->basketDrop($_SESSION['user_id']);
+    $obj_basket_add = new Connect_Basket;
+    $drop = $obj_basket_add->basketDrop($_SESSION['user_id']);
     header('location: ../home/index.php');
 }
 ?>
@@ -642,22 +680,14 @@ if (isset($_POST['basket_drop'])) {
                 //-basket
                 //------------------------------------------------
                 } elseif (isset($user_basket) && ! isset($user_edit)  && ! isset($user_register)) {
-                    $fgh = new Connect_Basket;
-                    $hmm = $fgh->basketSelect($_SESSION['user_id']);
-                    while ($row = $hmm->fetch(PDO::FETCH_ASSOC)) {
-                        $wyn = $fgh->basketShow('product_tab', $row['pr_id']);
-                        echo $wyn['product_name'];
-                        echo ' ilość: ';
-                        echo $row['amount'];
-                        echo ' cena: ';
-                        echo $wyn['product_price'];
-                        echo ' suma: ';
-                        echo $wyn['product_price']*$row['amount'];
-                        echo '<br />';
+                    $obj_basket_show = new Connect_Basket;
+                    $foo = $obj_basket_show->basketGet($_SESSION['user_id']);
+                    while ($row = $foo->fetch(PDO::FETCH_ASSOC)) {
+                        $obj_basket_show->basketShow($row['id'], $row['pr_id'], $row['amount']);
                     }
                     ?>
                     <form method="POST">
-                        <input class="basket-field button" type="submit" name="basket_drop" value="Wyczyść" />
+                        <input class="basket-field button" type="submit" name="basket_drop" value="Opróżnij koszyk" />
                     </form>
                     <?php                    
                 }

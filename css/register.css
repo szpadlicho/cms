@@ -85,3 +85,45 @@ div.inline{
 .basket-field.text{
     width:1em;
 }
+/*basket square*/
+.square-ling{
+    display:inline-block;
+}
+.bs-square{
+    display:block;
+    margin:0.25em 0em 0.25em 0.5em;
+    text-align: center;
+    width:90%;
+    height:10em;
+    border:1px solid rgba(255,255,255,0.5);
+    vertical-align:middle;/*dziwne*//*nie dziwne tylko inline-block*/
+    position:relative;
+    top:0px;
+}
+.bs-square:hover{
+    background: rgba(255,255,255,0.2);
+}
+.mini-image-bs-list{
+    width:100%;
+}
+.bs-sq{/*all in*/
+    padding:0.5em;
+}
+.bs-sq.img{
+    width:5em;
+    float:left;
+}
+.bs-sq.price{}
+.bs-sq.cat-main{}
+.bs-sq.cat-sub{}
+.bs-sq.name{
+    display:block;
+    position:absolute;
+    bottom:0.0em;
+    font-weight:600;
+    padding:0.5em;
+}
+.bs-mini-img{
+    width:5em;
+    height:auto;
+}
