@@ -86,7 +86,7 @@ div.inline{
     width:1em;
 }
 /*basket square*/
-.square-link:hover{
+.bs-square-link:hover{
     text-decoration:underline;
 }
 .bs-square{
@@ -148,5 +148,32 @@ div.inline{
     right:2em;
 }
 .bs-sq.drop{
-    margin-left:50em;
+    display:inline-block;
+    position:absolute;
+    top:12.5em;
+    right:2em;
+}
+.bs-sq.sumar{
+    display:inline-block;
+    position:absolute;
+    top:2.5em;
+    right:2em;
+}
+.bs-sq.send{
+    display:inline-block;
+    position:absolute;
+    top:4.5em;
+    right:2em;
+}
+.bs-sq.all{
+    display:inline-block;
+    position:absolute;
+    top:6.5em;
+    right:2em;
+}
+.bs-sq.pay{
+    display:inline-block;
+    position:absolute;
+    top:9.5em;
+    right:2em;
 }

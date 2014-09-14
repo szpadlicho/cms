@@ -162,7 +162,7 @@ class ProductDisplay
                    <img class="mini-image-pr-list" src="<?php echo $this->showMiniImg($cat['id']); ?>" alt="mini image" />
                 </div>
                 <div class="pr-sq price">
-                    Cena: <?php echo $cat['product_price']; ?>
+                    Cena: <?php echo $cat['product_price']; ?> PLN
                 </div>
                 <div class="pr-sq cat-main">
                     <?php echo $cat['product_category_main']; ?>
@@ -364,6 +364,10 @@ if (isset($_POST['user_check'])) {
 }
 class Connect_Basket extends Connect
 {
+    private $sumar=array();
+    public function __getSumar(){
+        return $this->sumar;
+    }
     public function basketAdd($table, $pr_id, $amount)
     {
         $con = $this->connectDB();
@@ -420,9 +424,9 @@ class Connect_Basket extends Connect
     public function basketShow($id, $pr_id, $amount)
     {
         $wyn = $this->basketSelect('product_tab', $pr_id);
-        $min_img = new ProductDisplay; 
-        ?>
-        
+        $min_img = new ProductDisplay;
+        //$this->sumar=array();
+        ?>       
             <div class="bs-square">
                 <div class="bs-sq img">
                     <img class="mini-image-bs-list" src="<?php echo $min_img->showMiniImg($wyn['id']); ?>" alt="mini image" />
@@ -439,7 +443,7 @@ class Connect_Basket extends Connect
                 </div>
                 -->
                 <div class="bs-sq name">
-                    <a class="square-link" href="../product/<?php echo $wyn['file_name'].'.php'; ?>">
+                    <a class="bs-square-link" href="../product/<?php echo $wyn['file_name'].'.php'; ?>">
                         <?php echo $wyn['product_name']; ?>
                     </a>
                 </div>
@@ -447,7 +451,7 @@ class Connect_Basket extends Connect
                     Ilość: <?php echo $amount; ?>
                 </div>
                 <div class="bs-sq suma">
-                    Suma: <?php echo $wyn['product_price']*$amount; ?>
+                    Razem: <?php echo $wyn['product_price']*$amount; ?> PLN
                 </div>
                 <div class="bs-sq del">
                     <form method="POST">
@@ -457,7 +461,15 @@ class Connect_Basket extends Connect
                 </div>
             </div>
         <?php
+        $lol = $wyn['product_price']*$amount;
+        $this->sumar[] = $lol;
     }
+    // public function basketSum(){
+        // $con = $this->connectDB();
+        // $sumar = $con->query("SELECT sum(numbers) FROM all_nums");
+        // $sumar = $sumar->fetch(PDO::FETCH_ASSOC);
+        // return $sumar;
+    // }
 }
 
 if (isset($_POST['add_to_basket']) && isset($_SESSION['user_id'])) {
@@ -698,9 +710,16 @@ if (isset($_POST['basket_item_drop'])) {
                     while ($row = $foo->fetch(PDO::FETCH_ASSOC)) {
                         $obj_basket_show->basketShow($row['id'], $row['pr_id'], $row['amount']);
                     }
+                    $bar = $obj_basket_show->__getSumar();
+                    //var_dump($bar);                    
+                    $sumar = array_sum($bar);
                     ?>
-                    <form method="POST">
+                    <div class="bs-sq sumar">Do zapłaty: <?php echo $sumar; ?> PLN</div>
+                    <div class="bs-sq send">+ koszty przesyłki: <?php echo $send = 15; ?> PLN</div>
+                    <div class="bs-sq all">Razem: <?php echo $sumar+$send; ?> PLN</div>
+                    <form method="POST">                        
                         <input class="basket-field button bs-sq drop" type="submit" name="basket_drop" value="Opróżnij koszyk" />
+                        <input class="basket-field button bs-sq pay" type="submit" name="basket_accept" value="Zapłać" />
                     </form>
                     <?php                    
                 }
