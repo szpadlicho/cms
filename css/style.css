@@ -117,7 +117,7 @@ h2{
 }
 .pr-sq.price{}
 .pr-sq.cat-main{}
-.pr-sq.cat-sub{}
+.pr-sq.cat-sub{ font-size: 0.9em}
 .pr-sq.name{
     display:block;
     position:absolute;
