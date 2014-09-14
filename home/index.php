@@ -536,12 +536,12 @@ $get_setting = $obj_gen->__getRow(1);
 <?php if ($get_setting['background_mod']=='two') { ?>
 	<!--poczatek-animcja-tła-->
 	<ul class="cb-slideshow">
-		<li><span class="image-bg">Image 01</span><div class="title-bg"><h3>1</h3></div></li>
-		<li><span class="image-bg">Image 02</span><div class="title-bg"><h3>2</h3></div></li>
-		<li><span class="image-bg">Image 03</span><div class="title-bg"><h3>3</h3></div></li>
-		<li><span class="image-bg">Image 04</span><div class="title-bg"><h3>4</h3></div></li>
-		<li><span class="image-bg">Image 05</span><div class="title-bg"><h3>5</h3></div></li>
-		<li><span class="image-bg">Image 06</span><div class="title-bg"><h3>6</h3></div></li>
+		<li><span class="image-bg">Image 01</span><div class="title-bg"><h3>WELCOME</h3></div></li>
+		<li><span class="image-bg">Image 02</span><div class="title-bg"><h3>TO MY</h3></div></li>
+		<li><span class="image-bg">Image 03</span><div class="title-bg"><h3>GREAT</h3></div></li>
+		<li><span class="image-bg">Image 04</span><div class="title-bg"><h3>WORLD</h3></div></li>
+		<li><span class="image-bg">Image 05</span><div class="title-bg"><h3>OF</h3></div></li>
+		<li><span class="image-bg">Image 06</span><div class="title-bg"><h3>PROGRAMMING</h3></div></li>
 	</ul>
 	<!--koniec-animacja-tła-->
 <?php } ?>
