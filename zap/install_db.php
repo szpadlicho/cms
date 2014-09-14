@@ -81,8 +81,10 @@ class DatabaseInstall
                 PRIMARY KEY(`id`)
                 )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
                 );
-            return $res ? true : false;
-            if (!empty($arr_val)) {
+            ////nie może tu byc return bo sie dalej nie wykona
+            //setcookie("TestCookie", 'asd', time()+3600);
+            if (! empty($arr_val)) {
+                
                 $field='';
                 $value='';
                 foreach ($arr_val as $name => $val) {
@@ -99,6 +101,8 @@ class DatabaseInstall
                     '0'
                     )"
                     );
+                return $res ? true : false;
+            } else {
                 return $res ? true : false;
             }
 		} else {
@@ -221,6 +225,15 @@ if (isset($_POST['crt'])) {
         );
     $arr_val = array();
     $return['users'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
+    
+    $obj_install->__setTable('setting_gen');
+    $arr_row = array(
+        'background_mod'         =>'VARCHAR(50)'
+        );
+    $arr_val = array(
+        'background_mod'         =>'one'
+        );
+    $return['setting_gen'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
 }
 if (isset($_POST['delete'])) {
     $res = $obj_install->deleteTb($_POST['delete_this']);    

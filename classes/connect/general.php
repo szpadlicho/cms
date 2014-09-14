@@ -1,24 +1,11 @@
 <?php
-class Img_Set_Size
+include_once '../classes/connect.php';
+class Connect_General extends Connect
 {
-	private $host='sql.bdl.pl';
-	private $port='';
-	private $dbname='szpadlic_cms';
-	private $charset='utf8';
-	private $user='szpadlic_baza';
-	private $pass='haslo';
-	private $table;
-	private $admin;
-	private $autor;
+    private $table;
 	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
-	}
-	public function connectDB()
-    {
-		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
-		return $con;
-		unset ($con);
 	}
     public function __setRow($arr_val, $id)
     {
@@ -28,10 +15,10 @@ class Img_Set_Size
         }
         /*zapis*/
 		$con=$this->connectDB();
-		$res=$con->exec(
+		$res=$con->query(
             "UPDATE `".$this->table."` 
-            SET ".$record." `mod` = '0'
-			WHERE `id` = '".$id."' "
+            SET ".$record." `mod` = '1'
+			WHERE `id` = '".$id."'"
             );
         if ($res) {
             echo "<div class=\"center\" >Zapis: OK!</div>";
@@ -56,4 +43,3 @@ class Img_Set_Size
         }
     }
 }
-?>

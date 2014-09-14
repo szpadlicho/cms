@@ -485,6 +485,10 @@ if (isset($_POST['basket_item_drop'])) {
     $obj_basket_add = new Connect_Basket;
     $drop = $obj_basket_add->basketItemDrop($_SESSION['user_id'], $_POST['basket_item_drop_id']);
 }
+include_once('../classes/connect/general.php');
+$obj_gen = new Connect_General;
+$obj_gen->__setTable('setting_gen');
+$get_setting = $obj_gen->__getRow(1);
 ?>
 <?php //php_beafor_html ?>
 <?php //html_p1 ?>
@@ -521,7 +525,7 @@ if (isset($_POST['basket_item_drop'])) {
 <![CDATA[spot two end section head]]>
 <?php //html_p2 ?>
 </head>
-<?php $bg1=true; if (isset($bg1)) { ?>
+<?php if ($get_setting['background_mod']=='one') { ?>
 <body style="background: #000 url(../images/bg.jpg) center 0px no-repeat; background-attachment:fixed; background-size: cover;">
 <?php } else { ?>
 <body>
@@ -529,7 +533,7 @@ if (isset($_POST['basket_item_drop'])) {
 <?php //html_p2 ?>
 <![CDATA[spot three begin section body]]>
 <?php //html_p3 ?>
-<?php if (isset($bg2)) { ?>
+<?php if ($get_setting['background_mod']=='two') { ?>
 	<!--poczatek-animcja-tła-->
 	<ul class="cb-slideshow">
 		<li><span class="image-bg">Image 01</span><div class="title-bg"><h3>1</h3></div></li>

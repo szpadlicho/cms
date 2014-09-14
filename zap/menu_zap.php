@@ -10,6 +10,7 @@
     <a href="product_list.php">Product lista</a> <> 
 	<a href="product_add.php">Add product</a> <> 		
 	<a href="setting_img.php">Image Setting</a> <> 	
+	<a href="setting_gen.php">General Setting</a> <> 	
 	<!--<a href="product_edit.php">Edycja</a> | -->
 </nav>
 <br />
