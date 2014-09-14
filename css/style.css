@@ -6,9 +6,6 @@
 .center{text-align:center; width:300px; margin:0 auto;}
 /*szkielet*/
 body{
-	background: #000 url(../images/bg.jpg) center 0px no-repeat;/*dodac do index i zrobic opcje*/
-	background-attachment:fixed;
-	background-size: cover;
 	font-family: 'Dosis', sans-serif;
 	font-size: 14px;
 	font-weight: 300;

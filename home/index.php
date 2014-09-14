@@ -521,12 +521,16 @@ if (isset($_POST['basket_item_drop'])) {
 <![CDATA[spot two end section head]]>
 <?php //html_p2 ?>
 </head>
+<?php $bg1=true; if (isset($bg1)) { ?>
+<body style="background: #000 url(../images/bg.jpg) center 0px no-repeat; background-attachment:fixed; background-size: cover;">
+<?php } else { ?>
 <body>
+<?php } ?>
 <?php //html_p2 ?>
 <![CDATA[spot three begin section body]]>
 <?php //html_p3 ?>
-<?php if (0==1) { ?>
-	<!--poczatek-animcja-tła
+<?php if (isset($bg2)) { ?>
+	<!--poczatek-animcja-tła-->
 	<ul class="cb-slideshow">
 		<li><span class="image-bg">Image 01</span><div class="title-bg"><h3>1</h3></div></li>
 		<li><span class="image-bg">Image 02</span><div class="title-bg"><h3>2</h3></div></li>
