@@ -187,7 +187,7 @@ if (isset($_POST['updateUser'])) {
         'post_code'  =>'42-200',
         'street'  =>'Garibaldiego 16 m. 23'
         );
-    $return = $obj_users->updateUser($arr_val, 1);    
+    $return = $obj_users->updateUser($arr_val, 2);    
 }
 if (isset($return)) {
     echo $return ? 'ok' : 'error';

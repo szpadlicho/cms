@@ -64,7 +64,7 @@ class ProduktSetCls
             `product_keywords`
 			) VALUES (
 			'".$_POST['product_name']."',
-			'".$_POST['product_price']."',
+			'".str_replace(",",".",$_POST['product_price'])."',
 			'".$_POST['product_number']."',
 			'".$_POST['product_category_main']."',  
 			'".$_POST['product_category_sub']."',

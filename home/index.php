@@ -2,6 +2,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 session_start();
+include_once '../classes/connect.php';
 include_once '../classes/connect/load.php';
 class ProductDisplay
 {
@@ -172,6 +173,13 @@ class ProductDisplay
                 <div class="pr-sq name">
                     <?php echo $cat['product_name']; ?>
                 </div>
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                <form method="POST">
+                    <input class="basket-field text" type="text" name="amount" value="1" />
+                    <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
+                    <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
+                </form>
+                <?php } ?>
             </div>
         </a>
         <?php
@@ -185,6 +193,13 @@ class ProductDisplay
                     <img class="mini-image-pr-list" src="<?php echo $this->showMiniImg($cat['id']); ?>" alt="mini image" />
                 </div>
                 <div class="full-name"><?php echo $cat['product_name']; ?></div>
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                <form method="POST">
+                    <input class="basket-field text" type="text" name="amount" value="1" />
+                    <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
+                    <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
+                </form>
+                <?php } ?>
             </div>          
             <div class="full-down-place-holder">
                 <div class="full-description-button color full-click active">Opis</div>
@@ -232,6 +247,181 @@ if (@$_POST['topmenu']=='Home') {
 $objload = new Connect_Load();
 $objload->__setTable('setting_seo');
 $global = $objload->globalMetaData();
+class Connect_Form extends Connect
+{
+    static function registerForm()
+    {
+    ?>
+        <form method="POST">
+            <div class="full-square">
+                <p>Account</p>
+                <div class="line"></div>
+                <div class="inline" ><span class="">Login:</span><input id="" class="register-field text" type="text" name="login" value="user" /></div>
+                <div class="inline" ><span class="">Adres email:</span><input id="" class="register-field text" type="text" name="email" value="user@gmail.com" /></div>
+                <div class="inline" ><span class="">Powtórz adres email:</span><input id="" class="register-field text" type="text" name="email_confirm" value="user@gmail.com" /></div>
+                <div class="inline" ><span class="">Hasło:</span><input id="" class="register-field text" type="text" name="password" value="user" /></div>
+                <div class="inline" ><span class="">Powtórz hasło:</span><input id="" class="register-field text" type="text" name="password_confirm" value="user" /></div>
+                <p>Personal info</p>
+                <div class="line"></div>
+                <div class="inline" ><span class="">Imię:</span><input id="" class="register-field text" type="text" name="first_name" value="Piotr" /></div>
+                <div class="inline" ><span class="">Nazwisko:</span><input id="" class="register-field text" type="text" name="last_name" value="Szpanelewski" /></div>
+                <div class="inline" ><span class="">Telefon:</span><input id="" class="register-field text" type="text" name="phone" value="888958277" /></div>
+                <div class="inline" ><span class="">Miasto:</span><input id="" class="register-field text" type="text" name="town" value="Częstochowa" /></div>
+                <div class="inline" ><span class="">Kod pocztowy:</span><input id="" class="register-field text" type="text" name="post_code" value="42-200" /></div>
+                <div class="inline" ><span class="">Ulica i nr domu:</span><input id="" class="register-field text" type="text" name="street" value="Garibaldiego 16 m. 23" /></div>
+                <p>Confirm</p>
+                <div class="line"></div>
+                <div class="inline" ><span class=""></span><input id="" class="register-field button" type="submit" name="addUser" value="Zapisz" /></div>
+            </div>
+        </form>
+    <?php
+    }
+    public function editForm($id)
+    {
+        $con = $this->connectDB();
+		$q = $con->query("SELECT * FROM `users` WHERE `id` = '".$id."'");
+        $q = $q->fetch(PDO::FETCH_ASSOC);
+		unset ($con);
+    ?>
+        <form method="POST">
+            <div class="full-square">
+                <p>Account</p>
+                <div class="line"></div>
+                <div class="inline" ><span class="">Login:</span><input id="" class="register-field text" type="text" name="login" value="<?php echo $q['login']; ?>" /></div>
+                <div class="inline" ><span class="">Adres email:</span><input id="" class="register-field text" type="text" name="email" value="<?php echo $q['email']; ?>" /></div>
+                <div class="inline" ><span class="">Hasło:</span><input id="" class="register-field text" type="text" name="password" value="<?php echo $q['password']; ?>" /></div>
+                <div class="inline" ><span class="">Powtórz hasło:</span><input id="" class="register-field text" type="text" name="password_confirm" value="<?php echo $q['password']; ?>" /></div>
+                <p>Personal info</p>
+                <div class="line"></div>
+                <div class="inline" ><span class="">Imię:</span><input id="" class="register-field text" type="text" name="first_name" value="<?php echo $q['first_name']; ?>" /></div>
+                <div class="inline" ><span class="">Nazwisko:</span><input id="" class="register-field text" type="text" name="last_name" value="<?php echo $q['last_name']; ?>" /></div>
+                <div class="inline" ><span class="">Telefon:</span><input id="" class="register-field text" type="text" name="phone" value="<?php echo $q['phone']; ?>" /></div>
+                <div class="inline" ><span class="">Miasto:</span><input id="" class="register-field text" type="text" name="town" value="<?php echo $q['town']; ?>" /></div>
+                <div class="inline" ><span class="">Kod pocztowy:</span><input id="" class="register-field text" type="text" name="post_code" value="<?php echo $q['post_code']; ?>" /></div>
+                <div class="inline" ><span class="">Ulica i nr domu:</span><input id="" class="register-field text" type="text" name="street" value="<?php echo $q['street']; ?>" /></div>
+                <p>Confirm</p>
+                <div class="line"></div>
+                <div class="inline" ><span class=""></span><input id="" class="register-field button" type="submit" name="updateUser" value="Uaktualnij" /></div>
+            </div>
+        </form>
+    <?php 
+    }
+}
+include_once '../classes/connect/register.php';
+$obj_users = new Connect_Register;
+if (isset($_POST['addUser'])) {
+    $obj_users->__setTable('users');
+    $arr_val = array(
+        'login'         =>$_POST['login'], 
+        'password'      =>$_POST['password'], 
+        'email'         =>$_POST['email'],                     
+        'create_data'   => date('Y-m-d H:i:s'),
+        'update_data'   => date('Y-m-d H:i:s'),
+        'first_name'    =>$_POST['first_name'],
+        'last_name'     =>$_POST['last_name'],
+        'phone'         =>$_POST['phone'],
+        'country'       =>'Polska',
+        'town'          =>$_POST['town'],
+        'post_code'     =>$_POST['post_code'],
+        'street'        =>$_POST['street']
+        );
+    $return = $obj_users->addUser($arr_val);
+    if ($return) {
+        $_SESSION['user_id'] = $return;
+        header('location: ../home/index.php');
+    }
+}
+if (isset($_POST['updateUser'])) {
+    $obj_users->__setTable('users');
+    $arr_val = array(
+        'login'         =>$_POST['login'], 
+        'password'      =>$_POST['password'], 
+        'email'         =>$_POST['email'],
+        'update_data'   => date('Y-m-d H:i:s'),
+        'first_name'    =>$_POST['first_name'],
+        'last_name'     =>$_POST['last_name'],
+        'phone'         =>$_POST['phone'],
+        'country'       =>'Polska',
+        'town'          =>$_POST['town'],
+        'post_code'     =>$_POST['post_code'],
+        'street'        =>$_POST['street']
+        );
+    $return = $obj_users->updateUser($arr_val, 1);    
+}
+if (isset($_POST['user_check'])) {
+    include_once '../users/user_login.php';
+    if (is_int($check)) {
+        $_SESSION['user_id'] = $check;
+    }
+} elseif (isset($_POST['user_logout'])) {
+        unset($_SESSION['user_id']);
+        //header tylko dla lokacji edit i basket
+        header('location: ../home/index.php');
+        // $arr_location = array ('user_edit.php', 'user_basket.php');
+        // if (in_array(basename(__FILE__), $arr_location, true)) {
+            // header('location: ../home/index.php');
+        // }
+}
+class Connect_Basket extends Connect
+{
+    public function basketAdd($table, $pr_id, $amount)
+    {
+        $con = $this->connectDB();
+        $res = $con->query(
+            "CREATE TABLE IF NOT EXISTS `".$table."`(
+            `id` INTEGER AUTO_INCREMENT,            
+            `pr_id` INTEGER(10),
+            `amount` INTEGER(10),
+            `mod` INTEGER(10),
+            PRIMARY KEY(`id`)
+            )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
+            );
+        $res = $con->query(
+            "INSERT INTO `".$table."`(
+            `pr_id`,
+            `amount`
+            ) VALUES (
+            '".$pr_id."',
+            '".$amount."'
+            )"
+            );
+        //$q = $con->query("SELECT * FROM `".$table."`");
+        //$q = $q->fetch(PDO::FETCH_ASSOC);
+		unset ($con);
+    }
+    public function basketSelect($table)
+    {
+        $con = $this->connectDB();
+        $q = $con->query("SELECT * FROM `".$table."`");
+        //$q = $q->fetch(PDO::FETCH_ASSOC);
+        return $q;
+		unset ($con);
+    }
+    public function basketShow($table, $id)
+    {
+        $con = $this->connectDB();
+        $q = $con->query("SELECT * FROM `".$table."` WHERE `id`='".$id."'");
+        $q = $q->fetch(PDO::FETCH_ASSOC);
+        return $q;
+		unset ($con);
+    }
+    public function basketDrop($table)
+    {
+        $con = $this->connectDB();
+        $res = $con->query('DROP TABLE `'.$table.'`');
+        return $res ? true : false;
+    }
+}
+
+if (isset($_POST['add_to_basket']) && isset($_SESSION['user_id'])) {
+    $obj_basketAdd = new Connect_Basket;
+    $obj_basketAdd->basketAdd($_SESSION['user_id'], $_POST['pr_id'], $_POST['amount']);
+}
+if (isset($_POST['basket_drop'])) {
+    $obj_basketAdd = new Connect_Basket;
+    $drop = $obj_basketAdd->basketDrop($_SESSION['user_id']);
+    header('location: ../home/index.php');
+}
 ?>
 <?php //php_beafor_html ?>
 <?php //html_p1 ?>
@@ -255,42 +445,6 @@ $global = $objload->globalMetaData();
 <?php //head_p1 ?>
 	<style type="text/css"></style>
 	<script type="text/javascript">
-        //ruch tła
-		$(window).scroll(function() {
-			var pos=150+($(this).scrollTop()*0.6);
-			if( pos <= 288 ){
-				$('#titi').css({'top': pos + 'px','position':'absolute'});
-			}
-		});
-		$(window).scroll(function() {
-			var pos1=($(this).scrollTop()/3);
-			$('body').css('background-position', 'center -'+pos1+'px');
-			//var pos2=($(this).scrollTop()/3);
-			$('.image-bg').css('background-position', 'center -'+pos1+'px');
-			var pos3=190-($(this).scrollTop());
-			$('.title-bg').css('top', pos3+'px');
-		});
-    </script>
-    <script type="text/javascript">
-        //full square active
-		$(document).ready(function(){
-            $('.full-click').click(function() {
-				$('.full-click').removeClass('active');
-				$(this).addClass('active');
-			});
-		});
-	</script>
-    <script type="text/javascript">
-		$(document).ready(function(){
-            //left menu active
-			$('input.left-menu').click(function() {
-				$('input.left-menu').removeClass('active');
-				$(this).addClass('active');
-                //alert('im here');
-			});
-		});
-	</script>
-	<script type="text/javascript">
 		<?php if(isset($_SESSION['menu_id'])){ ?>
 			var ids = '<?php echo $_SESSION['menu_id']; ?>';
 		<?php } ?>
@@ -299,12 +453,6 @@ $global = $objload->globalMetaData();
     <script type="text/javascript">
     $(document).ready(function(){
     });
-    </script>
-    <script type="text/javascript">
-        function submitOnClick(formName){//do klikania diva i odpalania formy
-            //echo '<div class="product-square" onclick="submitOnClick(\'#productForm'.$cat['id'].'\')">';
-            $(formName).submit();
-        }
     </script>
 <?php //head_p1 ?>
 <![CDATA[spot two end section head]]>
@@ -354,7 +502,19 @@ $global = $objload->globalMetaData();
 				</div>	
 			</nav>	
 			<div id="wrapper2">
-            <a style="float:right; font-size:2em; margin: 1em 1em;" href="../users/register.php" >register</a>
+                    <!-- login edit register basket-->
+                    <form method="POST" >
+                    <?php if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) { ?>
+                        <a class="login-field button" name="user_edit" href="../users/user_edit.php" >Edit</a>
+                        <a class="login-field button" name="user_basket" href="../users/user_basket.php" >Basket</a>
+                        <input class="login-field button" type="submit" name="user_logout" value="Wyloguj" />
+                    <?php } else { ?>
+                        <input class="login-field text" type="text" name="user_email" value="user@gmail.com" />
+                        <input class="login-field text" type="text" name="user_password" value="user" />
+                        <input class="login-field button" type="submit" name="user_check" value="Zaloguj" />
+                        <a class="login-field button" name="user_register" href="../users/user_register.php" >Register</a>
+                    <?php } ?>
+                    </form>
 			</div>
 			<div id="wrapper1-1"></div>
 		</div>
@@ -365,7 +525,7 @@ $global = $objload->globalMetaData();
 					<div id="left-menu-0">
 						<form method="POST">                     
 							<?php
-                            if (! isset($register) && ! isset($basket)) {//co by nic nie wyswietlało kiedy wywołam register user edit albo basket
+                            if (! isset($user_register) && ! isset($user_edit) && ! isset($user_basket)) {//co by nic nie wyswietlało kiedy wywołam register user edit albo basket
                                 //$category_now_display='PC';
                                 //$product_now_display='6';
                                 //left menu
@@ -417,7 +577,9 @@ $global = $objload->globalMetaData();
 			</nav>
 			<div id="wrapper4">               
                 <?php
-                if (! isset($register) && ! isset($basket)) {//co by nic nie wyswietlało kiedy wywołam register user edit albo basket
+                //echo $_SERVER['PHP_SELF'];
+                //echo basename(__FILE__);
+                if (! isset($user_register) && ! isset($user_edit) && ! isset($user_basket)) {//co by nic nie wyswietlało kiedy wywołam register user edit albo basket
                     //------------------------------------------------
                     $show = new ProductDisplay();
                     $show->__setTable('product_tab');
@@ -462,16 +624,42 @@ $global = $objload->globalMetaData();
                             }
                         }
                     }
-                    //------------------------------------------------
-                    //$sub = new ProductDisplay();
-                    //$sub->__setTable('product_tab');
-                    //$is = $sub->showCategorySub(@$_SESSION['category'])->fetch(PDO::FETCH_ASSOC);
-                    //$id = $id->fetch(PDO::FETCH_ASSOC);
-                    //var_dump($id);
-                    //echo @$category_now_display;
-                    //echo @$product_now_display;
-                } elseif (isset($register) && ! isset($basket)) {
-                    Register::registerForm();
+                //-user register
+                //------------------------------------------------
+                } elseif (isset($user_register) && ! isset($user_basket)  && ! isset($user_edit)) {
+                    if (isset($return)) {
+                        echo $return ? 'dodany' : 'błąd';
+                    }                    
+                    Connect_Form::registerForm();
+                //-user edit/update
+                //------------------------------------------------
+                } elseif (isset($user_edit) && ! isset($user_basket)  && ! isset($user_register)) {
+                    if (isset($return)) {
+                        echo $return ? 'wyedytowany' : 'błąd';
+                    }
+                    $asd = new Connect_Form;
+                    $asd->editForm($_SESSION['user_id']);
+                //-basket
+                //------------------------------------------------
+                } elseif (isset($user_basket) && ! isset($user_edit)  && ! isset($user_register)) {
+                    $fgh = new Connect_Basket;
+                    $hmm = $fgh->basketSelect($_SESSION['user_id']);
+                    while ($row = $hmm->fetch(PDO::FETCH_ASSOC)) {
+                        $wyn = $fgh->basketShow('product_tab', $row['pr_id']);
+                        echo $wyn['product_name'];
+                        echo ' ilość: ';
+                        echo $row['amount'];
+                        echo ' cena: ';
+                        echo $wyn['product_price'];
+                        echo ' suma: ';
+                        echo $wyn['product_price']*$row['amount'];
+                        echo '<br />';
+                    }
+                    ?>
+                    <form method="POST">
+                        <input class="basket-field button" type="submit" name="basket_drop" value="Wyczyść" />
+                    </form>
+                    <?php                    
                 }
 				?>
             <!--
@@ -483,41 +671,6 @@ $global = $objload->globalMetaData();
 		<div>
 			<h1 id="titi" >WELCOME TO MY GREAT WORLD OF PROGRAMMING</h1>	
 		</div>
-    <script type="text/javascript">
-        //set session
-        $('a.top-menu').click(function() {
-            $('a.top-menu').removeClass('active');
-            $(this).addClass('active');
-            var valu = $(this).attr('id');
-            //$.post('../set_session.php', { 'value' : valu});                
-            $.ajax({
-                async: false,
-                type: 'POST',
-                url: '../set_session.php',
-                data: {value : valu}                  
-            });
-        });
-        $('a.top-menu').click( function () {
-            var del = 'sub';
-            $.ajax({ 
-              async: false,
-              type: 'POST', 
-              url: '../unset_session.php',
-              data: {value : del}
-            });
-            //alert('asdasd');
-        });
-        $('a#top-menu-1').click( function () {
-            var del = 'main';
-            $.ajax({ 
-              async: false,
-              type: 'POST', 
-              url: '../unset_session.php',//if home click 
-              data: {value : del}
-            });
-            //alert('asdasd');
-        });        
-	</script>
 	</section>
 	<footer>
 	<!--<div id="count"></div><div id="count2"></div>-->
@@ -534,6 +687,9 @@ $global = $objload->globalMetaData();
 	var_dump (@$_SESSION);
 	echo "cookie";
 	var_dump (@$_COOKIE);
+    //unset($_SESSION);
+    //unset($_COOKIE);
+    //session_destroy();
 	?>
 	</div>
 <?php //html_p3 ?>

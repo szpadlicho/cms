@@ -80,7 +80,7 @@ class ProduktEditCls
 			`".$this->table."`   
 			SET 
 			`product_name` = '".$_POST['product_name']."', 
-			`product_price` = '".$_POST['product_price']."', 
+			`product_price` = '".str_replace(",",".",$_POST['product_price'])."', 
 			`product_number` = '".$_POST['product_number']."',
 			`product_category_main` = '".$_POST['product_category_main']."',
 			`product_category_sub` = '".$_POST['product_category_sub']."',

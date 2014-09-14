@@ -9,5 +9,5 @@
 include_once '../classes/connect/login.php';
 $login = new Connect_Login();
 $login->__setTable('users');
-$check = $login->__getUserId('email@gmail.com', 'user');
-var_dump($check);
+$check = $login->__getUserId($_POST['user_email'], $_POST['user_password']);
+//var_dump($check);

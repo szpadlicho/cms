@@ -1,5 +1,5 @@
-<html lang="pl">
 <?php
+header('Content-Type: text/html; charset=utf-8');
 class DatabaseInstall
 {
 	private $host='sql.bdl.pl';
@@ -35,17 +35,17 @@ class DatabaseInstall
 		$con=$this->connect();
 		$ret = $con->query("SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '".$this->dbname."'");/*sprawdzam czy baza istnieje*/
 		$res = $ret->fetch(PDO::FETCH_ASSOC);
-		return $res ?  1 :  0;
+		return $res ?  true : false;
 	}
 	public function createDb()
     {
-		if ($this->checkDb()==0) {
+		if ($this->checkDb()=== false) {
 			$con=$this->connect();		
 			$con->exec("CREATE DATABASE IF NOT EXISTS ".$this->dbname." charset=".$this->charset);
 			unset ($con);
-			echo "<div class=\"center\" >Utworzyłem bazę</div>";
-		} elseif($this->checkDb()==1) {
-			echo "<div class=\"center\" >Baza istnieje</div>";
+			return true;
+		} elseif ($this->checkDb()=== true) {
+			return false;
 		}
 	}
 	public function deleteDb()
@@ -54,30 +54,34 @@ class DatabaseInstall
 		$result=$con->exec("DROP DATABASE `".$this->dbname."`"); //usowanie
 		unset ($con);
 		if($result) {
-			echo "<div class=\"center\" >Deleted ({$result})</div>";
+			return true;
 		} else {
-			echo "<div class=\"center\" >Error ({$result})</div>";
+			return false;
 		}
 	}
     public function createTbDynamicRow($arr_row,$arr_val)
     {
-        /*tworze tabele tylko raz co pozwala klikać install bez konsekwencji*/
-		$con=$this->connectDB();
-		$res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	
+        // Tworze tabele tylko raz co pozwala klikać install bez konsekwencji
+		$con = $this->connectDB();
+		$res = $con->query(
+            "SELECT 1 
+            FROM ".$this->table
+            );// Zwraca false jesli tablica nie istnieje
 		if (!$res) {
             $columns='';
             foreach ($arr_row as $name => $val) {
                 $columns .= '`'.$name.'` '.$val.',';
             }
             // Create table
-			$result=$con->exec("CREATE TABLE IF NOT EXISTS `".$this->table."`(
+			$res = $con->query(
+                "CREATE TABLE IF NOT EXISTS `".$this->table."`(
                 `id` INTEGER AUTO_INCREMENT,            
                 ".$columns."
                 `mod` INTEGER(10),
                 PRIMARY KEY(`id`)
-                )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1");
-                echo "<div class=\"center\" >Utworzyłem tabelę: {$this->table}</div>";
-            
+                )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
+                );
+            return $res ? true : false;
             if (!empty($arr_val)) {
                 $field='';
                 $value='';
@@ -86,101 +90,141 @@ class DatabaseInstall
                     $value .= "'".$val."',";
                 }
                 // Create default record 
-                $res=$con->query("INSERT INTO `".$this->table."`(
+                $res = $con->query(
+                    "INSERT INTO `".$this->table."`(
                     ".$field."
                     `mod`
                     ) VALUES (
                     ".$value."
                     '0'
-                    )");
+                    )"
+                    );
+                return $res ? true : false;
             }
 		} else {
-			echo "<div class=\"center\" >Tabela już istnieje</div>";
+			return false;
 		}
+    }
+    public function deleteTb($table)
+    {
+        $con = $this->connectDB();
+        $res = $con->query('DROP TABLE `'.$table.'`');
+        return $res ? true : false;
     }
 }
 $obj_install = new DatabaseInstall;
 if (isset($_POST['del'])) {
-	$obj_install->deleteDb();
+    $return = array();// array initiate
+	$return['delete'] = $obj_install->deleteDb();
 }
 if (isset($_POST['crt'])) {
-    $obj_install->createDb();      
+    $return = array();// array initiate
+    $return['data_base'] = $obj_install->createDb();      
 	
 	$obj_install->__setTable('product_tab');
-    $arr_row = array('product_name'             =>'TEXT', 
-                    'product_price'             =>'VARCHAR(10)', 
-                    'product_number'            =>'INTEGER(10)', 
-                    'product_category_main'     =>'TEXT',
-                    'product_category_sub'      =>'TEXT',
-                    'product_description_small' =>'TEXT',
-                    'product_description_large' =>'TEXT',
-                    'product_foto_mini'         =>'TEXT',
-                    'product_foto_large'        =>'TEXT',
-                    'file_name'                 =>'TEXT',
-                    'product_title'             =>'TEXT',
-                    'product_description'       =>'TEXT',
-                    'product_keywords'          =>'TEXT'
-                    );
+    $arr_row = array(
+        'product_name'              =>'TEXT', 
+        'product_price'             =>'VARCHAR(10)', 
+        'product_number'            =>'INTEGER(10)', 
+        'product_category_main'     =>'TEXT',
+        'product_category_sub'      =>'TEXT',
+        'product_description_small' =>'TEXT',
+        'product_description_large' =>'TEXT',
+        'product_foto_mini'         =>'TEXT',
+        'product_foto_large'        =>'TEXT',
+        'file_name'                 =>'TEXT',
+        'product_title'             =>'TEXT',
+        'product_description'       =>'TEXT',
+        'product_keywords'          =>'TEXT'
+        );
     $arr_val = array();
-	$obj_install->createTbDynamicRow($arr_row, $arr_val);
+	$return['product_tab'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
 
 	$obj_install->__setTable('product_category_main');
-    $arr_row = array('product_category_main'     =>'TEXT', 
-                    'file_name_category_main'    =>'TEXT', 
-                    'title'                      =>'TEXT', 
-                    'description'                =>'TEXT',
-                    'keywords'                   =>'TEXT'
-                    );
+    $arr_row = array(
+        'product_category_main'      =>'TEXT', 
+        'file_name_category_main'    =>'TEXT', 
+        'title'                      =>'TEXT', 
+        'description'                =>'TEXT',
+        'keywords'                   =>'TEXT'
+        );
     $arr_val = array();
-	$obj_install->createTbDynamicRow($arr_row, $arr_val);
+	$return['product_category_main'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
 
 	$obj_install->__setTable('product_category_sub');
-    $arr_row = array('product_category_sub'     =>'TEXT', 
-                    'file_name_category_sub'    =>'TEXT', 
-                    'title'                     =>'TEXT', 
-                    'description'               =>'TEXT',
-                    'keywords'                  =>'TEXT'
-                    );
+    $arr_row = array(
+        'product_category_sub'      =>'TEXT', 
+        'file_name_category_sub'    =>'TEXT', 
+        'title'                     =>'TEXT', 
+        'description'               =>'TEXT',
+        'keywords'                  =>'TEXT'
+        );
     $arr_val = array();
-	$obj_install->createTbDynamicRow($arr_row, $arr_val);
+	$return['product_category_sub'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
     
     $obj_install->__setTable('setting_img');
-    $arr_row = array('small_width'  =>'INT(4)', 
-                    'small_height'  =>'INT(4)', 
-                    'large_width'   =>'INT(4)', 
-                    'large_height'  =>'INT(4)'
-                    );
-    $arr_val = array('small_width'  =>200,  
-                    'small_height'  =>300,  
-                    'large_width'   =>700,  
-                    'large_height'  =>700
-                    );
-	$obj_install->createTbDynamicRow($arr_row, $arr_val);
+    $arr_row = array(
+        'small_width'   =>'INT(4)', 
+        'small_height'  =>'INT(4)', 
+        'large_width'   =>'INT(4)', 
+        'large_height'  =>'INT(4)'
+        );
+    $arr_val = array(
+        'small_width'   =>200,  
+        'small_height'  =>300,  
+        'large_width'   =>700,  
+        'large_height'  =>700
+        );
+	$return['setting_img'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
     
     $obj_install->__setTable('setting_seo');
-    $arr_row = array('global_title_index'           =>'TEXT', 
-                    'global_keywords_index'         =>'TEXT', 
-                    'global_description_index'      =>'TEXT', 
-                    'global_title_category'         =>'TEXT',
-                    'global_keywords_category'      =>'TEXT',
-                    'global_description_category'   =>'TEXT',
-                    'global_title_product'          =>'TEXT',
-                    'global_keywords_product'       =>'TEXT',
-                    'global_description_product'    =>'TEXT'
-                    );
-    $arr_val = array('global_title_index'           =>'Globalny tytuł strony głównej', 
-                    'global_keywords_index'         =>'globalne,słowa,keywords,strony,głównej', 
-                    'global_description_index'      =>'Globalny opis strony głównej dodać max znaków', 
-                    'global_title_category'         =>'Globalny tytuł strony kategorii',
-                    'global_keywords_category'      =>'globalne,słowa,keywords,strony,kategorii',
-                    'global_description_category'   =>'Globalny opis strony kategorii dodać max znaków',
-                    'global_title_product'          =>'Globalny tytuł strony towaru',
-                    'global_keywords_product'       =>'globalne,słowa,keywords,strony,towaru',
-                    'global_description_product'    =>'Globalny opis strony towaru dodać max znaków'
-                    );
-	$obj_install->createTbDynamicRow($arr_row, $arr_val);
+    $arr_row = array(
+        'global_title_index'            =>'TEXT', 
+        'global_keywords_index'         =>'TEXT', 
+        'global_description_index'      =>'TEXT', 
+        'global_title_category'         =>'TEXT',
+        'global_keywords_category'      =>'TEXT',
+        'global_description_category'   =>'TEXT',
+        'global_title_product'          =>'TEXT',
+        'global_keywords_product'       =>'TEXT',
+        'global_description_product'    =>'TEXT'
+        );
+    $arr_val = array(
+        'global_title_index'            =>'Globalny tytuł strony głównej', 
+        'global_keywords_index'         =>'globalne,słowa,keywords,strony,głównej', 
+        'global_description_index'      =>'Globalny opis strony głównej dodać max znaków', 
+        'global_title_category'         =>'Globalny tytuł strony kategorii',
+        'global_keywords_category'      =>'globalne,słowa,keywords,strony,kategorii',
+        'global_description_category'   =>'Globalny opis strony kategorii dodać max znaków',
+        'global_title_product'          =>'Globalny tytuł strony towaru',
+        'global_keywords_product'       =>'globalne,słowa,keywords,strony,towaru',
+        'global_description_product'    =>'Globalny opis strony towaru dodać max znaków'
+        );
+	$return['setting_seo'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
+
+    $obj_install->__setTable('users');
+    $arr_row = array(
+        'login'         =>'VARCHAR(50) NOT NULL UNIQUE', 
+        'password'      =>'VARCHAR(50) NOT NULL', 
+        'email'         =>'VARCHAR(50) NOT NULL UNIQUE',                     
+        'create_data'   =>'DATETIME NOT NULL',
+        'update_data'   =>'DATETIME NOT NULL',
+        'first_name'    =>'VARCHAR(50) NOT NULL',
+        'last_name'     =>'VARCHAR(50) NOT NULL',
+        'phone'         =>'VARCHAR(50) NOT NULL',
+        'country'       =>'VARCHAR(50) NOT NULL',
+        'town'          =>'VARCHAR(50) NOT NULL',
+        'post_code'     =>'VARCHAR(50) NOT NULL',
+        'street'        =>'VARCHAR(50) NOT NULL',
+        'active'        =>'VARCHAR(50) NOT NULL',
+        'pref'          =>'VARCHAR(50) NOT NULL'
+        );
+    $arr_val = array();
+    $return['users'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);
 }
-//$obj_install->check();
+if (isset($_POST['delete'])) {
+    $res = $obj_install->deleteTb($_POST['delete_this']);    
+}
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -191,67 +235,36 @@ if (isset($_POST['crt'])) {
 	<script type="text/javascript"></script>
 </head>
 <body>
-    <div class="center">
-        Zarządzanie Bazą Danych
-        <form enctype="multipart/form-data" action="" method="POST">
-				<input class="input_cls" type="submit" name="del" value="Delete" />
-				<input class="input_cls" type="submit" name="crt" value="Create" />
-		</form>
-    </div>
-<section id="place-holder">
+    <section id="place-holder">
 		<?php include ('menu_zap.php'); ?>
-</section>
-	<?php
-// function is_table_exist($query){
-// $q = "SELECT * FROM $query;";
-// $i=mysql_query($q);
-// if( (integer)$i )     //rzutowanie na integer
-    // return 1;    //tabela $query istnieje w bazie
-// else
-    // return 0;    //tabela $query nie istnieje w bazie
-// }
- 
- 
-// mysql_connect("server","login","haslo");
-// mysql_select_db("bazadanych");
- 
-// $tab1 = "tabela1"; // tabela 'tabela1' istnieje w bazie
-// $tab2 = "tabela2"; //tabela 'tabela2' nie istnieje w bazie
- 
-// $r1 = is_table_exist($tab1);
-// $r2 = is_table_exist($tab2);
- 
-// if($r1) 
-    // echo "Tabela $tab1 istnieje w bazie";
- 
-// if($r2)
-    // echo "Tabela $tab2 nie istnieje w bazie";
-?>
+    
+        <div class="center">
+            Zarządzanie Bazą Danych
+            <form enctype="multipart/form-data" action="" method="POST">
+                    <input class="input_cls" type="submit" name="del" value="Delete DB" />
+                    <input class="input_cls" type="submit" name="crt" value="Create" />
+            <p></p>
+            <br />
+            <?php
+            if (isset($res)) {
+                echo 'Delete ';
+                echo $res ? 'ok' : 'error';
+            }
+            if (isset($return)) {
+                foreach ($return as $key => $val) {
+                    echo $key.' - ';
+                    echo $val ? 'ok' : 'error';
+                    ?>
+                    <input class="input_cls" type="submit" name="delete" value="Del TB" />
+                    <input class="input_cls" type="hidden" name="delete_this" value="<?php echo $key; ?>" />
+                    <br />
+                    <?php
+                }
+                //var_dump($return);
+            }
+            ?>
+            </form>
+        </div>
+    </section>
 </body>
 </html>
-<?php
-	// public function createTable(){
-		// $con=$this->connectDB();
-		// //if($con){ echo "połączyłem"; } else { echo "błąd"; }
-		// $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);/*do przechwytywania błędów try i catch*/
-		// try {
-			// $result=$con->exec("CREATE TABLE IF NOT EXISTS `".$this->table."`(`id` INTEGER AUTO_INCREMENT, `now` VARCHAR(200), `what` TEXT, `mod` INTEGER(1), `text` TEXT, PRIMARY KEY(`id`))ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1");
-			// echo "<div class=\"center\" >Utworzyłem tabelę: {$this->table}</div>";
-		// }
-		// catch(PDOException $e){
-			// echo "<div class=\"center\" >Tabela istnieje ({})</div>";
-			// echo $e->getMessage();
-		// }
-		// /*zapis do tablei tylko raz*/
-		// $q = $con->query("SELECT * FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
-		// $count = $q -> fetch();/*konwertor na tablice*/
-		// if(!$count){
-			// $con->exec("INSERT INTO `".$this->table."`(`now`, `what`, `mod`, `text`) VALUES ('rec', 'rec', '0', 'rec')");/*co zrobic zeby raz ?*/
-			// echo "<div class=\"center\" >zapis udany</div>";
-		// }
-		// else{
-			// echo "<div class=\"center\" >zapis juz istnieje</div>";
-		// }		
-		// unset ($con);	
-	// }
-?>
