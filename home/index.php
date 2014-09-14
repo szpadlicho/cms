@@ -707,15 +707,17 @@ if (isset($_POST['basket_item_drop'])) {
                 } elseif (isset($user_basket) && ! isset($user_edit)  && ! isset($user_register)) {
                     $obj_basket_show = new Connect_Basket;
                     $foo = $obj_basket_show->basketGet($_SESSION['user_id']);
-                    while ($row = $foo->fetch(PDO::FETCH_ASSOC)) {
-                        $obj_basket_show->basketShow($row['id'], $row['pr_id'], $row['amount']);
+                    if ($foo) {
+                        while ($row = $foo->fetch(PDO::FETCH_ASSOC)) {
+                            $obj_basket_show->basketShow($row['id'], $row['pr_id'], $row['amount']);
+                        }
                     }
                     $bar = $obj_basket_show->__getSumar();
                     //var_dump($bar);                    
                     $sumar = array_sum($bar);
                     ?>
                     <div class="bs-sq sumar">Do zapłaty: <?php echo $sumar; ?> PLN</div>
-                    <div class="bs-sq send">+ koszty przesyłki: <?php echo $send = 15; ?> PLN</div>
+                    <div class="bs-sq send">+ koszty przesyłki: <?php echo $send = 2; ?> PLN</div>
                     <div class="bs-sq all">Razem: <?php echo $sumar+$send; ?> PLN</div>
                     <form method="POST">                        
                         <input class="basket-field button bs-sq drop" type="submit" name="basket_drop" value="Opróżnij koszyk" />
