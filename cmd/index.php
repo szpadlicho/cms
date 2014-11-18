@@ -331,7 +331,7 @@ echo '</div>';
 								?>
 								/>
 								<div class="cmd_span"><?php echo $foo['0']; ?></div>
-                                <?php if (in_array($type[0], array('jpg','jpeg','gif','bmp','txt','html','htm','xls','ico','png'))) { //pozwolenie na pokazanie podglądu?>
+                                <?php if (in_array($type[0], array('jpg','jpeg','gif','bmp','txt','html','htm','xls','ico','png','pdf'))) { //pozwolenie na pokazanie podglądu?>
                                     <span class="preview_span"><a href="<?php echo $_SESSION['cmd'].'/'.$foo['0'];?>" target="_blank" >podgląd</a></span>
                                 <?php } ?>
 								<span class="size_span"><?php echo filesize_formatted($fil); ?></span>
