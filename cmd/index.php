@@ -8,6 +8,10 @@ if(isset($_POST['imie'])) {
 if(isset($_POST['nazwisko'])) {
 	echo 'LOL';
 }
+/*create storage folder DATA if no exist !important*/
+if (! is_dir('data')) {
+    mkdir('data');
+}
 /*download*/
 if (isset($_POST['download']) && (! empty($_POST['files']) || ! empty($_POST['folders']))) {
 	include_once ('download_files.php');
@@ -269,7 +273,15 @@ echo '</div>';
 								$type=array_reverse($type);//odwracam tablice żeby mieć rozszerzenie pod index [0]
 								//echo $type[0];
 								?>
-								<label class="label_all"><input class="cmd_check" type="checkbox" multiple name="files[]" value="<?php echo $fil; ?>" <?php if (@in_array($fil, @$_POST['files']) && (isset($_POST['copy']) || isset($_POST['cut']))) { echo "checked='checked'"; } ?> /><img class="cmd_ico" title="ico" alt="ico"
+                                <script type="text/javascript">
+                                    $(document).ready(function($) {
+                                        $( '.cmd_check' ).click(function(){
+                                           var file_name = $(this).attr('title');
+                                           $( '#rename_text' ).attr('value', file_name); 
+                                        });
+                                    });
+                                </script>
+								<label class="label_all"><input class="cmd_check" type="checkbox" multiple name="files[]" value="<?php echo $fil; ?>" title="<?php echo $type[1]; ?>" <?php if (@in_array($fil, @$_POST['files']) && (isset($_POST['copy']) || isset($_POST['cut']))) { echo "checked='checked'"; } ?> /><img class="cmd_ico" title="ico" alt="ico"
 								<?php
 									if (in_array($type[0], $arr_txt)) {
 										echo 'src="images/32/txt.png"';
@@ -383,7 +395,7 @@ echo '</div>';
 			</div>
 			<div class="rename-place-holder">
 				<div class="rename-form">
-					<input class="cmd_input_sub text_input" type="text" name="rename_text" />
+					<input id="rename_text" class="cmd_input_sub text_input" type="text" name="rename_text" />
 					<label><label id="ok_label2" class="cmd_label_sub" ><input class="cmd_input_sub" type="submit" name="ok_r" value="OK" /></label></label>
 					<label><label id="no_label2" class="cmd_label_sub" ><input class="cmd_input_sub anuluj" type="button" name="anuluj_r" value="Anuluj" /></label></label>
 				</div>
