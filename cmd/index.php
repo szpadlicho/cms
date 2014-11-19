@@ -184,33 +184,50 @@ echo '</div>';
 							if ($cat != '.' && $cat != '..') {
 								?>
 								<script type="text/javascript" >
-								$(document).ready(function(){//po kliknieciu
-									$('#fc<?php echo $f; ?>').click(function(){
-										if($(this).attr('checked') == true){
-											 $('#fs<?php echo $f; ?>').attr("disabled","disabled");   
-										} else {
-											$('#fs<?php echo $f; ?>').removeAttr('disabled');
-										}
-									});
-								});
-								$(document).ready(function(){//po kliknieciu w zaznacz wszystko
-									$('#cmd_check_back').click(function(){
-										if($(this).attr('checked') == true){
-											 $('#fs<?php echo $f; ?>').attr("disabled","disabled");   
-										} else {
-											$('#fs<?php echo $f; ?>').removeAttr('disabled');
-										}
-									});
-								});
-								$(document).ready(function(){//po przeladowaniu
-									if($('#fc<?php echo $f; ?>').attr('checked') == true){
-										 $('#fs<?php echo $f; ?>').attr("disabled","disabled");   
-									} else {
-										$('#fs<?php echo $f; ?>').removeAttr('disabled');
-									}
-								});
+                                    $(document).ready(function(){//po kliknieciu
+                                        $('#fc<?php echo $f; ?>').click(function(){
+                                            if($(this).attr('checked') == true){
+                                                 $('#fs<?php echo $f; ?>').attr("disabled","disabled");   
+                                            } else {
+                                                $('#fs<?php echo $f; ?>').removeAttr('disabled');
+                                            }
+                                        });
+                                    });
+                                    $(document).ready(function(){//po kliknieciu w zaznacz wszystko
+                                        $('#cmd_check_back').click(function(){
+                                            if($(this).attr('checked') == true){
+                                                 $('#fs<?php echo $f; ?>').attr("disabled","disabled");   
+                                            } else {
+                                                $('#fs<?php echo $f; ?>').removeAttr('disabled');
+                                            }
+                                        });
+                                    });
+                                    $(document).ready(function(){//po przeladowaniu
+                                        if($('#fc<?php echo $f; ?>').attr('checked') == true){
+                                             $('#fs<?php echo $f; ?>').attr("disabled","disabled");   
+                                        } else {
+                                            $('#fs<?php echo $f; ?>').removeAttr('disabled');
+                                        }
+                                    });
 								</script>
-								<label class="label_all"><input id="fc<?php echo $f; ?>" class="cmd_check" type="checkbox" multiple name="folders[]" value="<?php echo $cat; ?>" <?php if (@in_array($cat, @$_POST['folders']) && (isset($_POST['copy']) || isset($_POST['cut']))) { echo "checked='checked'"; } ?> /><img class="cmd_ico" src="images/32/fod.png" />
+                                <script type="text/javascript">
+                                    // display old name in rename text for folder
+                                    $(document).ready(function($) {
+                                        $( '.cmd_check' ).click(function(){
+                                            $( '.cmd_check' ).change(function() {
+                                                var file_name = $(this).attr('title');
+                                                if ($(this).is(':checked')) {
+                                                    //alert('Checked');
+                                                    $( '#rename_text' ).attr('value', file_name);
+                                                } else {
+                                                    //alert('Unchecked');
+                                                    $( '#rename_text' ).attr('value','');
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+								<label class="label_all"><input id="fc<?php echo $f; ?>" class="cmd_check" type="checkbox" multiple name="folders[]" value="<?php echo $cat; ?>" title="<?php echo $foo['0']; ?>" <?php if (@in_array($cat, @$_POST['folders']) && (isset($_POST['copy']) || isset($_POST['cut']))) { echo "checked='checked'"; } ?> /><img class="cmd_ico" src="images/32/fod.png" />
 								<input id="fs<?php echo $f; ?>" class="cmd_button" type="submit" name="catalog" value="<?php echo $foo['0']; ?>" />
 								<span class="size_span"><?php echo filesize_formatted2(foldersize($cat)); ?></span>
 								<span class="create_time_span">
@@ -274,10 +291,19 @@ echo '</div>';
 								//echo $type[0];
 								?>
                                 <script type="text/javascript">
+                                    // display old name in rename text for file
                                     $(document).ready(function($) {
                                         $( '.cmd_check' ).click(function(){
-                                           var file_name = $(this).attr('title');
-                                           $( '#rename_text' ).attr('value', file_name); 
+                                            $( '.cmd_check' ).change(function() {
+                                                var file_name = $(this).attr('title');
+                                                if ($(this).is(':checked')) {
+                                                    //alert('Checked');
+                                                    $( '#rename_text' ).attr('value', file_name);
+                                                } else {
+                                                    //alert('Unchecked');
+                                                    $( '#rename_text' ).attr('value','');
+                                                }
+                                            });
                                         });
                                     });
                                 </script>
