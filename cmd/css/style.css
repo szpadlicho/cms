@@ -25,6 +25,7 @@ body{
 	font-family: 'Dosis', sans-serif;
 	font-size: 14px;
 	font-weight: 300;
+    background-color: white;
 }
 #place-holder {
     width: 71.42em;
