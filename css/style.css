@@ -9,7 +9,7 @@ body{
 	font-family: 'Dosis', sans-serif;
 	font-size: 14px;
 	font-weight: 300;
-	overflow-x:hidden;
+	#overflow-x:hidden;
 }
 a { /*zmieniam na kolor body*/
     color: inherit;

@@ -48,8 +48,7 @@ if (isset($_POST['download']) && (! empty($_POST['files']) || ! empty($_POST['fo
 		}
 		$download=new Download('multi_files.zip');
 		$download->set_header();
-		$download->get_file();		
-	
+		$download->get_file();
 	} else {
 		echo "else";
 	}
