@@ -510,6 +510,14 @@ $get_setting = $obj_gen->__getRow(1);
 	<?php include ("../meta5.html"); ?>
 <?php //head_include ?>
 <?php //head_p1 ?>
+	<style type="text/css"></style>
+	<script type="text/javascript">
+        //var ids = '#menu';
+		<?php if(isset($_SESSION['menu_id'])){ ?>
+			//var ids = '<?php echo $_SESSION['menu_id']; ?>';
+		<?php } ?>
+        //var ids = localStorage.getItem('topMenu');
+	</script>
 	<script type="text/javascript" src="../js/menu.js"></script>
     <script type="text/javascript">
     $(document).ready(function(){
