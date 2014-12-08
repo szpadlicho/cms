@@ -49,3 +49,18 @@ $(function(){
         // });
     // });
 });
+$(function(){
+    /**
+    * Debugger function show hide
+    **/
+    var ww = $( '#debugger' ).width();
+    console.log(ww);
+    var wwp = 0.95 * ww ;
+    $( '#debugger' ).css( 'right',-wwp+'px' );
+    $( '#debugger' ).hover(function() {
+        $(this).animate({'right':'0px'}, 500);
+    }, function() {
+        $(this).animate({ 'right':-wwp+'px'}, 500);
+    });
+    
+});

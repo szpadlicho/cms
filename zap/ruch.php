@@ -34,7 +34,7 @@ Query string: <span id='1'></span>
 	<footer>
 	<!--<div id="count"></tr><div id="count2"></tr>-->
 	</footer>
-	<div id="debugged">
+	<div id="debugger">
 		<?php
 		//echo "post";
 		//var_dump (@$_POST);

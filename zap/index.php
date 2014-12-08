@@ -45,7 +45,7 @@ echo '</div>';
 	<footer>
 	<!--<div id="count"></div><div id="count2"></div>-->
 	</footer>
-	<div id="debugged">
+	<div id="debugger">
 		<?php
 		//echo "post";
 		//var_dump (@$_POST);

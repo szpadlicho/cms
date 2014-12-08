@@ -278,7 +278,7 @@ echo '</div>';
 	</section>
 	<footer>
 	</footer>
-	<div id="debugged">
+	<div id="debugger">
 		<?php
 		//echo "post";
 		//var_dump ($_POST);

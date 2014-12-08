@@ -99,6 +99,6 @@ h2{
 #titi{
     color: #fff;/*welcome to my..*/
 }
-#debugged{position:fixed; bottom:0px; left:0px; background-color:rgba(134,115,161,0.5); padding:10px; z-index:1000; color:white;}
-.catch{position:fixed; bottom:0px; left:0px; background-color:rgba(134,115,161,0.5); padding:10px; z-index:1001;}
+#debugger{position:fixed; bottom:0em; right:0em; background-color:rgba(134,115,161,0.5); padding:0.6em; z-index:1000; color:white;}
+.catch{position:fixed; bottom:0em; left:0em; background-color:rgba(134,115,161,0.5); padding:0.6em; z-index:1001;}
 .catch_span{display:block;}
