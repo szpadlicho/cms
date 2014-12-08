@@ -61,6 +61,14 @@ $(function(){
         $(this).animate({'right':'0px'}, 500);
     }, function() {
         $(this).animate({ 'right':-wwp+'px'}, 500);
+    });  
+});
+$(function(){
+    /**
+    * Resetuje pozycje top menu przy rejestracji
+    **/
+    //11.user -> if register click unset ( 'menu_id' => string 'top-menu-6' (length=10))
+    $('[name="user_register"]').click( function () {
+        localStorage.removeItem('topMenu');
     });
-    
 });

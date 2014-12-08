@@ -1,7 +1,8 @@
 <?php
+//ini_set('output_buffering', 'Off');//output_buffering = On
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-echo '<div class="catch">';
+//echo '<div class="catch">';
 if (isset($_POST['id_post'])) {
 	$_SESSION['id_post']=(int)$_POST['id_post'];
 }
@@ -94,10 +95,10 @@ class ProduktEditCls
             `product_description` = '".trim($description)."',
             `product_keywords` = '".trim($keywords)."'
 			WHERE 
-			`id`='".$what."'");		
-
-		echo "<div class=\"center\" >zapis udany</div>";	
+			`id`='".$what."'");	
 		unset ($con);	
+        //echo "<div class=\"center\" >zapis udany</div>";
+        return true;
 	}
 	public function showCategory()
     {
@@ -159,7 +160,6 @@ class ProduktEditCls
         fwrite($out_file, $content);
         fclose($out_file);
     }
-    //-----------------------------------------
     public function showAll()
     {
 		$con=$this->connectDB();
@@ -168,31 +168,28 @@ class ProduktEditCls
 		unset ($con);
 		return $q;
 	}
-    //----------------------------------------
 }
 $product = new ProduktEditCls();
 $product->__setTable('product_tab');
 if (isset($_POST['update'])) {
     $product->deleteOldFile();
 	$product->updateREC($_SESSION['id_post']);
-    //$product->addFileName($_SESSION['id_post']);    
     $product->createFile($_SESSION['id_post']);
+    //echo 'fsdfsdfs';
+    //output_buffering = On
+    //header('Location: product_list.php');
 }
 if (isset($_POST['delete'])) {
     $product->deleteOldFile();
     $product->deleteREC();        
     //dodac usuwanie galeri
     include_once('product_delete.php');
-    //$nr=array('../data/'.$_SESSION['id_post']);//musi byc array dla delete.php
-    //$del->delete_folder($nr);
     $del->rrmdir('../data/'.$_SESSION['id_post']);
     unset($_SESSION['id_post']);
-    //ob_start();
-    //header('Location: product_list.php');
-    //ob_end_flush();
-    echo("<script>location.href = 'product_list.php';</script>");
+    header('Location: product_list.php');
+    //echo("<script>location.href = 'product_list.php';</script>");
 }
-echo '</div>';
+//echo '</div>';
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -201,8 +198,6 @@ echo '</div>';
 	<?php include ("meta5.html"); ?>
     <link href="../upload/uploadfile.css" rel="stylesheet">    
     <script src="../upload/jquery.uploadfile.js"></script>
-	<style type="text/css"></style>
-    <script type="text/javascript"></script>
 </head>
 <body>
 	<section id="place-holder">
@@ -336,7 +331,6 @@ echo '</div>';
 							<td>
                                 <?php $id = $_SESSION['id_post']; ?>
                                 <div class="upload_td_div"><?php include('../upload/up_large.php'); ?></div>
-                                <!--<div id="wyn1"></div>-->
                             </td>
 						</tr>
 						<tr>

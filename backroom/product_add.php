@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-echo '<div class="catch">';
+//echo '<div class="catch">';
 class ProduktSetCls 
 {
 	private $host='sql.bdl.pl';
@@ -78,12 +78,9 @@ class ProduktSetCls
             '".trim($description)."',
             '".trim($keywords)."'          
 			)");
-			echo "<div class=\"center\" >zapis udany</div>";
-		//}
-		//else{
-			//echo "<div class=\"center\" >zapis już istnieje</div>";
-		//}		
-		unset ($con);	
+		unset ($con);
+        //echo "<div class=\"center\" >zapis udany</div>";
+        return true;
 	}
 	public function showCategory()
     {
@@ -163,24 +160,19 @@ if (isset($_POST['save'])) {
 	$product->__setTable('product_tab');
 	$product->createREC($next_id);
 	$product->createFile($next_id);
-    //ob_start();
-    //header('Location: product_list.php');
-    //ob_end_flush();
-    echo("<script>location.href = 'product_list.php';</script>");
+    header('Location: product_list.php');
+    //echo("<script>location.href = 'product_list.php';</script>");
 }
 //echo 'next id is: '.$next_id;
-echo '</div>';
+//echo '</div>';
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
 	<title>Nowy</title>
 	<?php include ("meta5.html"); ?>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <link href="../upload/uploadfile.css" rel="stylesheet">    
     <script src="../upload/jquery.uploadfile.js"></script>
-	<style type="text/css"></style>
-	<script type="text/javascript"></script>
 </head>
 <body>
 	<section id="place-holder">				
