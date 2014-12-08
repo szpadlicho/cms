@@ -249,7 +249,7 @@ if (isset($_POST['delete'])) {
 </head>
 <body>
     <section id="place-holder">
-		<?php include ('menu_zap.php'); ?>
+		<?php include ('backroom-top-menu.php'); ?>
     
         <div class="center">
             Zarządzanie Bazą Danych

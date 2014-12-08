@@ -1,0 +1,43 @@
+#backroom-top-menu{
+    width:31em;
+	margin:0em auto;
+	font-size:1.5em;
+    line-height:1.5em;
+    color: rgb(111,26,153);
+    border: 1px solid silver;
+}
+#backroom-top-menu > ul {
+    list-style-type:none;
+}
+#backroom-top-menu > ul > li{
+    display:inline-block;
+    position:relative;
+    padding:0.3em 0.5em;
+    text-align:center;
+}
+#backroom-top-menu > ul > li:hover{
+    background-color: rgb(255,248,175);
+}
+#backroom-top-menu > ul > li > ul{
+    list-style-type:none;
+    visibility:hidden;
+    position:absolute;
+    left:-50%;
+    width:8em;
+    text-align:center;
+}
+
+#backroom-top-menu > ul > li:hover > ul{
+    visibility:visible;
+    position:absolute;   
+}
+#backroom-top-menu > ul > li > ul > li{
+    padding:0.3em 0.5em;
+    line-height:1.5em;
+}
+#backroom-top-menu > ul > li > ul > li:hover{
+    background-color: rgb(255,248,175);
+}
+.active{
+    color:lime;
+}

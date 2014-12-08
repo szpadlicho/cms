@@ -199,49 +199,14 @@ echo '</div>';
 <head>
 	<title>Edycja</title>
 	<?php include ("meta5.html"); ?>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>    
     <link href="../upload/uploadfile.css" rel="stylesheet">    
     <script src="../upload/jquery.uploadfile.js"></script>
 	<style type="text/css"></style>
-    
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>-->
-    <script type="text/javascript">
-        // $(document).ready(function () {
-            // //alert('redy');
-            // $('.upload_td_div').sortable({
-            // //$('.upload_td_div').children().uniqueId().end().sortable({
-                // axis: 'xy',
-                // stop: function (event, ui) {
-                    // var data = $(this).sortable('serialize');
-                    // $('#1').text(data);
-                    // $('#wyn1').text(data);
-                    // /*$.ajax({
-                            // data: oData,
-                        // type: 'POST',
-                        // url: '/your/url/here'
-                    // });*/
-            // }
-            // });
-        // });    
-    </script>
+    <script type="text/javascript"></script>
 </head>
 <body>
 	<section id="place-holder">
-    <!--
-    <ul class="upload_td_div">
-        <li id="item-0">Item 0</li>
-        <li id="item-1">Item 1</li>
-        <li id="item-2">Item 2</li>
-        <li id="item-3">Item 3</li>
-        <li id="item-3">Item 3</li>
-    </ul>
-    Query string: <span id='1'></span>
-    -->
-		<?php include ('menu_zap.php'); ?>
-        <?php
-
-        //var_dump($dir);       
-        ?>
+		<?php include ('backroom-top-menu.php'); ?>
 		<div>
 				<?php foreach ($product->showOne() as $wyn) { ?>
 				<form enctype="multipart/form-data" action="" method="POST" >
