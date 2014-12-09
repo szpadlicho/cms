@@ -1,6 +1,5 @@
 <?php
 session_start();
-echo '<div class="catch">';
 // if(isset($_POST['id_post'])){
 	// $_SESSION['id_post']=$_POST['id_post'];
 // }
@@ -63,8 +62,6 @@ class ProduktGetCls
 $produkt = new ProduktGetCls();
 $produkt->_setTable('product_tab');
 //$produkt->showAll();
-
-echo '</div>';
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">

@@ -40,31 +40,31 @@ echo '</div>';
 			<?php include ('backroom-top-menu.php'); ?>
 		</nav>
         <!--NEW-->
-		<div>
+		<div class="back-main-placeholder">
             <form enctype="multipart/form-data" action="" method="POST" >
                 <!--MAIN-->
-                <table class="table-bck table-category">
+                <table class="back-main-table table-category">
                     <tr>
                         <th>Nazwa Kategorii w górnym Menu</th>
-                        <th>Zapis</th>
+                        <td>
+                            <input id="" class="back-main-text" type="text" name="product_add_category_main" />
+                        </td>
                     </tr>
                     <tr>
+                        <th>Zapis</th>
                         <td>
-                            <input id="" class="text-cls" type="text" name="product_add_category_main" />
-                        </td>
-                        <td>
-                            <input id="" class="submit-cls" type="submit" name="save_main" value="Dodaj" />
+                            <input id="" class="back-main-submit" type="submit" name="save_main" value="Dodaj" />
                         </td>
                     </tr>
                     <tr>
                         <th>Ustawienia dla SEO</th>
                         <td>
-                            <input id="" class="seo-radio" type="radio" name="seo_setting" checked="checked" value="title-n_false" />Użyj globalnych ustawień.<br />
-                            <input id="" class="seo-radio" type="radio" name="seo_setting" value="title-n_true" />Użyj własnych ustawień (zalecane).
+                            <input id="" class="back-main-radio seo-radio" type="radio" name="seo_setting" checked="checked" value="title-n_false" />Użyj globalnych ustawień.<br />
+                            <input id="" class="back-main-radio seo-radio" type="radio" name="seo_setting" value="title-n_true" />Użyj własnych ustawień (zalecane).
                         </td>
                     </tr>
                 </table>
-                <table id="seo-table-new" class="table-bck table-category">                              
+                <table id="seo-table-new" class="back-main-table table-category">                              
                     <script type="text/javascript">
                         $(document).ready(function(){
                             $('input[type="radio"]').each(function() { 
@@ -97,7 +97,7 @@ echo '</div>';
                     </tr>  
                     <tr>
                         <td colspan="2">
-                            <input id="" class="text-cls seo-n-text" type="text" name="title" />
+                            <input id="" class="back-main-text seo-n-text" type="text" name="title" />
                         </td>
                     </tr>
                     <tr>
@@ -106,7 +106,7 @@ echo '</div>';
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input id="" class="text-cls seo-n-text" type="text" name="description" />
+                            <input id="" class="back-main-text seo-n-text" type="text" name="description" />
                         </td>
                     </tr>
                     <tr>
@@ -115,7 +115,7 @@ echo '</div>';
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input id="" class="text-cls seo-n-text" type="text" name="keywords" />
+                            <input id="" class="back-main-text seo-n-text" type="text" name="keywords" />
                         </td>
                     </tr>
                 </table>
@@ -129,7 +129,7 @@ echo '</div>';
 		if ($produkt->showCategory()) { ?>   
             <?php foreach ($produkt->showCategory() as $cat) { ?>
                 <form enctype="multipart/form-data" action="" method="POST" >
-                    <table class="table-bck table-category">                    
+                    <table class="back-main-table table-category">                    
                         <script type="text/javascript">
                             $(document).ready(function(){
                                 $('.ok').css({'display':'none'});                                    
@@ -150,21 +150,21 @@ echo '</div>';
                                 <?php echo $cat['id']; ?>
                             </td>
                             <td>
-                                <input id="main<?php echo $cat['id']; ?>" class="text-cls" type="text" name="update_txt" value="<?php echo $cat['product_category_main']; ?>" disabled="disabled" />
+                                <input id="main<?php echo $cat['id']; ?>" class="back-main-text" type="text" name="update_txt" value="<?php echo $cat['product_category_main']; ?>" disabled="disabled" />
                                                             
                             </td>
                             <td>
-                                <input id="" class="up-sub-main<?php echo $cat['id']; ?>" type="button" name="update_rec_main" value="Edytuj" />
-                                <input id="" class="delete-main<?php echo $cat['id']; ?>" type="submit" name="delete_rec_main" value="Usuń" />
+                                <input class="back-main-submit up-sub-main<?php echo $cat['id']; ?>" type="button" name="update_rec_main" value="Edytuj" />
+                                <input class="back-main-submit delete-main<?php echo $cat['id']; ?>" type="submit" name="delete_rec_main" value="Usuń" />
                                 <!--change-->
-                                <input id="ok-main<?php echo $cat['id']; ?>" class="ok" type="submit" name="ok_main" value="OK"/>
-                                <input id="anuluj-main<?php echo $cat['id']; ?>" class="ok" type="submit" name="anuluj" value="Anuluj"/>
+                                <input id="ok-main<?php echo $cat['id']; ?>" class="back-main-submit ok" type="submit" name="ok_main" value="OK"/>
+                                <input id="anuluj-main<?php echo $cat['id']; ?>" class="back-main-submit ok" type="submit" name="anuluj" value="Anuluj"/>
                                 <!--old-->
-                                <input id="" class="" type="hidden" name="hidden_old_rec_main" value="<?php echo $cat['product_category_main']; ?>" />
+                                <input class="" type="hidden" name="hidden_old_rec_main" value="<?php echo $cat['product_category_main']; ?>" />
                             </td>
                         </tr>
                     </table>       
-                    <table id="seo-table-edit-<?php echo $cat['id']; ?>" class="table-bck table-category seo-table-edit">
+                    <table id="seo-table-edit-<?php echo $cat['id']; ?>" class="back-main-table table-category seo-table-edit">
                         <script type="text/javascript">
                             $(document).ready(function(){
                                 $('.seo-table-edit').css({'display':'none'});
@@ -195,8 +195,8 @@ echo '</div>';
                         <tr>
                             <th>Ustawienia dla SEO</th>
                             <td>
-                                <input id="" class="seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==0 ? 'checked="checked"' : '' ; ?> value="title_false" />Użyj globalnych ustawień.<br />
-                                <input id="" class="seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==1 ? 'checked="checked"' : '' ; ?> value="title_true-<?php echo $cat['id']; ?>" />Użyj własnych ustawień (zalecane).
+                                <input class="back-main-radio seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==0 ? 'checked="checked"' : '' ; ?> value="title_false" />Użyj globalnych ustawień.<br />
+                                <input class="back-main-radio seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==1 ? 'checked="checked"' : '' ; ?> value="title_true-<?php echo $cat['id']; ?>" />Użyj własnych ustawień (zalecane).
                             </td>
                         </tr>
                         <tr>
@@ -205,7 +205,7 @@ echo '</div>';
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input id="" class="text-cls seo-e-text-<?php echo $cat['id']; ?>" type="text" name="title" value="<?php echo $cat['title']!=null ? $cat['title'] : 'brak' ; ?>" />
+                                <input class="back-main-text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="title" value="<?php echo $cat['title']!=null ? $cat['title'] : 'brak' ; ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -214,7 +214,7 @@ echo '</div>';
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input id="" class="text-cls seo-e-text-<?php echo $cat['id']; ?>" type="text" name="description" value="<?php echo $cat['description']!=null ? $cat['description'] : 'brak' ; ?>" />
+                                <input class="back-main-text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="description" value="<?php echo $cat['description']!=null ? $cat['description'] : 'brak' ; ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -223,7 +223,7 @@ echo '</div>';
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input id="" class="text-cls seo-e-text-<?php echo $cat['id']; ?>" type="text" name="keywords" value="<?php echo $cat['keywords']!=null ? $cat['keywords'] : 'brak' ; ?>" />
+                                <input class="back-main-text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="keywords" value="<?php echo $cat['keywords']!=null ? $cat['keywords'] : 'brak' ; ?>" />
                             </td>
                         </tr>
                     </table>

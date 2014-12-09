@@ -2,7 +2,6 @@
 //ini_set('output_buffering', 'Off');//output_buffering = On
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-//echo '<div class="catch">';
 if (isset($_POST['id_post'])) {
 	$_SESSION['id_post']=(int)$_POST['id_post'];
 }
@@ -189,7 +188,6 @@ if (isset($_POST['delete'])) {
     header('Location: product_list.php');
     //echo("<script>location.href = 'product_list.php';</script>");
 }
-//echo '</div>';
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -229,7 +227,13 @@ if (isset($_POST['delete'])) {
 						<tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                            <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                            </td>
+                        </tr>                        
+                        <tr>    
+                            <th>Usuń Produkt:</th>
+							<td colspan="3">
+                                <input id="" class="back-edit-submit" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 						<tr>
@@ -345,7 +349,7 @@ if (isset($_POST['delete'])) {
                                 });
                             </script>                            
                             <td colspan="3">
-                                <label><input id="" class="back-edit-radio seo-radio" type="radio" name="seo_setting" value="title_false" <?php echo $wyn['mod']==0 ? 'checked="checked"' : '' ; ?> />Użyj globalnych ustawień.</label>
+                                <label><input id="" class="back-edit-radio seo-radio" type="radio" name="seo_setting" value="title_false" <?php echo $wyn['mod']==0 ? 'checked="checked"' : '' ; ?> />Użyj globalnych ustawień.</label><br />
                                 <label><input id="" class="back-edit-radio seo-radio" type="radio" name="seo_setting" value="title_true" <?php echo $wyn['mod']==1 ? 'checked="checked"' : '' ; ?> />Użyj własnych ustawień (zalecane).</label>
                             </td>
 						</tr>
@@ -369,11 +373,13 @@ if (isset($_POST['delete'])) {
 						</tr>                        
                         <tr>
 							<th>Zapisz:</th>
-							<td>
+							<td colspan="3">
                                 <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
                             </td>
+                        </tr>                        
+                        <tr>    
                             <th>Usuń Produkt:</th>
-							<td>
+							<td colspan="3">
                                 <input id="" class="back-edit-submit" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>

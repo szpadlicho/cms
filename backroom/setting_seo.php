@@ -3,7 +3,6 @@
 //ini_set('xdebug.var_display_max_children', -1);
 //ini_set('xdebug.var_display_max_data', -1);
 header('Content-Type: text/html; charset=utf-8');
-echo '<div class="catch">';
 class GlobalSettingCls
 {
 	private $host='sql.bdl.pl';
@@ -19,108 +18,12 @@ class GlobalSettingCls
     {
 		$this->table=$tab_name;
 	}
-    // public function __setRow($row_name)
-    // {
-		// $this->row=$row_name;
-	// }
-    // public function _setPath($path)
-    // {
-		// $this->path=$path;
-	// }
 	public function connectDB()
     {
 		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
 		return $con;
 		unset ($con);
 	}
-    // public function deleteTB()//usuwam tabele
-    // {
-		// $con=$this->connectDB();
-        // $res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	        
-		// if(!$res)
-        // {
-            // unset ($con);
-            // echo "<div class=\"center\" >Tabela nie istnieje więc nie można jej usunąć</div>";
-        // }
-        // else
-        // {
-            // $result=$con->query("DROP TABLE `".$this->table."`"); //usowanie
-            // unset ($con);
-            // if($result)
-            // {
-                // echo "<div class=\"center\" >Delete: {$this->table} OK!</div>";
-            // }
-            // else
-            // {
-                // echo "<div class=\"center\" >Delete: {$this->table} ERROR!</div>";
-            // }
-        // }
-	// }
-    // public function createTB()//tworze tabele
-    // {
-		// $con=$this->connectDB();
-		// $res = $con->query("SELECT 1 FROM ".$this->table);/*zwraca false jesli tablica nie istnieje*/	
-		// if(!$res)
-        // {
-			// $result=$con->query("CREATE TABLE IF NOT EXISTS `".$this->table."`(
-			// `id` INTEGER AUTO_INCREMENT,
-			// PRIMARY KEY(`id`)
-			// )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1");
-            // if($result)
-            // {
-                // echo "<div class=\"center\" >Tworzenie tabeli: {$this->table} OK!</div>";
-                // //inicjacja tabeli
-                // $res=$con->query("ALTER TABLE `".$this->table."` ADD `mod` INT(11) ");
-                // $res=$con->query("INSERT INTO `".$this->table."`(
-                // `mod`
-                // ) VALUES (
-                // '0'
-                // )");               
-            // }
-            // else
-            // {
-                // echo "<div class=\"center\" >Tworzenie tabeli: {$this->table} ERROR!</div>";
-            // }
-		// }
-		// else
-        // {
-			// echo "<div class=\"center\" >Tabela już istnieje !</div>";
-		// }
-	// }
-    // public function addRow($name)
-    // {
-        // $this->_setRow($name);
-        // $con=$this->connectDB();
-        // $res=$con->query("ALTER TABLE `".$this->table."` ADD `".$this->row."` TEXT ");
-        // if($res)
-        // {
-            // echo "<div class=\"center\" >Dodanie kolumny: {$this->row} OK!</div>";
-        // }
-        // else
-        // {
-            // echo "<div class=\"center\" >Dodanie kolumny: {$this->row} ERROR!</div>";
-        // }
-    // }
-    // public function recRow($value)
-    // {
-        // /*zapis*/
-		// $con=$this->connectDB();
-		// $res=$con->exec("UPDATE `".$this->table."` 
-            // SET
-			// `".$this->row."` = '".trim($value)."'
-			// WHERE
-            // `id` = '1'
-            // ");
-        // if($res)
-        // {
-            // echo "<div class=\"center\" >Zapis: OK!</div>";
-            // echo "<div class=\"center\" >Last id: ".$con->lastInsertId()."</div>";
-        // }
-        // else
-        // {
-            // echo "<div class=\"center\" >Zapis: ERROR!</div>";
-        // }
-    // }
     public function __setRow($arr_val, $id)
     {
         $value ='';
@@ -172,7 +75,6 @@ if (isset($_POST['save'])) {//dodac usuwanie kodu html php itd......
     $setting_seo->__setRow($arr_val,1);
 }
 $get = $setting_seo->__getRow(1);
-echo '</div>';
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -189,87 +91,63 @@ echo '</div>';
         <form enctype="multipart/form-data" action="" method="POST" >
             <table class="back-seo-table">
                 <tr>
-                    <th>SEO Globalne Ustawienia</th>
+                    <th colspan="2">SEO Globalne Ustawienia</th>
                 </tr>
                 <tr>
-                    <th>Strona Głowna:</th>
+                    <th colspan="2">Strona Głowna:</th>
                 </tr>
                 <tr>
                     <th>Tytuł (Title)</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-text" type="text" name="global_title_index" value="<?php echo $get['global_title_index']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Słowa kluczowe (Keywords)</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-text" type="text" name="global_keywords_index" value="<?php echo $get['global_keywords_index']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Opis (Description)</th>
-                </tr>
-                <tr>
                     <td><textarea id="" class="back-seo-textarea" name="global_description_index" ><?php echo $get['global_description_index']; ?></textarea></td>
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-submit" type="submit" name="save" value="Zapisz" /></td>
                 </tr>
                 <tr>
-                    <th>Strona Kategorii:</th>
+                    <th colspan="2">Strona Kategorii:</th>
                 </tr>
                 <tr>
                     <th>Tytuł (Title)</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-text" type="text" name="global_title_category" value="<?php echo $get['global_title_category']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Słowa kluczowe (Keywords)</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-text" type="text" name="global_keywords_category" value="<?php echo $get['global_keywords_category']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Opis (Description)</th>
-                </tr>
-                <tr>
                     <td><textarea id="" class="back-seo-textarea" name="global_description_category" ><?php echo $get['global_description_category']; ?></textarea></td>
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-submit" type="submit" name="save" value="Zapisz" /></td>
                 </tr>
                 <tr>
-                    <th>Strona Towaru:</th>
+                    <th colspan="2">Strona Towaru:</th>
                 </tr>
                 <tr>
                     <th>Tytuł (Title)</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-text" type="text" name="global_title_product" value="<?php echo $get['global_title_product']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Słowa kluczowe (Keywords)</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-text" type="text" name="global_keywords_product" value="<?php echo $get['global_keywords_product']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Opis (Description)</th>
-                </tr>
-                <tr>
                     <td><textarea id="" class="back-seo-textarea" name="global_description_product" ><?php echo $get['global_description_product']; ?></textarea></td>
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
-                </tr>
-                <tr>
                     <td><input id="" class="back-seo-submit" type="submit" name="save" value="Zapisz" /></td>
                 </tr>                
             </table>

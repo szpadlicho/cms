@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-//echo '<div class="catch">';
 class ProduktSetCls 
 {
 	private $host='sql.bdl.pl';
@@ -164,7 +163,6 @@ if (isset($_POST['save'])) {
     //echo("<script>location.href = 'product_list.php';</script>");
 }
 //echo 'next id is: '.$next_id;
-//echo '</div>';
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -177,50 +175,37 @@ if (isset($_POST['save'])) {
 <body>
 	<section id="place-holder">				
 		<?php include ('backroom-top-menu.php'); ?>
-		<div>
+		<div class="back-add-placeholder">
             <form enctype="multipart/form-data" action="" method="POST" >
-                <table class="table-bck">
+                <table class="back-add-table">
                     <tr>
-                        <th>ID: <?php echo $next_id; ?></th>
-                    </tr>
-                    <tr>
+                        <th>ID:</th>
+                        <th><?php echo $next_id; ?></th>
                         <th>Nazwa:</th>
-                    </tr>
-                    <tr>
                         <td>
-                            <input id="" class="text-cls" type="text" name="product_name" />
+                            <input id="" class="back-add-text" type="text" name="product_name" />
                         </td>
                     </tr>
                     <tr>
                         <th>Cena:</th>
-                    </tr>
-                    <tr>
                         <td>
-                            <input id="" class="text-cls" type="text" name="product_price" />
+                            <input id="" class="back-add-text" type="text" name="product_price" />
                         </td>
-                    </tr>
-                    <tr>
                         <th>Ilość:</th>
-                    </tr>
-                    <tr>
                         <td>
-                            <input id="" class="text-cls" type="text" name="product_number" />
+                            <input id="" class="back-add-text" type="text" name="product_number" />
                         </td>
                     </tr>
                     <tr>
                         <th>Zapisz:</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="" class="submit-cls" type="submit" name="save" value="Zapisz" />
+                        <td colspan="3">
+                            <input id="" class="back-add-submit" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
-                        <th>Przypisz do Kategorii / Pozycji w górnym Menu:</th>
-                    </tr>
-                    <tr>
+                        <th>Przypisz do Kategorii<br />Pozycji w górnym Menu:</th>
                         <td>
-                            <select class="option-cls" name="product_category_main">
+                            <select class="back-add-select" name="product_category_main">
                                 <option></option>
                             <?php
                             $main= new ProduktSetCls();
@@ -235,13 +220,9 @@ if (isset($_POST['save'])) {
                             ?>
                             </select>
                         </td>
-                    </tr>
-                    <tr>
-                        <th>Przypisz do Podkategorii / Pozycji w lewym Menu:</th>
-                    </tr>
-                    <tr>
+                        <th>Przypisz do Podkategorii<br />Pozycji w lewym Menu:</th>
                         <td>
-                            <select class="option-cls" name="product_category_sub">
+                            <select class="back-add-select" name="product_category_sub">
                                 <option></option>
                             <?php
                             $sub = new ProduktSetCls();
@@ -259,50 +240,42 @@ if (isset($_POST['save'])) {
                     </tr>
                     <tr>
                         <th>Description:</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <textarea id="" class="" type="" name="product_description_small" ></textarea>
+                        <td colspan="3">
+                            <textarea id="" class="back-add-textarea" name="product_description_small" ></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>Zapisz:</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="" class="submit-cls" type="submit" name="update" value="Zapisz" />
+                        <td  colspan="3">
+                            <input id="" class="back-add-submit" type="submit" name="update" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
                         <th>Opis:</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <textarea id="" class="" type="" name="product_description_large" ></textarea>
+                        <td colspan="3">
+                            <textarea id="" class="back-add-textarea" name="product_description_large" ></textarea>
                         </td>
                     </tr>
                     <tr>
-                        <th>Miniaturka:</th>
+                        <th colspan="4">Miniaturka:</th>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="upload_td_div"><?php include('../upload/up_small.php'); ?></div>
+                        <td colspan="4">
+                            <div class="back-add-div"><?php include('../upload/up_small.php'); ?></div>
                         </td>
                     </tr>
                     <tr>
-                        <th>Zdjęcia:</th>
+                        <th colspan="4">Zdjęcia:</th>
                     </tr>
                     <tr>
-                        <td>
-                            <div class="upload_td_div"><?php include('../upload/up_large.php'); ?></div>
+                        <td colspan="4">
+                            <div class="back-add-div"><?php include('../upload/up_large.php'); ?></div>
                         </td>
                     </tr>
                     <tr>
                         <th>Zapisz:</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="" class="submit-cls" type="submit" name="save" value="Zapisz" />
+                        <td colspan="3">
+                            <input id="" class="back-add-submit" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
@@ -329,43 +302,39 @@ if (isset($_POST['save'])) {
                                 }); 
                             });
                         </script>                            
-                    </tr>  
-                    <tr>
-                        <td class="seo-td">
-                            <input id="" class="seo-radio" type="radio" name="seo_setting" checked="checked" value="title_false" />Użyj globalnych ustawień.<br />
-                            <input id="" class="seo-radio" type="radio" name="seo_setting" value="title_true" />Użyj własnych ustawień (zalecane).
+                        <td colspan="3">
+                            <label><input id="" class="back-add-radio seo-radio" type="radio" name="seo_setting" checked="checked" value="title_false" />Użyj globalnych ustawień.</label><br />
+                            <label><input id="" class="back-add-radio seo-radio" type="radio" name="seo_setting" value="title_true" />Użyj własnych ustawień (zalecane).</label>
                         </td>
                     </tr>
                     <tr>
                         <th>Title</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="" class="text-cls seo-text" type="text" name="title" />
+                        <td colspan="3">
+                            <input id="" class="back-add-text seo-text" type="text" name="title" />
                         </td>
                     </tr>
                     <tr>
                         <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="" class="text-cls seo-text" type="text" name="description" />
+                        <td colspan="3">
+                            <input id="" class="back-add-text seo-text" type="text" name="description" />
                         </td>
                     </tr>
                     <tr>
                         <th>Keywords</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="" class="text-cls seo-text" type="text" name="keywords" />
+                        <td colspan="3">
+                            <input id="" class="back-add-text seo-text" type="text" name="keywords" />
                         </td>
                     </tr>                        
                     <tr>
                         <th>Zapisz:</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input id="" class="submit-cls" type="submit" name="save" value="Zapisz" />
+                        <td colspan="3">
+                            <input id="" class="back-add-submit" type="submit" name="save" value="Zapisz" />
+                        </td>
+                    </tr>                        
+                    <tr>    
+                        <th>Anuluj:</th>
+                        <td colspan="3">
+                            <input id="" class="back-add-submit" type="submit" name="cancel" value="Anuluj" />
                         </td>
                     </tr>
                 </table>

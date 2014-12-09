@@ -1,7 +1,11 @@
 #place-holder{
     #border: 1px solid red;
 }
-.back-edit-placeholder{
+.back-add-placeholder,
+.back-edit-placeholder,
+.back-seo-placeholder,
+.back-main-placeholder,
+.back-sub-placeholder{
     #text-align: center;
     #border: 1px solid black;
 }
@@ -9,32 +13,62 @@ table, th, td {
     #border: 1px solid black;
     vertical-align:middle;
 }
-.back-edit-table{
+.back-add-table,
+.back-edit-table,
+.back-seo-table,
+.back-main-table,
+.back-sub-table{
     width:46.5em; /*same as top menu ph*/
     margin:0.1em auto;
     border: 1px solid lime;
 }
+.back-add-table th,
+.back-add-table td,
 .back-edit-table th,
-.back-edit-table td{
+.back-edit-table td,
+.back-seo-table th,
+.back-seo-table td,
+.back-main-table th,
+.back-main-table td,
+.back-sub-table th,
+.back-sub-table td{
     #border: 1px solid lime;
-    height:1.5em;
     padding:0.5em;
 }
+.back-add-table th,
 .back-edit-table th {
-    width:8em;
+    width:15%;
     font-weight: bold;
 }
-.back-edit-table input, .back-edit-table textarea, .back-edit-table select{
+.back-seo-table th {
+    width:30%;
+    font-weight: bold;
+}
+.back-add-table td,
+.back-edit-table td {
+    width:35%;
+}
+.back-seo-table td {
+    width:70%;
+}
+.back-add-table input, .back-add-table textarea, .back-add-table select,
+.back-edit-table input, .back-edit-table textarea, .back-edit-table select,
+.back-seo-table input, .back-seo-table textarea, .back-seo-table select,
+.back-main-table input, .back-main-table textarea, .back-main-table select,
+.back-sub-table input, .back-sub-table textarea, .back-sub-table select{
     width:99%;
     height:99%;
 }
-.back-edit-table [type=radio]{
+input[type=radio]{
     width:0.5em;
     height:0.5em;
 }
-.back-edit-table textarea{
+.back-add-table textarea,
+.back-edit-table textarea,
+.back-seo-table textarea{
     height:10em;
 }
+.back-add-table .back-add-div,
 .back-edit-table .back-edit-div{
     min-height:10em;
 }
@@ -44,7 +78,8 @@ option,
 input[type=text], 
 input[type=checkbox],
 input[type=radio],
-input[type=submit] {
+input[type=submit],
+input[type=button]{
     margin:0.1em;
     background-color: #ffffff;
     border: 1px solid #cccccc;
@@ -68,7 +103,8 @@ input[type=checkbox]:focus,
 input[type=checkbox]:checked,
 input[type=radio]:focus,
 input[type=radio]:checked,
-input[type=submit]:hover {
+input[type=submit]:hover,
+input[type=button]:hover{
     border-color: rgba(82, 168, 236, 0.8);
     outline: 0;
     outline: thin dotted \9;
@@ -77,7 +113,8 @@ input[type=submit]:hover {
      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
 }
-input[type=submit] {
+input[type=submit],
+input[type=button]{
     background-color: #eee;
     border-color: rgba(238,238,238, 0.8);
     outline: 0;

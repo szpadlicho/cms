@@ -63,7 +63,11 @@ class CategorySetCls
     public function updateREC($rec,$what,$row_name)
     {
 		/*zapis*/
-        $_POST['seo_setting']!='title_false' ? $mod=1 : $mod=0 ;//bo true mam z -id
+        if (isset($_POST['seo_setting'])) {/**********moze generowac blad************test wyszed dobrze*************/
+            $_POST['seo_setting']!='title_false' ? $mod=1 : $mod=0 ;//bo true mam z -id
+        } else {
+            $mod=0;
+        }
         isset($_POST['title']) ? $title = $_POST['title'] : $title = null ;
         isset($_POST['description']) ? $description = substr($_POST['description'], 0, 200) : $description = null ;
         isset($_POST['keywords']) ? $keywords = $_POST['keywords'] : $keywords = null ;

@@ -1,5 +1,5 @@
 #backroom-top-menu{
-    width:31em;
+    width:37em;
 	margin:0em auto;
 	font-size:1.5em;
     line-height:1.5em;
@@ -8,12 +8,14 @@
 }
 #backroom-top-menu > ul {
     list-style-type:none;
+    cursor: default;
 }
 #backroom-top-menu > ul > li{
     display:inline-block;
     position:relative;
     padding:0.3em 0.5em;
     text-align:center;
+    #width:
 }
 #backroom-top-menu > ul > li:hover{
     background-color: rgb(255,248,175);
@@ -23,8 +25,9 @@
     visibility:hidden;
     position:absolute;
     left:-50%;
-    width:8em;
+    width:200%;/*sprawimy że będzie on o półtora raza szerszy od swojego elementu rodzica, czyli elementu*/
     text-align:center;
+    background-color: rgb(255,255,255);
 }
 
 #backroom-top-menu > ul > li:hover > ul{

@@ -77,6 +77,8 @@ $(document).ready(function(){
         $('#'+ids).addClass('active');
         $('#wrapper1').css({'border-color':'rgb(189,224,67)'});
         $('#wrapper1-1').css({'color':'rgb(189,224,67)'});
+    }else if( ids == 'top-menu-backroom'){
+        // nothing
     }else{
         $('#wrapper4').css({'border-bottom':'5px solid rgb(40,40,40)'});
         $('#wrapper3, #'+ids).css('background','linear-gradient(to bottom, rgb(248,248,248) 0%,rgb(185,185,185) 100%)');

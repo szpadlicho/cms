@@ -1,6 +1,5 @@
 <?php
 session_start();
-echo '<div class="catch">';
 class ProduktSetCls 
 {
 	private $host='sql.bdl.pl';
@@ -28,7 +27,6 @@ class ProduktSetCls
 		$con=$this->connectDB();
 	}
 }
-echo '</div>';
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
