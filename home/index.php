@@ -370,6 +370,9 @@ class Connect_Basket extends Connect
     }
     public function basketAdd($table, $pr_id, $amount)
     {
+        /**
+        * jesli produkt juz jest w koszyku zwiekszyc tylko ilosc
+        **/
         $con = $this->connectDB();
         $res = $con->query(
             "CREATE TABLE IF NOT EXISTS `".$table."`(
@@ -380,7 +383,21 @@ class Connect_Basket extends Connect
             PRIMARY KEY(`id`)
             )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
             );
-        $res = $con->query(
+        // tu musze pobrac pole o pr_id jesli jest pobrac i zwiekszyc tylko amount (update)
+        // jesli nie to zostawic normalnie !it done
+        $check = $con->query("SELECT `amount` FROM `".$table."` WHERE `pr_id` = '".$pr_id."'");
+        $check = $check->fetch(PDO::FETCH_ASSOC);
+        //var_dump($check);
+        if ($check) {// if exist sum and add only amount
+            $value = $check['amount'] + $amount;
+            $res = $con->query("UPDATE `".$table."` 
+            SET
+			`amount` = '".$value."'
+			WHERE
+            `pr_id` = '".$pr_id."'
+            ");
+        } else {// if product not exist in basket yet 
+            $res = $con->query(
             "INSERT INTO `".$table."`(
             `pr_id`,
             `amount`
@@ -389,6 +406,7 @@ class Connect_Basket extends Connect
             '".$amount."'
             )"
             );
+        }
         //$q = $con->query("SELECT * FROM `".$table."`");
         //$q = $q->fetch(PDO::FETCH_ASSOC);
 		unset ($con);
@@ -652,7 +670,32 @@ $get_setting = $obj_gen->__getRow(1);
 					</div>	
 				</div>	
 			</nav>
-			<div id="wrapper4">               
+			<div id="wrapper4">    
+                <script type="text/javascript">
+                    $(function(){
+                        /**
+                        * behawior when product-square basket-field click in home position
+                        **/
+                        // $( '.basket-field' ).click(function(e){//stop follow link when amount click
+                            // $( '.square-link' ).click(function(e){
+                                // e.preventDefault();
+                                // //alert('sdf');
+                                // //console.log('a follow blocked');
+                            // });
+                        // });
+                        $(".square-link").on('click', '.basket-field.text', function(e) {//stop follow link when amount click
+                            e.preventDefault();
+                            //console.log('a follow blocked');
+                        });
+                        // $(".square-link").on('click', '.basket-field.button', function(e) {//stop follow link when add click
+                            // e.preventDefault();
+                            // //console.log('a follow blocked');
+                        // });
+                        $(".basket-field.text").mousedown(function () { //set cursor on the end text input !important
+                            this.setSelectionRange(this.value.length, this.value.length);    
+                        });
+                    });
+                </script>
                 <?php
                 //echo $_SERVER['PHP_SELF'];
                 //echo basename(__FILE__);

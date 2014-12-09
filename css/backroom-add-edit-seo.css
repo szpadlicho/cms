@@ -81,6 +81,7 @@ input[type=radio],
 input[type=submit],
 input[type=button]{
     margin:0.1em;
+    padding:0.2em;
     background-color: #ffffff;
     border: 1px solid #cccccc;
     -webkit-border-radius: 3px;

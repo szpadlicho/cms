@@ -46,7 +46,7 @@ class ProduktSetCls
 		//$q = $con->query("SELECT * FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
 		//$count = $q -> fetch();/*konwertor na tablice*/
 		//if(!$count){
-			$con->exec("INSERT INTO `".$this->table."`(
+			$feedback = $con->exec("INSERT INTO `".$this->table."`(
 			`product_name`, 
 			`product_price`, 
 			`product_number`,
@@ -79,7 +79,11 @@ class ProduktSetCls
 			)");
 		unset ($con);
         //echo "<div class=\"center\" >zapis udany</div>";
-        return true;
+        if ($feedback) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 	public function showCategory()
     {
@@ -157,7 +161,7 @@ $id = $next_id;//for upload system
 if (isset($_POST['save'])) {
 	$product = new ProduktSetCls();
 	$product->__setTable('product_tab');
-	$product->createREC($next_id);
+	$success = $product->createREC($next_id);
 	$product->createFile($next_id);
     header('Location: product_list.php');
     //echo("<script>location.href = 'product_list.php';</script>");
@@ -345,6 +349,18 @@ if (isset($_POST['save'])) {
 	<footer>
 	<!--<div id="count"></div><div id="count2"></div>-->
 	</footer>
+    <div class="catch">
+        <?php
+            if (isset($success)) {
+                //echo 'isset';
+                if ($success == true) {
+                    echo 'Zapis udany';
+                } else {
+                    echo 'Błąd';
+                }
+            }
+        ?>
+    </div>
 	<div id="debugger">
 		<?php
 		echo "post";

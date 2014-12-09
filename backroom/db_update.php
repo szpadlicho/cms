@@ -17,23 +17,23 @@ class UpgradeCls
 	private $path;
 	public function __setTable($tab_name)
     {
-		$this->table=$tab_name;
+		$this->table = $tab_name;
 	}
     public function _setRow($row_name)
     {
-		$this->row=$row_name;
+		$this->row = $row_name;
 	}
 	public function connectDB()
     {
-		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
+		$con = new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
 		return $con;
 		unset ($con);
 	}
     public function addRow($name)
     {
         $this->_setRow($name);
-        $con=$this->connectDB();
-        $res=$con->query("ALTER TABLE `".$this->table."` ADD `".$this->row."` TEXT ");
+        $con = $this->connectDB();
+        $res = $con->query("ALTER TABLE `".$this->table."` ADD `".$this->row."` TEXT ");
         if ($res) {
             echo "<div class=\"center\" >Dodanie kolumny: {$this->row} OK!</div>";
         } else {
@@ -43,8 +43,8 @@ class UpgradeCls
     public function recRow($value)//wgranie zawartości wywołane wewnątrz funkcji _getString
     {
         //zapis
-		$con=$this->connectDB();
-		$res=$con->query("UPDATE `".$this->table."` 
+		$con = $this->connectDB();
+		$res = $con->query("UPDATE `".$this->table."` 
             SET
 			`".$this->row."` = '".$value."'
 			WHERE
@@ -61,8 +61,8 @@ class UpgradeCls
     public function recRowAll($value)//wgranie zawartości wywołane wewnątrz funkcji _getString
     {
         //zapis
-		$con=$this->connectDB();
-		$res=$con->query("UPDATE `".$this->table."` 
+		$con = $this->connectDB();
+		$res = $con->query("UPDATE `".$this->table."` 
             SET
 			`".$this->row."` = '".$value."'
             ");
@@ -76,12 +76,12 @@ class UpgradeCls
     }   
     public function addRowDynamic($arr_row)
     {
-        $con=$this->connectDB();
+        $con = $this->connectDB();
         $content = '';
         foreach ($arr_row as $name => $value) {
             $content .= 'ADD COLUMN `'.$name.'` '.$value.',';
         }       
-        $res=$con->query("ALTER TABLE `".$this->table."` ".$content." ADD COLUMN `mod2` TEXT");
+        $res = $con->query("ALTER TABLE `".$this->table."` ".$content." ADD COLUMN `mod2` TEXT");
         if ($res) {
             echo "<div class=\"center\" >Dodanie kolumny: add OK!</div>";
         } else {
@@ -90,9 +90,9 @@ class UpgradeCls
     }
     public function addRowDynamic2($arr_row)
     {
-        $con=$this->connectDB();
+        $con = $this->connectDB();
         foreach ($arr_row as $name => $value) {
-            $res=$con->query("ALTER TABLE `".$this->table."` ADD COLUMN `".$name."` ".$value."");
+            $res = $con->query("ALTER TABLE `".$this->table."` ADD COLUMN `".$name."` ".$value."");
             if ($res) {
                 echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." OK!</div>";
             } else {

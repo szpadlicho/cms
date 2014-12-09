@@ -74,30 +74,34 @@ class ProduktEditCls
         isset($_POST['title']) ? $title = $_POST['title'] : $title = null ;
         isset($_POST['description']) ? $description = substr($_POST['description'], 0, 200) : $description = null ;
         isset($_POST['keywords']) ? $keywords = $_POST['keywords'] : $keywords = null ;
-		$con=$this->connectDB();        
-			$con->query("
-			UPDATE 
-			`".$this->table."`   
-			SET 
-			`product_name` = '".$_POST['product_name']."', 
-			`product_price` = '".str_replace(",",".",$_POST['product_price'])."', 
-			`product_number` = '".$_POST['product_number']."',
-			`product_category_main` = '".$_POST['product_category_main']."',
-			`product_category_sub` = '".$_POST['product_category_sub']."',
-			`product_description_small` = '".$_POST['product_description_small']."',
-			`product_description_large` = '".$_POST['product_description_large']."',
-			`product_foto_mini` = '0',
-			`product_foto_large` = '0',
-			`mod` = '".$mod."',
-            `file_name` = '".$this->createFileName($what)."',
-            `product_title` = '".trim($title)."',
-            `product_description` = '".trim($description)."',
-            `product_keywords` = '".trim($keywords)."'
-			WHERE 
-			`id`='".$what."'");	
+		$con = $this->connectDB();        
+			$feedback = $con->query("
+                UPDATE 
+                `".$this->table."`   
+                SET 
+                `product_name` = '".$_POST['product_name']."', 
+                `product_price` = '".str_replace(",",".",$_POST['product_price'])."', 
+                `product_number` = '".$_POST['product_number']."',
+                `product_category_main` = '".$_POST['product_category_main']."',
+                `product_category_sub` = '".$_POST['product_category_sub']."',
+                `product_description_small` = '".$_POST['product_description_small']."',
+                `product_description_large` = '".$_POST['product_description_large']."',
+                `product_foto_mini` = '0',
+                `product_foto_large` = '0',
+                `mod` = '".$mod."',
+                `file_name` = '".$this->createFileName($what)."',
+                `product_title` = '".trim($title)."',
+                `product_description` = '".trim($description)."',
+                `product_keywords` = '".trim($keywords)."'
+                WHERE 
+                `id`='".$what."'");	
 		unset ($con);	
         //echo "<div class=\"center\" >zapis udany</div>";
-        return true;
+        if ($feedback) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 	public function showCategory()
     {
@@ -172,9 +176,9 @@ $product = new ProduktEditCls();
 $product->__setTable('product_tab');
 if (isset($_POST['update'])) {
     $product->deleteOldFile();
-	$product->updateREC($_SESSION['id_post']);
+	$success = $product->updateREC($_SESSION['id_post']);
     $product->createFile($_SESSION['id_post']);
-    //echo 'fsdfsdfs';
+    //echo $success;
     //output_buffering = On
     //header('Location: product_list.php');
 }
@@ -392,6 +396,18 @@ if (isset($_POST['delete'])) {
 	<footer>
 	<!--<div id="count"></tr><div id="count2"></tr>-->
 	</footer>
+    <div class="catch">
+        <?php
+            if (isset($success)) {
+                //echo 'isset';
+                if ($success == true) {
+                    echo 'Zapis udany';
+                } else {
+                    echo 'Błąd';
+                }
+            }
+        ?>
+    </div>
 	<div id="debugger">
 		<?php
 		echo "post";
