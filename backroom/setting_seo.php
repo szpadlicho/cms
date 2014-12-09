@@ -185,9 +185,9 @@ echo '</div>';
 <body>
 <section id="place-holder">	
 	<?php include ('backroom-top-menu.php'); ?>
-    <div>
+    <div class="back-seo-placeholder">
         <form enctype="multipart/form-data" action="" method="POST" >
-            <table class="table-bck">
+            <table class="back-seo-table">
                 <tr>
                     <th>SEO Globalne Ustawienia</th>
                 </tr>
@@ -198,25 +198,25 @@ echo '</div>';
                     <th>Tytuł (Title)</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="text-cls" type="text" name="global_title_index" value="<?php echo $get['global_title_index']; ?>" /></td>
+                    <td><input id="" class="back-seo-text" type="text" name="global_title_index" value="<?php echo $get['global_title_index']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Słowa kluczowe (Keywords)</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="text-cls" type="text" name="global_keywords_index" value="<?php echo $get['global_keywords_index']; ?>" /></td>
+                    <td><input id="" class="back-seo-text" type="text" name="global_keywords_index" value="<?php echo $get['global_keywords_index']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Opis (Description)</th>
                 </tr>
                 <tr>
-                    <td><textarea id="" class="" type="" name="global_description_index" ><?php echo $get['global_description_index']; ?></textarea></td>
+                    <td><textarea id="" class="back-seo-textarea" name="global_description_index" ><?php echo $get['global_description_index']; ?></textarea></td>
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="submit-cls" type="submit" name="save" value="Zapisz" /></td>
+                    <td><input id="" class="back-seo-submit" type="submit" name="save" value="Zapisz" /></td>
                 </tr>
                 <tr>
                     <th>Strona Kategorii:</th>
@@ -225,25 +225,25 @@ echo '</div>';
                     <th>Tytuł (Title)</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="text-cls" type="text" name="global_title_category" value="<?php echo $get['global_title_category']; ?>" /></td>
+                    <td><input id="" class="back-seo-text" type="text" name="global_title_category" value="<?php echo $get['global_title_category']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Słowa kluczowe (Keywords)</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="text-cls" type="text" name="global_keywords_category" value="<?php echo $get['global_keywords_category']; ?>" /></td>
+                    <td><input id="" class="back-seo-text" type="text" name="global_keywords_category" value="<?php echo $get['global_keywords_category']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Opis (Description)</th>
                 </tr>
                 <tr>
-                    <td><textarea id="" class="" type="" name="global_description_category" ><?php echo $get['global_description_category']; ?></textarea></td>
+                    <td><textarea id="" class="back-seo-textarea" name="global_description_category" ><?php echo $get['global_description_category']; ?></textarea></td>
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="submit-cls" type="submit" name="save" value="Zapisz" /></td>
+                    <td><input id="" class="back-seo-submit" type="submit" name="save" value="Zapisz" /></td>
                 </tr>
                 <tr>
                     <th>Strona Towaru:</th>
@@ -252,25 +252,25 @@ echo '</div>';
                     <th>Tytuł (Title)</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="text-cls" type="text" name="global_title_product" value="<?php echo $get['global_title_product']; ?>" /></td>
+                    <td><input id="" class="back-seo-text" type="text" name="global_title_product" value="<?php echo $get['global_title_product']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Słowa kluczowe (Keywords)</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="text-cls" type="text" name="global_keywords_product" value="<?php echo $get['global_keywords_product']; ?>" /></td>
+                    <td><input id="" class="back-seo-text" type="text" name="global_keywords_product" value="<?php echo $get['global_keywords_product']; ?>" /></td>
                 </tr>
                 <tr>
                     <th>Opis (Description)</th>
                 </tr>
                 <tr>
-                    <td><textarea id="" class="" type="" name="global_description_product" ><?php echo $get['global_description_product']; ?></textarea></td>
+                    <td><textarea id="" class="back-seo-textarea" name="global_description_product" ><?php echo $get['global_description_product']; ?></textarea></td>
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
                 </tr>
                 <tr>
-                    <td><input id="" class="submit-cls" type="submit" name="save" value="Zapisz" /></td>
+                    <td><input id="" class="back-seo-submit" type="submit" name="save" value="Zapisz" /></td>
                 </tr>                
             </table>
         </form>

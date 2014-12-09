@@ -77,7 +77,7 @@ echo '</div>';
 <body>
 	<section id="place-holder">		
 		<?php include ('backroom-top-menu.php'); ?>
-		<div>
+		<div class="back-list-placeholder">
 					<?php
 					if ($produkt->showAll()) { ?>
 						<table id="table-list" class="back-list-table">

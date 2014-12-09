@@ -11,13 +11,14 @@ table, th, td {
 }
 .back-edit-table{
     width:46.5em; /*same as top menu ph*/
-    margin:0 auto;
-    #border: 1px solid lime;
+    margin:0.1em auto;
+    border: 1px solid lime;
 }
 .back-edit-table th,
 .back-edit-table td{
     #border: 1px solid lime;
     height:1.5em;
+    padding:0.5em;
 }
 .back-edit-table th {
     width:8em;
