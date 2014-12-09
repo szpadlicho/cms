@@ -1,0 +1,88 @@
+#place-holder{
+    #border: 1px solid red;
+}
+.back-edit-placeholder{
+    #text-align: center;
+    #border: 1px solid black;
+}
+table, th, td {
+    #border: 1px solid black;
+    vertical-align:middle;
+}
+.back-edit-table{
+    width:46.5em; /*same as top menu ph*/
+    margin:0 auto;
+    #border: 1px solid lime;
+}
+.back-edit-table th,
+.back-edit-table td{
+    #border: 1px solid lime;
+    height:1.5em;
+}
+.back-edit-table th {
+    width:8em;
+    font-weight: bold;
+}
+.back-edit-table input, .back-edit-table textarea, .back-edit-table select{
+    width:99%;
+    height:99%;
+}
+.back-edit-table [type=radio]{
+    width:0.5em;
+    height:0.5em;
+}
+.back-edit-table textarea{
+    height:10em;
+}
+.back-edit-table .back-edit-div{
+    min-height:10em;
+}
+textarea, 
+select,
+option,
+input[type=text], 
+input[type=checkbox],
+input[type=radio],
+input[type=submit] {
+    margin:0.1em;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+     -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+      -ms-transition: border linear 0.2s, box-shadow linear 0.2s;
+       -o-transition: border linear 0.2s, box-shadow linear 0.2s;
+          transition: border linear 0.2s, box-shadow linear 0.2s;
+}
+textarea:focus, 
+select:focus,
+option:focus,
+input[type=text]:focus, 
+input[type=checkbox]:focus,
+input[type=checkbox]:checked,
+input[type=radio]:focus,
+input[type=radio]:checked,
+input[type=submit]:hover {
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    /* IE6-9 */
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+input[type=submit] {
+    background-color: #eee;
+    border-color: rgba(238,238,238, 0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    /* IE6-9 */
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238,238,238, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238,238,238, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238,238,238, 0.6);
+}

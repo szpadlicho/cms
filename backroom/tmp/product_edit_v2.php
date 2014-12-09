@@ -228,8 +228,12 @@ if (isset($_POST['delete'])) {
 						</tr>
 						<tr>
 							<th>Zapisz:</th>
-							<td colspan="3">
+							<td>
                             <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                            </td>
+                            <th>Usuń Produkt:</th>
+							<td>
+                                <input id="" class="back-edit-submit" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 						<tr>

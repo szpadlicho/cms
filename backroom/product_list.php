@@ -52,7 +52,7 @@ class ProduktGetCls
                 }
                 closedir($folder);
                 $losowy=rand(0,count(@$obrazki)-1);//losuje obrazek
-                echo '<img class="mini_image_table_list" src="'.$dir_mini.@$obrazki[$losowy].'" alt="mini image" /><br />';
+                echo '<img class="back-list-mini-image" src="'.$dir_mini.@$obrazki[$losowy].'" alt="mini image" /><br />';
                 unset($obrazki);
             }                                               
         } else {
@@ -80,7 +80,7 @@ echo '</div>';
 		<div>
 					<?php
 					if ($produkt->showAll()) { ?>
-						<table id="table-list" class="table-bck">
+						<table id="table-list" class="back-list-table">
 							<tr>
 								<th>
 									ID

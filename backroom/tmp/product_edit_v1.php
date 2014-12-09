@@ -202,122 +202,143 @@ if (isset($_POST['delete'])) {
 <body>
 	<section id="place-holder">
 		<?php include ('backroom-top-menu.php'); ?>
-        <div class="back-edit-placeholder">
-            <?php foreach ($product->showOne() as $wyn) { ?>
-                <form enctype="multipart/form-data" method="POST">
-                    <table class="back-edit-table">
+		<div>
+				<?php foreach ($product->showOne() as $wyn) { ?>
+				<form enctype="multipart/form-data" action="" method="POST" >
+					<table class="table-bck">
                         <tr>
-							<th>ID:</th>
-                            <td>
-                                <?php echo $wyn['id'] ?>
-                            </td>
-                            <th>Nazwa:</th>
+							<th>ID: <?php echo $wyn['id'] ?></th>
+						</tr>
+						<tr>
+							<th>Nazwa:</th>
+						</tr>
+						<tr>
 							<td>
-                                <input id="" class="back-edit-text" type="text" name="product_name" value="<?php echo $wyn['product_name'] ?>" />
+                                <input id="" class="text-cls" type="text" name="product_name" value="<?php echo $wyn['product_name'] ?>" />
                             </td>
 						</tr>
 						<tr>
 							<th>Cena:</th>
+						</tr>
+						<tr>
 							<td>
-                                <input id="" class="back-edit-text" type="text" name="product_price" value="<?php echo $wyn['product_price'] ?>" />
+                                <input id="" class="text-cls" type="text" name="product_price" value="<?php echo $wyn['product_price'] ?>" />
                             </td>
-                            <th>Ilość:</th>
+						</tr>
+						<tr>
+							<th>Ilość:</th>
+						</tr>
+						<tr>
 							<td>
-                                <input id="" class="back-edit-text" type="text" name="product_number" value="<?php echo $wyn['product_number'] ?>" />
+                                <input id="" class="text-cls" type="text" name="product_number" value="<?php echo $wyn['product_number'] ?>" />
                             </td>
 						</tr>
 						<tr>
 							<th>Zapisz:</th>
-							<td colspan="3">
-                            <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+						</tr>
+						<tr>
+							<td>
+                            <input id="" class="submit-cls" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>
 						<tr>
-							<th>Przypisz do Kategorii<br />Pozycji w górnym Menu:</th>
+							<th>Przypisz do Kategorii / Pozycji w górnym Menu:</th>
+						</tr>
+						<tr>
 							<td>
-								<select class="back-edit-select" name="product_category_main">
+								<select class="option-cls" name="product_category_main">
 									<option></option>
-                                    <?php
-                                    $main= new ProduktEditCls();
-                                    $main->__setTable('product_category_main');
-                                    if ($main->showCategory()) {
-                                        foreach ($main->showCategory() as $cat) {
-                                            echo '<option value="'.$cat['product_category_main'].'"';
-                                            if ($cat['product_category_main']==$wyn['product_category_main']) {
-                                                echo ' selected ';
-                                            }
-                                            echo '">';
-                                            echo $cat['product_category_main'];
-                                            echo '</option>';
-                                        }
-                                    }
-                                    ?>
+								<?php
+								$main= new ProduktEditCls();
+								$main->__setTable('product_category_main');
+								if ($main->showCategory()) {
+									foreach ($main->showCategory() as $cat) {
+										echo '<option value="'.$cat['product_category_main'].'"';
+										if ($cat['product_category_main']==$wyn['product_category_main']) {
+											echo ' selected ';
+										}
+										echo '">';
+										echo $cat['product_category_main'];
+										echo '</option>';
+									}
+								}
+								?>
 								</select>
 							</td>
-                            <th>Przypisz do Podkategorii<br />Pozycji w lewym Menu:</th>
+						</tr>
+						<tr>
+							<th>Przypisz do Podkategorii / Pozycji w lewym Menu:</th>
+						</tr>
+						<tr>
 							<td>
-								<select class="back-edit-select" name="product_category_sub">
+								<select class="option-cls" name="product_category_sub">
 									<option></option>
-                                    <?php
-                                    $sub = new ProduktEditCls();
-                                    $sub->__setTable('product_category_sub');
-                                    if ($sub->showCategory()) {
-                                        foreach ($sub->showCategory() as $cat) {
-                                            echo '<option value="'.$cat['product_category_sub'].'"'; 
-                                            if ($cat['product_category_sub']==$wyn['product_category_sub']) {
-                                                echo ' selected ';
-                                            }									
-                                            echo '>';
-                                            echo $cat['product_category_sub'];
-                                            echo '</option>';
-                                        }
-                                    }
-                                    ?>
+								<?php
+								$sub = new ProduktEditCls();
+								$sub->__setTable('product_category_sub');
+								if ($sub->showCategory()) {
+									foreach ($sub->showCategory() as $cat) {
+										echo '<option value="'.$cat['product_category_sub'].'"'; 
+										if ($cat['product_category_sub']==$wyn['product_category_sub']) {
+											echo ' selected ';
+										}									
+										echo '>';
+										echo $cat['product_category_sub'];
+										echo '</option>';
+									}
+								}
+								?>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<th>Description:</th>
-							<td colspan="3">
-                                <textarea id="" class="back-edit-textarea" name="product_description_small" ><?php echo $wyn['product_description_small'] ?></textarea>
+						</tr>
+						<tr>
+							<td>
+                                <textarea id="" class="" type="" name="product_description_small" ><?php echo $wyn['product_description_small'] ?></textarea>
                             </td>
 						</tr>
                         <tr>
 							<th>Zapisz:</th>
-							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+						</tr>
+						<tr>
+							<td>
+                                <input id="" class="submit-cls" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>
 						<tr>
 							<th>Opis:</th>
-							<td  colspan="3">
-                                <textarea id="" class="back-edit-textarea" name="product_description_large" ><?php echo $wyn['product_description_large'] ?></textarea>
+						</tr>
+						<tr>
+							<td>
+                                <textarea id="" class="" type="" name="product_description_large" ><?php echo $wyn['product_description_large'] ?></textarea>
                             </td>
 						</tr>
 						<tr>
-							<th colspan="4">Miniaturka:</th>
+							<th>Miniaturka:</th>
 						</tr>
 						<tr>
-							<td colspan="4">
+							<td>
                                 <?php $id = $_SESSION['id_post']; ?>
-                                <!--<div class="upload_td_div"></div>-->
-                                <div class="back-edit-div upload_td_div"><?php include('../upload/up_small.php'); ?></div>
+                                <div class="upload_td_div"><?php include('../upload/up_small.php'); ?></div>
                             </td>
 						</tr>
 						<tr>
-							<th colspan="4">Zdjęcia:</th>
+							<th>Zdjęcia:</th>
 						</tr>
 						<tr>
-							<td colspan="4">
+							<td>
                                 <?php $id = $_SESSION['id_post']; ?>
-                                <!--<div class="upload_td_div"></div>-->
-                                <div class="back-edit-div upload_td_div"><?php include('../upload/up_large.php'); ?></div>
+                                <div class="upload_td_div"><?php include('../upload/up_large.php'); ?></div>
                             </td>
 						</tr>
 						<tr>
 							<th>Zapisz:</th>
-							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+						</tr>
+						<tr>
+							<td>
+                                <input id="" class="submit-cls" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>                        
                         <tr>
@@ -344,43 +365,57 @@ if (isset($_POST['delete'])) {
                                     }); 
                                 });
                             </script>                            
-                            <td colspan="3">
-                                <label><input id="" class="back-edit-radio seo-radio" type="radio" name="seo_setting" value="title_false" <?php echo $wyn['mod']==0 ? 'checked="checked"' : '' ; ?> />Użyj globalnych ustawień.</label>
-                                <label><input id="" class="back-edit-radio seo-radio" type="radio" name="seo_setting" value="title_true" <?php echo $wyn['mod']==1 ? 'checked="checked"' : '' ; ?> />Użyj własnych ustawień (zalecane).</label>
+						</tr>  
+                        <tr>
+                            <td>
+                                <input id="" class="seo-radio" type="radio" name="seo_setting" <?php echo $wyn['mod']==0 ? 'checked="checked"' : '' ; ?> value="title_false" />Użyj globalnych ustawień.<br />
+                                <input id="" class="seo-radio" type="radio" name="seo_setting" <?php echo $wyn['mod']==1 ? 'checked="checked"' : '' ; ?> value="title_true" />Użyj własnych ustawień (zalecane). 
                             </td>
 						</tr>
 						<tr>
 							<th>Title</th>
-                            <td colspan="3">
-                                <input id="" class="back-edit-text seo-text" type="text" name="title" value="<?php echo $wyn['product_title']!=null ? $wyn['product_title'] : 'brak' ; ?>" />
+						</tr>
+                        <tr>
+                            <td>
+                                <input id="" class="text-cls seo-text" type="text" name="title" value="<?php echo $wyn['product_title']!=null ? $wyn['product_title'] : 'brak' ; ?>" />
                             </td>
 						</tr>
 						<tr>
 							<th>Description</th>
-                            <td colspan="3">
-                                <input id="" class="back-edit-text seo-text" type="text" name="description" value="<?php echo $wyn['product_description']!=null ? $wyn['product_description'] : 'brak' ; ?>" />
+						</tr>
+                        <tr>
+                            <td>
+                                <input id="" class="text-cls seo-text" type="text" name="description" value="<?php echo $wyn['product_description']!=null ? $wyn['product_description'] : 'brak' ; ?>" />
                             </td>
 						</tr>
                         <tr>
 							<th>Keywords</th>
-                            <td colspan="3">
-                                <input id="" class="back-edit-text seo-text" type="text" name="keywords" value="<?php echo $wyn['product_keywords']!=null ? $wyn['product_keywords'] : 'brak' ; ?>" />
+						</tr>
+                        <tr>
+                            <td>
+                                <input id="" class="text-cls seo-text" type="text" name="keywords" value="<?php echo $wyn['product_keywords']!=null ? $wyn['product_keywords'] : 'brak' ; ?>" />
                             </td>
 						</tr>                        
                         <tr>
 							<th>Zapisz:</th>
+						</tr>
+						<tr>
 							<td>
-                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="submit-cls" type="submit" name="update" value="Zapisz" />
                             </td>
-                            <th>Usuń Produkt:</th>
+						</tr>
+                        <tr>
+							<th>Usuń Produkt:</th>
+						</tr>
+                        <tr>
 							<td>
-                                <input id="" class="back-edit-submit" type="submit" name="delete" value="delete" />
+                                <input id="" class="submit-cls" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 					</table>
                     <input type="hidden" name="id_product_edit" value="<?php echo $wyn['id'] ?>" />
 				</form>
-            <?php } ?>
+			<?php } ?>
 		</div>
 	</section>
 	<footer>
