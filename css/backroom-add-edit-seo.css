@@ -5,12 +5,13 @@
 .back-edit-placeholder,
 .back-seo-placeholder,
 .back-main-placeholder,
-.back-sub-placeholder{
+.back-sub-placeholder,
+.back-shipping-placeholder{
     #text-align: center;
     #border: 1px solid black;
 }
 table, th, td {
-    #border: 1px solid black;
+    border: 1px solid black;
     vertical-align:middle;
 }
 .back-add-table,
@@ -19,6 +20,10 @@ table, th, td {
 .back-main-table,
 .back-sub-table{
     width:46.5em; /*same as top menu ph*/
+    margin:0.1em auto;
+    border: 1px solid lime;
+}
+.back-shipping-table{
     margin:0.1em auto;
     border: 1px solid lime;
 }
@@ -31,7 +36,9 @@ table, th, td {
 .back-main-table th,
 .back-main-table td,
 .back-sub-table th,
-.back-sub-table td{
+.back-sub-table td,
+.back-shipping-table th,
+.back-shipping-table td{
     #border: 1px solid lime;
     padding:0.5em;
 }
@@ -59,13 +66,18 @@ table, th, td {
     width:99%;
     height:99%;
 }
+.back-shipping-table input, .back-shipping-table textarea, .back-shipping-table select{
+    width:93%;
+    height:93%;
+}
 input[type=radio]{
     width:0.5em;
     height:0.5em;
 }
 .back-add-table textarea,
 .back-edit-table textarea,
-.back-seo-table textarea{
+.back-seo-table textarea,
+.back-shipping-table textarea{
     height:10em;
 }
 .back-add-table .back-add-div,
