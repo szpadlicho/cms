@@ -54,7 +54,7 @@ $(function(){
     * Debugger function show hide
     **/
     var ww = $( '#debugger' ).width();
-    console.log(ww);
+    //console.log(ww);
     var wwp = 0.95 * ww ;
     $( '#debugger' ).css( 'right',-wwp+'px' );
     $( '#debugger' ).hover(function() {

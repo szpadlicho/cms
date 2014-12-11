@@ -23,20 +23,20 @@ if (isset($_POST['save_sub'])) {
 			<?php include ('backroom-top-menu.php'); ?>
 		</nav>
         <!--NEW-->
-		<div class="back-sub-placeholder">
+		<div class="back-all sub placeholder">
             <form enctype="multipart/form-data" action="" method="POST" >
-                <!--SUB-->
-                <table class="back-sub-table table-category">	
+                <!-- SUB -->
+                <table class="back-all sub table table-category">	
                     <tr>
                         <th>Nazwa Podkategorii Lewe Menu</th>
                         <th>Zapis</th>
                     </tr>
                     <tr>
                         <td>
-                            <input id="" class="back-sub-text" type="text" name="product_add_category_sub" />
+                            <input id="" class="back-all sub text" type="text" name="product_add_category_sub" />
                         </td>
                         <td>
-                            <input id="" class="back-sub-submit" type="submit" name="save_sub" value="Dodaj" />
+                            <input id="" class="back-all sub submit" type="submit" name="save_sub" value="Dodaj" />
                         </td>
                     </tr>
                 </table>

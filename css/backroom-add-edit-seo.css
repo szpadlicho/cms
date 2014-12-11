@@ -1,72 +1,80 @@
 #place-holder{
     #border: 1px solid red;
 }
-.back-add-placeholder,
-.back-edit-placeholder,
-.back-seo-placeholder,
-.back-main-placeholder,
-.back-sub-placeholder,
-.back-shipping-placeholder{
+.back-all.add.placeholder,
+.back-all.edit.placeholder,
+.back-all.seo.placeholder,
+.back-all.main.placeholder,
+.back-all.sub.placeholder,
+.back-all.shipping.placeholder,
+.back-all.placeholder{
     #text-align: center;
     #border: 1px solid black;
+    margin-top: 1em;
 }
 table, th, td {
     border: 1px solid black;
     vertical-align:middle;
 }
-.back-add-table,
-.back-edit-table,
-.back-seo-table,
-.back-main-table,
-.back-sub-table{
+.back-all.add.table,
+.back-all.edit.table,
+.back-all.seo.table,
+.back-all.main.table,
+.back-all.sub.table{
     width:46.5em; /*same as top menu ph*/
     margin:0.1em auto;
     border: 1px solid lime;
 }
-.back-shipping-table{
+.back-all.shipping.table{
     margin:0.1em auto;
     border: 1px solid lime;
 }
-.back-add-table th,
-.back-add-table td,
-.back-edit-table th,
-.back-edit-table td,
-.back-seo-table th,
-.back-seo-table td,
-.back-main-table th,
-.back-main-table td,
-.back-sub-table th,
-.back-sub-table td,
-.back-shipping-table th,
-.back-shipping-table td{
+.back-all.add.table th,
+.back-all.add.table td,
+.back-all.edit.table th,
+.back-all.edit.table td,
+.back-all.seo.table th,
+.back-all.seo.table td,
+.back-all.main.table th,
+.back-all.main.table td,
+.back-all.sub.table th,
+.back-all.sub.table td,
+.back-all.shipping.table th,
+.back-all.shipping.table td,
+.back-all.index.table th,
+.back-all.index.table td{
     #border: 1px solid lime;
     padding:0.5em;
 }
-.back-add-table th,
-.back-edit-table th {
+.back-all.add.table th,
+.back-all.edit.table th {
     width:15%;
     font-weight: bold;
 }
-.back-seo-table th {
+.back-all.seo.table th {
     width:30%;
     font-weight: bold;
 }
-.back-add-table td,
-.back-edit-table td {
+.back-all.add.table td,
+.back-all.edit.table td {
     width:35%;
 }
-.back-seo-table td {
+.back-all.seo.table td {
     width:70%;
 }
-.back-add-table input, .back-add-table textarea, .back-add-table select,
-.back-edit-table input, .back-edit-table textarea, .back-edit-table select,
-.back-seo-table input, .back-seo-table textarea, .back-seo-table select,
-.back-main-table input, .back-main-table textarea, .back-main-table select,
-.back-sub-table input, .back-sub-table textarea, .back-sub-table select{
+.back-all.main.table tr td:first-child{
+    width: 4em;
+}
+.back-all.add.table input, .back-all.add.table textarea, .back-all.add.table select,
+.back-all.edit.table input, .back-all.edit.table textarea, .back-all.edit.table select,
+.back-all.seo.table input, .back-all.seo.table textarea, .back-all.seo.table select,
+.back-all.main.table input, .back-all.main.table textarea, .back-all.main.table select,
+.back-all.sub.table input, .back-all.sub.table textarea, .back-all.sub.table select,
+.back-all.table input, .back-all.table textarea, .back-all.table select{
     width:99%;
     height:99%;
 }
-.back-shipping-table input, .back-shipping-table textarea, .back-shipping-table select{
+.back-all.shipping.table input, .back-all.shipping.table textarea, .back-all.shipping.table select{
     width:93%;
     height:93%;
 }
@@ -74,14 +82,15 @@ input[type=radio]{
     width:0.5em;
     height:0.5em;
 }
-.back-add-table textarea,
-.back-edit-table textarea,
-.back-seo-table textarea,
-.back-shipping-table textarea{
+.back-all.add.table textarea,
+.back-all.edit.table textarea,
+.back-all.seo.table textarea,
+.back-all.shipping.table textarea,
+.back-all.all.table textarea{
     height:10em;
 }
-.back-add-table .back-add-div,
-.back-edit-table .back-edit-div{
+.back-all.add.table .back-all.add.div,
+.back-all.edit.table .back-all.edit.div{
     min-height:10em;
 }
 textarea, 

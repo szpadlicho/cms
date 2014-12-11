@@ -25,63 +25,63 @@ class ProductDisplay
 	}
 	public function showCategoryMain()
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT `product_category_main` FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
 	public function showCategorySub($sub)
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT DISTINCT `product_category_sub` FROM `".$this->table."` WHERE `product_category_main` = '".$sub."'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
     public function showSubAll()
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT DISTINCT `product_category_sub` FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
 	public function showAll()
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT * FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
 	public function showAllCategory($main)
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
     public function showAllSub($sub)
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_sub` = '".$sub."'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
 	public function showAllCategorySub($main, $sub)
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_category_sub` = '".$sub."'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
     public function showProduct($id)
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `id` = '".$id."'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
     public function __getCatMain($id)
     {
-		$con=$this->connectDB();
+		$con = $this->connectDB();
 		$q = $con->query("SELECT `product_category_main` FROM `".$this->table."` WHERE `id` = '".$id."'");/*zwraca false jesli tablica nie istnieje*/
         $q = $q->fetch(PDO::FETCH_ASSOC);
 		unset ($con);
@@ -374,15 +374,14 @@ class Connect_Basket extends Connect
         * jesli produkt juz jest w koszyku zwiekszyc tylko ilosc
         **/
         $con = $this->connectDB();
-        $res = $con->query(
-            "CREATE TABLE IF NOT EXISTS `".$table."`(
-            `id` INTEGER AUTO_INCREMENT,            
-            `pr_id` INTEGER(10),
-            `amount` INTEGER(10),
-            `mod` INTEGER(10),
-            PRIMARY KEY(`id`)
-            )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
-            );
+        $res = $con->query("CREATE TABLE IF NOT EXISTS `".$table."`(
+                            `id` INTEGER AUTO_INCREMENT,            
+                            `pr_id` INTEGER(10) UNSIGNED,
+                            `amount` INTEGER(10) UNSIGNED,
+                            `mod` INTEGER(10),
+                            PRIMARY KEY(`id`)
+                            )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
+                            );
         // tu musze pobrac pole o pr_id jesli jest pobrac i zwiekszyc tylko amount (update)
         // jesli nie to zostawic normalnie !it done
         $check = $con->query("SELECT `amount` FROM `".$table."` WHERE `pr_id` = '".$pr_id."'");
@@ -391,25 +390,44 @@ class Connect_Basket extends Connect
         if ($check) {// if exist sum and add only amount
             $value = $check['amount'] + $amount;
             $res = $con->query("UPDATE `".$table."` 
-            SET
-			`amount` = '".$value."'
-			WHERE
-            `pr_id` = '".$pr_id."'
-            ");
+                                SET
+                                `amount` = '".$value."'
+                                WHERE
+                                `pr_id` = '".$pr_id."'
+                                ");
         } else {// if product not exist in basket yet 
-            $res = $con->query(
-            "INSERT INTO `".$table."`(
-            `pr_id`,
-            `amount`
-            ) VALUES (
-            '".$pr_id."',
-            '".$amount."'
-            )"
-            );
+            $res = $con->query("INSERT INTO `".$table."`(
+                                `pr_id`,
+                                `amount`
+                                ) VALUES (
+                                '".$pr_id."',
+                                '".$amount."'
+                                )");
         }
         //$q = $con->query("SELECT * FROM `".$table."`");
         //$q = $q->fetch(PDO::FETCH_ASSOC);
 		unset ($con);
+    }
+    public function basketUpdate($table, $id, $amount_new)
+    {
+        /**
+        * regulowanie ilosci produktu w koszyku
+        **/
+        $con = $this->connectDB();
+        $check = $con->query("SELECT `amount` FROM `".$table."` WHERE `id` = '".$id."'");
+        $check = $check->fetch(PDO::FETCH_ASSOC);
+        if ($check) {
+            $res = $con->query("UPDATE `".$table."` 
+            SET
+			`amount` = '".$amount_new."'
+			WHERE
+            `id` = '".$id."'
+            ");
+            return true;
+        } else {
+            return false;
+        }
+		//unset ($con);
     }
     public function basketDrop($table)
     {
@@ -466,7 +484,11 @@ class Connect_Basket extends Connect
                     </a>
                 </div>
                 <div class="bs-sq amount">
-                    Ilość: <?php echo $amount; ?>
+                    <form method="POST">
+                        Ilość: <input class="basket-field text" type="text" name="basket_item_update_text" value="<?php echo $amount; ?>" />
+                        <input class="basket-field button" type="submit" name="basket_item_update_amount" value="Aktualizuj" />
+                        <input type="hidden" name="basket_item_update_id" value="<?php echo $id; ?>" />
+                    </form>
                 </div>
                 <div class="bs-sq suma">
                     Razem: <?php echo $wyn['product_price']*$amount; ?> PLN
@@ -482,17 +504,50 @@ class Connect_Basket extends Connect
         $lol = $wyn['product_price']*$amount;
         $this->sumar[] = $lol;
     }
-    // public function basketSum(){
+    // public function basketSum()
+    // {
         // $con = $this->connectDB();
         // $sumar = $con->query("SELECT sum(numbers) FROM all_nums");
         // $sumar = $sumar->fetch(PDO::FETCH_ASSOC);
         // return $sumar;
     // }
+    public function basketSubtraction($table)
+    {
+        $con = $this->connectDB();
+    }
+    public function basketAccept($table)
+    {
+        $con = $this->connectDB();
+        $check = $con->query("SELECT * FROM `".$table."`");
+        //$check = $check->fetch(PDO::FETCH_ASSOC);
+        //var_dump($check);
+        if ($check) {
+            while ($row = $check->fetch(PDO::FETCH_ASSOC)) {
+                //$obj_basket_show->basketShow($row['id'], $row['pr_id'], $row['amount']);
+                //var_dump($row);
+                $con = $this->connectDB();
+                $old = $con->query("SELECT `amount` FROM `product_tab` WHERE `id` = '".$row['pr_id']."'");
+                $old = $old->fetch(PDO::FETCH_ASSOC);
+                $value = $old['amount'] - $row['amount'];
+                //echo $value;
+                $res = $con->query("UPDATE `product_tab` 
+                    SET
+                    `amount` = '".$value."'
+                    WHERE
+                    `id` = '".$row['pr_id']."'
+                    ");
+            }
+        }
+    }
 }
 
 if (isset($_POST['add_to_basket']) && isset($_SESSION['user_id'])) {
     $obj_basket_add = new Connect_Basket;
     $obj_basket_add->basketAdd($_SESSION['user_id'], $_POST['pr_id'], $_POST['amount']);
+}
+if (isset($_POST['basket_item_update_amount']) && isset($_SESSION['user_id'])) {
+    $obj_basket_add = new Connect_Basket;
+    $obj_basket_add->basketUpdate($_SESSION['user_id'], $_POST['basket_item_update_id'], $_POST['basket_item_update_text']);
 }
 if (isset($_POST['basket_drop'])) {
     $obj_basket_add = new Connect_Basket;
@@ -502,6 +557,10 @@ if (isset($_POST['basket_drop'])) {
 if (isset($_POST['basket_item_drop'])) {
     $obj_basket_add = new Connect_Basket;
     $drop = $obj_basket_add->basketItemDrop($_SESSION['user_id'], $_POST['basket_item_drop_id']);
+}
+if (isset($_POST['basket_accept'])) {
+    $obj_basket_add = new Connect_Basket;
+    $drop = $obj_basket_add->basketAccept($_SESSION['user_id']);
 }
 include_once('../classes/connect/general.php');
 $obj_gen = new Connect_General;
@@ -593,6 +652,7 @@ $get_setting = $obj_gen->__getRow(1);
 							?>
                             <a id="top-menu-backroom" class="top-menu" href="../backroom/product_list.php">Zaplecze</a>
 							<div id="bottom-line"></div>
+                            <a href="http://localhost/htdocs/cms/backroom/db_update_index.php">update index</a>
 					</div>						
 				</div>	
 			</nav>	

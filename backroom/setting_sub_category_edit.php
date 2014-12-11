@@ -32,12 +32,12 @@ echo '</div>';
 			<?php include ('backroom-top-menu.php'); ?>
 		</nav>
         <!--EDIT-->
-        <!--SUB-->
-		<div class="back-sub-placeholder">
+        <!-- SUB -->
+		<div class="back-all sub placeholder">
 		<?php
 		$produkt->__setTable('product_category_sub');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
 		if ($produkt->showCategory()) { ?>
-            <table class="back-sub-table table-category">
+            <table class="back-all sub table table-category">
             <?php foreach ($produkt->showCategory() as $cat) { ?>			
 				<form enctype="multipart/form-data" action="" method="POST" >
                     <tr>
@@ -49,23 +49,23 @@ echo '</div>';
                                 $(document).ready(function(){
                                     $('.ok').css({'display':'none'});
                                     $('.cancel').css({'display':'none'});
-                                    $('input#up-sub-sub<?php echo $cat['id']; ?>').click(function() {
+                                    $('input#up-all sub sub<?php echo $cat['id']; ?>').click(function() {
                                         $('input#sub<?php echo $cat['id']; ?>').removeAttr('disabled');
                                         $('#ok-sub<?php echo $cat['id']; ?>').css({'display':'inline'});
                                         $('#anuluj-sub<?php echo $cat['id']; ?>').css({'display':'inline'});
-                                        $('#up-sub-sub<?php echo $cat['id']; ?>').css({'display':'none'});
-                                        $('#delete-sub-sub<?php echo $cat['id']; ?>').css({'display':'none'});
+                                        $('#up-all sub sub<?php echo $cat['id']; ?>').css({'display':'none'});
+                                        $('#delete-all sub sub<?php echo $cat['id']; ?>').css({'display':'none'});
                                     });
                                 });
                             </script>
-                            <input id="sub<?php echo $cat['id']; ?>" class="back-sub-text" type="text" name="update_txt" value="<?php echo $cat['product_category_sub']; ?>" disabled="disabled" />                     
+                            <input id="sub<?php echo $cat['id']; ?>" class="back-all sub text" type="text" name="update_txt" value="<?php echo $cat['product_category_sub']; ?>" disabled="disabled" />                     
                         </td>
                         <td>
-                            <input id="ok-sub<?php echo $cat['id']; ?>" class="back-sub-submit ok" type="submit" name="ok_sub" value="OK"/>                      
-                            <input id="anuluj-sub<?php echo $cat['id']; ?>" class="back-sub-submit cancel" type="submit" name="anuluj" value="Anuluj"/> 
-                            <input id="up-sub-sub<?php echo $cat['id']; ?>" class="back-sub-submit" type="button" name="update_rec_sub" value="Edytuj" />
+                            <input id="ok-sub<?php echo $cat['id']; ?>" class="back-all sub submit ok" type="submit" name="ok_sub" value="OK"/>                      
+                            <input id="anuluj-sub<?php echo $cat['id']; ?>" class="back-all sub submit cancel" type="submit" name="anuluj" value="Anuluj"/> 
+                            <input id="up-all sub sub<?php echo $cat['id']; ?>" class="back-all sub submit" type="button" name="update_rec_sub" value="Edytuj" />
                             <!--<input id="" class="" type="hidden" name="update_hidden_old_rec_sub" value="<?php //echo $cat['product_category_sub']; ?>" />-->
-                            <input id="delete-sub-sub<?php echo $cat['id']; ?>" class="back-sub-submit" type="submit" name="delete_rec_sub" value="Usuń" />
+                            <input id="delete-all sub sub<?php echo $cat['id']; ?>" class="back-all sub submit" type="submit" name="delete_rec_sub" value="Usuń" />
                             <input type="hidden" name="hidden_old_rec_sub" value="<?php echo $cat['product_category_sub']; ?>" />
                         </td>
                     </tr>

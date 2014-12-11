@@ -1,18 +1,18 @@
-.back-list-table{
+.back-all.list.table{
     margin:1em auto;
     text-align:center;    
 }
-.back-list-table tr{
+.back-all.list.table tr{
     background: rgba(255,255,255,0.5);
 }
-.back-list-table tr:hover{   
+.back-all.list.table tr:hover{   
     background: rgba(240,240,240,0.5);
 }
-.back-list-table th,
-.back-list-table td{
+.back-all.list.table th,
+.back-all.list.table td{
 	padding:1em 1em 1em 1em;    
     border:1px solid lime;
 }
-.back-list-mini-image{
+.back-all.list.mini-image{
     width:5em;
 }

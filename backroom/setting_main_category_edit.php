@@ -33,14 +33,14 @@ if (isset($_POST['ok_main'])) {
 			<?php include ('backroom-top-menu.php'); ?>
 		</nav>
         <!--EDIT-->
-        <!--MAIN-->  
-		<div>
+        <!-- MAIN -->  
+		<div class="back-all main placeholder">
 		<?php
 		$produkt->__setTable('product_category_main');//tabelke juz bedzie mial trzeba ustalic z gory w install jak bedzie sie nazywala tabelka z produktami
 		if ($produkt->showCategory()) { ?>   
             <?php foreach ($produkt->showCategory() as $cat) { ?>
                 <form enctype="multipart/form-data" action="" method="POST" >
-                    <table class="back-main-table table-category">                    
+                    <table class="back-all main table table-category">                    
                         <script type="text/javascript">
                             $(document).ready(function(){
                                 $('.ok').css({'display':'none'});                                   
@@ -62,21 +62,21 @@ if (isset($_POST['ok_main'])) {
                                 <?php echo $cat['id']; ?>
                             </td>
                             <td>
-                                <input id="main<?php echo $cat['id']; ?>" class="back-main-text" type="text" name="update_txt" value="<?php echo $cat['product_category_main']; ?>" disabled="disabled" />
+                                <input id="main<?php echo $cat['id']; ?>" class="back-all main text" type="text" name="update_txt" value="<?php echo $cat['product_category_main']; ?>" disabled="disabled" />
                                                             
                             </td>
                             <td>
-                                <input class="back-main-submit up-sub-main<?php echo $cat['id']; ?>" type="button" name="update_rec_main" value="Edytuj" />
-                                <input class="back-main-submit delete-main<?php echo $cat['id']; ?>" type="submit" name="delete_rec_main" value="Usuń" />
+                                <input class="back-all main submit up-sub-main<?php echo $cat['id']; ?>" type="button" name="update_rec_main" value="Edytuj" />
+                                <input class="back-all main submit delete-main<?php echo $cat['id']; ?>" type="submit" name="delete_rec_main" value="Usuń" />
                                 <!--change-->
-                                <input id="ok-main<?php echo $cat['id']; ?>" class="back-main-submit ok" type="submit" name="ok_main" value="OK"/>
-                                <input id="anuluj-main<?php echo $cat['id']; ?>" class="back-main-submit cancel" type="submit" name="anuluj" value="Anuluj"/>
+                                <input id="ok-main<?php echo $cat['id']; ?>" class="back-all main submit ok" type="submit" name="ok_main" value="OK"/>
+                                <input id="anuluj-main<?php echo $cat['id']; ?>" class="back-all main submit cancel" type="submit" name="anuluj" value="Anuluj"/>
                                 <!--old-->
                                 <input type="hidden" name="hidden_old_rec_main" value="<?php echo $cat['product_category_main']; ?>" />
                             </td>
                         </tr>
                     </table>       
-                    <table id="seo-table-edit-<?php echo $cat['id']; ?>" class="back-main-table table-category seo-table-edit">
+                    <table id="seo-table-edit-<?php echo $cat['id']; ?>" class="back-all main table table-category seo-table-edit">
                         <script type="text/javascript">
                             $(document).ready(function(){
                                 $('.seo-table-edit').css({'display':'none'});
@@ -107,8 +107,8 @@ if (isset($_POST['ok_main'])) {
                         <tr>
                             <th>Ustawienia dla SEO</th>
                             <td>
-                                <input class="back-main-radio seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==0 ? 'checked="checked"' : '' ; ?> value="title_false" />Użyj globalnych ustawień.<br />
-                                <input class="back-main-radio seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==1 ? 'checked="checked"' : '' ; ?> value="title_true-<?php echo $cat['id']; ?>" />Użyj własnych ustawień (zalecane).
+                                <input class="back-all main radio seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==0 ? 'checked="checked"' : '' ; ?> value="title_false" />Użyj globalnych ustawień.<br />
+                                <input class="back-all main radio seo-radio" type="radio" name="seo_setting" <?php echo $cat['mod']==1 ? 'checked="checked"' : '' ; ?> value="title_true-<?php echo $cat['id']; ?>" />Użyj własnych ustawień (zalecane).
                             </td>
                         </tr>
                         <tr>
@@ -117,7 +117,7 @@ if (isset($_POST['ok_main'])) {
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input class="back-main-text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="title" value="<?php echo $cat['title']!=null ? $cat['title'] : 'brak' ; ?>" />
+                                <input class="back-all main text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="title" value="<?php echo $cat['title']!=null ? $cat['title'] : 'brak' ; ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -126,7 +126,7 @@ if (isset($_POST['ok_main'])) {
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input class="back-main-text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="description" value="<?php echo $cat['description']!=null ? $cat['description'] : 'brak' ; ?>" />
+                                <input class="back-all main text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="description" value="<?php echo $cat['description']!=null ? $cat['description'] : 'brak' ; ?>" />
                             </td>
                         </tr>
                         <tr>
@@ -135,7 +135,7 @@ if (isset($_POST['ok_main'])) {
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input class="back-main-text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="keywords" value="<?php echo $cat['keywords']!=null ? $cat['keywords'] : 'brak' ; ?>" />
+                                <input class="back-all main text seo-e-text-<?php echo $cat['id']; ?>" type="text" name="keywords" value="<?php echo $cat['keywords']!=null ? $cat['keywords'] : 'brak' ; ?>" />
                             </td>
                         </tr>
                     </table>

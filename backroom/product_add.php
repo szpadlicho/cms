@@ -49,7 +49,7 @@ class ProduktSetCls
 			$feedback = $con->exec("INSERT INTO `".$this->table."`(
 			`product_name`, 
 			`product_price`, 
-			`product_number`,
+			`amount`,
 			`product_category_main`,
 			`product_category_sub`,
 			`product_description_small`,
@@ -64,7 +64,7 @@ class ProduktSetCls
 			) VALUES (
 			'".$_POST['product_name']."',
 			'".str_replace(",",".",$_POST['product_price'])."',
-			'".$_POST['product_number']."',
+			'".$_POST['amount']."',
 			'".$_POST['product_category_main']."',  
 			'".$_POST['product_category_sub']."',
 			'".$_POST['product_description_small']."',
@@ -179,37 +179,37 @@ if (isset($_POST['save'])) {
 <body>
 	<section id="place-holder">				
 		<?php include ('backroom-top-menu.php'); ?>
-		<div class="back-add-placeholder">
+		<div class="back-all add placeholder">
             <form enctype="multipart/form-data" action="" method="POST" >
-                <table class="back-add-table">
+                <table class="back-all add table">
                     <tr>
                         <th>ID:</th>
                         <th><?php echo $next_id; ?></th>
                         <th>Nazwa:</th>
                         <td>
-                            <input id="" class="back-add-text" type="text" name="product_name" />
+                            <input id="" class="back-all add text" type="text" name="product_name" />
                         </td>
                     </tr>
                     <tr>
                         <th>Cena:</th>
                         <td>
-                            <input id="" class="back-add-text" type="text" name="product_price" />
+                            <input id="" class="back-all add text" type="text" name="product_price" />
                         </td>
                         <th>Ilość:</th>
                         <td>
-                            <input id="" class="back-add-text" type="text" name="product_number" />
+                            <input id="" class="back-all add text" type="text" name="amount" />
                         </td>
                     </tr>
                     <tr>
                         <th>Zapisz:</th>
                         <td colspan="3">
-                            <input id="" class="back-add-submit" type="submit" name="save" value="Zapisz" />
+                            <input id="" class="back-all add submit" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
                         <th>Przypisz do Kategorii<br />Pozycji w górnym Menu:</th>
                         <td>
-                            <select class="back-add-select" name="product_category_main">
+                            <select class="back-all add select" name="product_category_main">
                                 <option></option>
                             <?php
                             $main= new ProduktSetCls();
@@ -226,7 +226,7 @@ if (isset($_POST['save'])) {
                         </td>
                         <th>Przypisz do Podkategorii<br />Pozycji w lewym Menu:</th>
                         <td>
-                            <select class="back-add-select" name="product_category_sub">
+                            <select class="back-all add select" name="product_category_sub">
                                 <option></option>
                             <?php
                             $sub = new ProduktSetCls();
@@ -245,19 +245,19 @@ if (isset($_POST['save'])) {
                     <tr>
                         <th>Description:</th>
                         <td colspan="3">
-                            <textarea id="" class="back-add-textarea" name="product_description_small" ></textarea>
+                            <textarea id="" class="back-all add textarea" name="product_description_small" ></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>Zapisz:</th>
                         <td  colspan="3">
-                            <input id="" class="back-add-submit" type="submit" name="update" value="Zapisz" />
+                            <input id="" class="back-all add submit" type="submit" name="update" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
                         <th>Opis:</th>
                         <td colspan="3">
-                            <textarea id="" class="back-add-textarea" name="product_description_large" ></textarea>
+                            <textarea id="" class="back-all add textarea" name="product_description_large" ></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -265,7 +265,7 @@ if (isset($_POST['save'])) {
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <div class="back-add-div"><?php include('../upload/up_small.php'); ?></div>
+                            <div class="back-all add div"><?php include('../upload/up_small.php'); ?></div>
                         </td>
                     </tr>
                     <tr>
@@ -273,13 +273,13 @@ if (isset($_POST['save'])) {
                     </tr>
                     <tr>
                         <td colspan="4">
-                            <div class="back-add-div"><?php include('../upload/up_large.php'); ?></div>
+                            <div class="back-all add div"><?php include('../upload/up_large.php'); ?></div>
                         </td>
                     </tr>
                     <tr>
                         <th>Zapisz:</th>
                         <td colspan="3">
-                            <input id="" class="back-add-submit" type="submit" name="save" value="Zapisz" />
+                            <input id="" class="back-all add submit" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
@@ -307,38 +307,38 @@ if (isset($_POST['save'])) {
                             });
                         </script>                            
                         <td colspan="3">
-                            <label><input id="" class="back-add-radio seo-radio" type="radio" name="seo_setting" checked="checked" value="title_false" />Użyj globalnych ustawień.</label><br />
-                            <label><input id="" class="back-add-radio seo-radio" type="radio" name="seo_setting" value="title_true" />Użyj własnych ustawień (zalecane).</label>
+                            <label><input id="" class="back-all add radio seo-radio" type="radio" name="seo_setting" checked="checked" value="title_false" />Użyj globalnych ustawień.</label><br />
+                            <label><input id="" class="back-all add radio seo-radio" type="radio" name="seo_setting" value="title_true" />Użyj własnych ustawień (zalecane).</label>
                         </td>
                     </tr>
                     <tr>
                         <th>Title</th>
                         <td colspan="3">
-                            <input id="" class="back-add-text seo-text" type="text" name="title" />
+                            <input id="" class="back-all add text seo-text" type="text" name="title" />
                         </td>
                     </tr>
                     <tr>
                         <th>Description</th>
                         <td colspan="3">
-                            <input id="" class="back-add-text seo-text" type="text" name="description" />
+                            <input id="" class="back-all add text seo-text" type="text" name="description" />
                         </td>
                     </tr>
                     <tr>
                         <th>Keywords</th>
                         <td colspan="3">
-                            <input id="" class="back-add-text seo-text" type="text" name="keywords" />
+                            <input id="" class="back-all add text seo-text" type="text" name="keywords" />
                         </td>
                     </tr>                        
                     <tr>
                         <th>Zapisz:</th>
                         <td colspan="3">
-                            <input id="" class="back-add-submit" type="submit" name="save" value="Zapisz" />
+                            <input id="" class="back-all add submit" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>                        
                     <tr>    
                         <th>Anuluj:</th>
                         <td colspan="3">
-                            <input id="" class="back-add-submit" type="submit" name="cancel" value="Anuluj" />
+                            <input id="" class="back-all add submit" type="submit" name="cancel" value="Anuluj" />
                         </td>
                     </tr>
                 </table>

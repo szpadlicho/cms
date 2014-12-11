@@ -81,7 +81,7 @@ class ProduktEditCls
                 SET 
                 `product_name` = '".$_POST['product_name']."', 
                 `product_price` = '".str_replace(",",".",$_POST['product_price'])."', 
-                `product_number` = '".$_POST['product_number']."',
+                `amount` = '".$_POST['amount']."',
                 `product_category_main` = '".$_POST['product_category_main']."',
                 `product_category_sub` = '".$_POST['product_category_sub']."',
                 `product_description_small` = '".$_POST['product_description_small']."',
@@ -204,10 +204,10 @@ if (isset($_POST['delete'])) {
 <body>
 	<section id="place-holder">
 		<?php include ('backroom-top-menu.php'); ?>
-        <div class="back-edit-placeholder">
+        <div class="back-all edit placeholder">
             <?php foreach ($product->showOne() as $wyn) { ?>
                 <form enctype="multipart/form-data" method="POST">
-                    <table class="back-edit-table">
+                    <table class="back-all edit table">
                         <tr>
 							<th>ID:</th>
                             <td>
@@ -215,35 +215,35 @@ if (isset($_POST['delete'])) {
                             </td>
                             <th>Nazwa:</th>
 							<td>
-                                <input id="" class="back-edit-text" type="text" name="product_name" value="<?php echo $wyn['product_name'] ?>" />
+                                <input id="" class="back-all edit text" type="text" name="product_name" value="<?php echo $wyn['product_name'] ?>" />
                             </td>
 						</tr>
 						<tr>
 							<th>Cena:</th>
 							<td>
-                                <input id="" class="back-edit-text" type="text" name="product_price" value="<?php echo $wyn['product_price'] ?>" />
+                                <input id="" class="back-all edit text" type="text" name="product_price" value="<?php echo $wyn['product_price'] ?>" />
                             </td>
                             <th>Ilość:</th>
 							<td>
-                                <input id="" class="back-edit-text" type="text" name="product_number" value="<?php echo $wyn['product_number'] ?>" />
+                                <input id="" class="back-all edit text" type="text" name="amount" value="<?php echo $wyn['amount'] ?>" />
                             </td>
 						</tr>
 						<tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
                             </td>
                         </tr>                        
                         <tr>    
                             <th>Usuń Produkt:</th>
 							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="delete" value="delete" />
+                                <input id="" class="back-all edit submit" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 						<tr>
 							<th>Przypisz do Kategorii<br />Pozycji w górnym Menu:</th>
 							<td>
-								<select class="back-edit-select" name="product_category_main">
+								<select class="back-all edit select" name="product_category_main">
 									<option></option>
                                     <?php
                                     $main= new ProduktEditCls();
@@ -264,7 +264,7 @@ if (isset($_POST['delete'])) {
 							</td>
                             <th>Przypisz do Podkategorii<br />Pozycji w lewym Menu:</th>
 							<td>
-								<select class="back-edit-select" name="product_category_sub">
+								<select class="back-all edit select" name="product_category_sub">
 									<option></option>
                                     <?php
                                     $sub = new ProduktEditCls();
@@ -287,19 +287,19 @@ if (isset($_POST['delete'])) {
 						<tr>
 							<th>Description:</th>
 							<td colspan="3">
-                                <textarea id="" class="back-edit-textarea" name="product_description_small" ><?php echo $wyn['product_description_small'] ?></textarea>
+                                <textarea id="" class="back-all edit textarea" name="product_description_small" ><?php echo $wyn['product_description_small'] ?></textarea>
                             </td>
 						</tr>
                         <tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>
 						<tr>
 							<th>Opis:</th>
 							<td  colspan="3">
-                                <textarea id="" class="back-edit-textarea" name="product_description_large" ><?php echo $wyn['product_description_large'] ?></textarea>
+                                <textarea id="" class="back-all edit textarea" name="product_description_large" ><?php echo $wyn['product_description_large'] ?></textarea>
                             </td>
 						</tr>
 						<tr>
@@ -309,7 +309,7 @@ if (isset($_POST['delete'])) {
 							<td colspan="4">
                                 <?php $id = $_SESSION['id_post']; ?>
                                 <!--<div class="upload_td_div"></div>-->
-                                <div class="back-edit-div upload_td_div"><?php include('../upload/up_small.php'); ?></div>
+                                <div class="back-all edit div upload_td_div"><?php include('../upload/up_small.php'); ?></div>
                             </td>
 						</tr>
 						<tr>
@@ -319,13 +319,13 @@ if (isset($_POST['delete'])) {
 							<td colspan="4">
                                 <?php $id = $_SESSION['id_post']; ?>
                                 <!--<div class="upload_td_div"></div>-->
-                                <div class="back-edit-div upload_td_div"><?php include('../upload/up_large.php'); ?></div>
+                                <div class="back-all edit div upload_td_div"><?php include('../upload/up_large.php'); ?></div>
                             </td>
 						</tr>
 						<tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>                        
                         <tr>
@@ -353,38 +353,38 @@ if (isset($_POST['delete'])) {
                                 });
                             </script>                            
                             <td colspan="3">
-                                <label><input id="" class="back-edit-radio seo-radio" type="radio" name="seo_setting" value="title_false" <?php echo $wyn['mod']==0 ? 'checked="checked"' : '' ; ?> />Użyj globalnych ustawień.</label><br />
-                                <label><input id="" class="back-edit-radio seo-radio" type="radio" name="seo_setting" value="title_true" <?php echo $wyn['mod']==1 ? 'checked="checked"' : '' ; ?> />Użyj własnych ustawień (zalecane).</label>
+                                <label><input id="" class="back-all edit radio seo-radio" type="radio" name="seo_setting" value="title_false" <?php echo $wyn['mod']==0 ? 'checked="checked"' : '' ; ?> />Użyj globalnych ustawień.</label><br />
+                                <label><input id="" class="back-all edit radio seo-radio" type="radio" name="seo_setting" value="title_true" <?php echo $wyn['mod']==1 ? 'checked="checked"' : '' ; ?> />Użyj własnych ustawień (zalecane).</label>
                             </td>
 						</tr>
 						<tr>
 							<th>Title</th>
                             <td colspan="3">
-                                <input id="" class="back-edit-text seo-text" type="text" name="title" value="<?php echo $wyn['product_title']!=null ? $wyn['product_title'] : 'brak' ; ?>" />
+                                <input id="" class="back-all edit text seo-text" type="text" name="title" value="<?php echo $wyn['product_title']!=null ? $wyn['product_title'] : 'brak' ; ?>" />
                             </td>
 						</tr>
 						<tr>
 							<th>Description</th>
                             <td colspan="3">
-                                <input id="" class="back-edit-text seo-text" type="text" name="description" value="<?php echo $wyn['product_description']!=null ? $wyn['product_description'] : 'brak' ; ?>" />
+                                <input id="" class="back-all edit text seo-text" type="text" name="description" value="<?php echo $wyn['product_description']!=null ? $wyn['product_description'] : 'brak' ; ?>" />
                             </td>
 						</tr>
                         <tr>
 							<th>Keywords</th>
                             <td colspan="3">
-                                <input id="" class="back-edit-text seo-text" type="text" name="keywords" value="<?php echo $wyn['product_keywords']!=null ? $wyn['product_keywords'] : 'brak' ; ?>" />
+                                <input id="" class="back-all edit text seo-text" type="text" name="keywords" value="<?php echo $wyn['product_keywords']!=null ? $wyn['product_keywords'] : 'brak' ; ?>" />
                             </td>
 						</tr>                        
                         <tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
                             </td>
                         </tr>                        
                         <tr>    
                             <th>Usuń Produkt:</th>
 							<td colspan="3">
-                                <input id="" class="back-edit-submit" type="submit" name="delete" value="delete" />
+                                <input id="" class="back-all edit submit" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 					</table>

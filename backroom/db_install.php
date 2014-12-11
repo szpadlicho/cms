@@ -129,7 +129,7 @@ if (isset($_POST['crt'])) {
     $arr_row = array(
         'product_name'              =>'TEXT', 
         'product_price'             =>'VARCHAR(10)', 
-        'product_number'            =>'INTEGER(10)', 
+        'amount'                    =>'INTEGER(10) UNSIGNED', 
         'product_category_main'     =>'TEXT',
         'product_category_sub'      =>'TEXT',
         'product_description_small' =>'TEXT',
@@ -168,10 +168,10 @@ if (isset($_POST['crt'])) {
     
     $obj_install->__setTable('setting_img');
     $arr_row = array(
-        'small_width'   =>'INT(4)', 
-        'small_height'  =>'INT(4)', 
-        'large_width'   =>'INT(4)', 
-        'large_height'  =>'INT(4)'
+        'small_width'   =>'INT(4) UNSIGNED', 
+        'small_height'  =>'INT(4) UNSIGNED', 
+        'large_width'   =>'INT(4) UNSIGNED', 
+        'large_height'  =>'INT(4) UNSIGNED'
         );
     $arr_val = array(
         'small_width'   =>200,  

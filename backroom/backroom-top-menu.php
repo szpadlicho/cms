@@ -11,6 +11,7 @@
         </li>
         <li><a>Setting</a>
             <ul>
+                <li><a href="setting_shipping.php">Shipping</a></li>
                 <li><a href="setting_seo.php">SEO</a></li>
                 <li><a href="setting_img.php">Image</a></li>
                 <li><a href="setting_gen.php">General</a></li>

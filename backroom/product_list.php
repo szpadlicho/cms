@@ -51,7 +51,7 @@ class ProduktGetCls
                 }
                 closedir($folder);
                 $losowy=rand(0,count(@$obrazki)-1);//losuje obrazek
-                echo '<img class="back-list-mini-image" src="'.$dir_mini.@$obrazki[$losowy].'" alt="mini image" /><br />';
+                echo '<img class="back-all list mini-image" src="'.$dir_mini.@$obrazki[$losowy].'" alt="mini image" /><br />';
                 unset($obrazki);
             }                                               
         } else {
@@ -74,10 +74,10 @@ $produkt->_setTable('product_tab');
 <body>
 	<section id="place-holder">		
 		<?php include ('backroom-top-menu.php'); ?>
-		<div class="back-list-placeholder">
+		<div class="back-all list placeholder">
 					<?php
 					if ($produkt->showAll()) { ?>
-						<table id="table-list" class="back-list-table">
+						<table id="table-list" class="back-all list table">
 							<tr>
 								<th>
 									ID
@@ -130,7 +130,7 @@ $produkt->_setTable('product_tab');
 											echo $wyn['product_price']; 
 										echo '</td>';
 										echo '<td>';
-											echo $wyn['product_number']; 
+											echo $wyn['amount']; 
 										echo '</td>';
 										echo '<td>';
 											echo '<input type="submit" name="id_post_bt" value="Edytuj" />'; 

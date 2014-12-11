@@ -24,31 +24,31 @@ if (isset($_POST['save_main'])) {
 			<?php include ('backroom-top-menu.php'); ?>
 		</nav>
         <!--NEW-->
-		<div class="back-main-placeholder">
+		<div class="back-all main placeholder">
             <form enctype="multipart/form-data" action="" method="POST" >
-                <!--MAIN-->
-                <table class="back-main-table table-category">
+                <!-- MAIN -->
+                <table class="back-all main table table-category">
                     <tr>
                         <th>Nazwa Kategorii w górnym Menu</th>
                         <td>
-                            <input id="" class="back-main-text" type="text" name="product_add_category_main" />
+                            <input id="" class="back-all main text" type="text" name="product_add_category_main" />
                         </td>
                     </tr>
                     <tr>
                         <th>Zapis</th>
                         <td>
-                            <input id="" class="back-main-submit" type="submit" name="save_main" value="Dodaj" />
+                            <input id="" class="back-all main submit" type="submit" name="save_main" value="Dodaj" />
                         </td>
                     </tr>
                     <tr>
                         <th>Ustawienia dla SEO</th>
                         <td>
-                            <input id="" class="back-main-radio seo-radio" type="radio" name="seo_setting" checked="checked" value="title-n_false" />Użyj globalnych ustawień.<br />
-                            <input id="" class="back-main-radio seo-radio" type="radio" name="seo_setting" value="title-n_true" />Użyj własnych ustawień (zalecane).
+                            <input id="" class="back-all main radio seo-radio" type="radio" name="seo_setting" checked="checked" value="title-n_false" />Użyj globalnych ustawień.<br />
+                            <input id="" class="back-all main radio seo-radio" type="radio" name="seo_setting" value="title-n_true" />Użyj własnych ustawień (zalecane).
                         </td>
                     </tr>
                 </table>
-                <table id="seo-table-new" class="back-main-table table-category">                              
+                <table id="seo-table-new" class="back-all main table table-category">                              
                     <script type="text/javascript">
                         $(document).ready(function(){
                             $('input[type="radio"]').each(function() { 
@@ -81,7 +81,7 @@ if (isset($_POST['save_main'])) {
                     </tr>  
                     <tr>
                         <td colspan="2">
-                            <input id="" class="back-main-text seo-n-text" type="text" name="title" />
+                            <input id="" class="back-all main text seo-n-text" type="text" name="title" />
                         </td>
                     </tr>
                     <tr>
@@ -90,7 +90,7 @@ if (isset($_POST['save_main'])) {
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input id="" class="back-main-text seo-n-text" type="text" name="description" />
+                            <input id="" class="back-all main text seo-n-text" type="text" name="description" />
                         </td>
                     </tr>
                     <tr>
@@ -99,7 +99,7 @@ if (isset($_POST['save_main'])) {
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input id="" class="back-main-text seo-n-text" type="text" name="keywords" />
+                            <input id="" class="back-all main text seo-n-text" type="text" name="keywords" />
                         </td>
                     </tr>
                 </table>

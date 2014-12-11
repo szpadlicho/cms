@@ -100,6 +100,24 @@ class UpgradeCls
             }
         }
     }
+    public function renameColumn($old_name, $new_name)
+    {
+        $con = $this->connectDB();
+        // foreach ($arr_row as $name => $value) {
+            // $res = $con->query("ALTER TABLE `".$this->table."` ADD COLUMN `".$name."` ".$value."");
+            // if ($res) {
+                // echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." OK!</div>";
+            // } else {
+                // echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." ERROR!</div>";
+            // }
+        // }
+        $res = $con->query("ALTER TABLE `".$this->table."` CHANGE ".$old_name." ".$new_name." INTEGER(10) UNSIGNED");
+        if ($res) {
+            echo "<div class=\"center\" >Zmiana nazwy z ".$old_name." na ".$new_name." OK!</div>";
+        } else {
+            echo "<div class=\"center\" >Zmiana nazwy z ".$old_name." na ".$new_name." ERROR!</div>";
+        }
+    }
 }
 //
 $upgrade = new UpgradeCls();
@@ -128,22 +146,8 @@ if (isset($_POST['add2'])) {//dodane na kompie
 }
 */
 if (isset($_POST['add3'])) {//dodane na kompie
-    $upgrade->__setTable('setting_img');
-    $arr_row = array('product_name'             =>'TEXT', 
-                    'product_price'             =>'VARCHAR(10)', 
-                    'product_number'            =>'INTEGER(10)', 
-                    'product_category_main'     =>'TEXT',
-                    'product_category_sub'      =>'TEXT',
-                    'product_description_small' =>'TEXT',
-                    'product_description_large' =>'TEXT',
-                    'product_foto_mini'         =>'TEXT',
-                    'product_foto_large'        =>'TEXT',
-                    'file_name'                 =>'TEXT',
-                    'product_title'             =>'TEXT',
-                    'product_description'       =>'TEXT',
-                    'product_keywords'          =>'TEXT'
-                    );
-    //$upgrade->addRowDynamic2($arr_row);
+    $upgrade->__setTable('product_tab');
+    //$upgrade->renameColumn('product_number', 'amount');
 }
 echo '</div>';
 ?>
