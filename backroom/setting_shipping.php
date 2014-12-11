@@ -151,6 +151,55 @@ class Connect_Shipping
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
+        public function updateToSupplier()
+    {
+        isset($_SESSION['this_supplier']) ? $this_supplier = $_SESSION['this_supplier'] : $this_supplier = null;
+        isset($_POST['configuration_mod']) ? $configuration_mod = $_POST['configuration_mod'] : $configuration_mod = null;
+        isset($_POST['weight_of']) ? $weight_of = $_POST['weight_of'] : $weight_of = null;
+        isset($_POST['weight_to']) ? $weight_to = $_POST['weight_to'] : $weight_to = null;
+        isset($_POST['price_of']) ? $price_of = $_POST['price_of'] : $price_of = null;
+        isset($_POST['price_to']) ? $price_to = $_POST['price_to'] : $price_to = null;
+        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = null;
+        isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null;
+        isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = null;
+        isset($_POST['price_prepayment']) ? $price_prepayment = $_POST['price_prepayment'] : $price_prepayment = null;
+        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = null;
+        isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null;
+        isset($_POST['free_of']) ? $free_of = $_POST['free_of'] : $free_of = null;
+        
+        $con = $this->connectDB();
+        $res = $con->query("UPDATE `".$_SESSION['this_supplier']."`
+                                SET
+                                `name` = '".$this_supplier."',
+                                `configuration_mod` = '".$configuration_mod."',
+                                `weight_of` = '".$weight_of."',
+                                `weight_to` = '".$weight_to."',
+                                `price_of` = '".$price_of."',
+                                `price_to` = '".$price_to."',
+                                `package_share` = '".$package_share."',
+                                `max_item_in_package` = '".$max_item_in_package."',
+                                `allow_prepayment` = '".$allow_prepayment."',
+                                `price_prepayment` = '".$price_prepayment."',
+                                `allow_ondelivery` = '".$allow_ondelivery."',
+                                `price_ondelivery` = '".$price_ondelivery."',
+                                `free_of` = '".$free_of."',
+                                `mod` = '0'
+                                WHERE
+                                `id` = '".$_POST['curent_id']."'
+                                ");
+        if ($res) {
+                return true;
+            } else {
+                return false;
+            }
+        unset($con);
+        $res = $con->query("UPDATE `".$table."` 
+                                SET
+                                `amount` = '".$value."'
+                                WHERE
+                                `pr_id` = '".$pr_id."'
+                                ");
+    }
 }
 $obj_shipping = new Connect_Shipping();
 //next
@@ -170,6 +219,9 @@ if (isset($_POST['unset_this'])) {
 }
 if (isset($_POST['add_new'])) {
     $success = $obj_shipping->addToSupplier();
+}
+if (isset($_POST['update'])) {
+    $obj_shipping->updateToSupplier();
 }
 if (isset($_SESSION['this_supplier'])) {
     $show = $obj_shipping->showSupplierConfig();
@@ -337,60 +389,74 @@ if (isset($_SESSION['this_supplier'])) {
                                 <th>tryb konfiguracji</th>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $( '.weight_mod, .price_mod' ).hide();
-                                        $(document).on('change', '#configuration_mod', function () {
-                                            //console.log($( this ).val());
-                                            if ($( this ).val() == 'weight') {
-                                                $( '.weight_mod' ).show();
-                                                $( '.price_mod' ).hide();
-                                            } else if ($( this ).val() == 'price') {
-                                                $( '.price_mod' ).show();
-                                                $( '.weight_mod' ).hide();
-                                            } else if ($( this ).val() == 'simple') {
-                                                $( '.weight_mod, .price_mod' ).hide();
+                                        $( '.weight_mod_<?php echo $row['id']; ?>, .price_mod_<?php echo $row['id']; ?>' ).hide();
+                                        var confMod = function() {
+                                            if ($( '#configuration_mod_<?php echo $row['id']; ?>' ).val() == 'weight') {
+                                                $( '.weight_mod_<?php echo $row['id']; ?>' ).show();
+                                                $( '.price_mod_<?php echo $row['id']; ?>' ).hide();
+                                            } else if ($( '#configuration_mod_<?php echo $row['id']; ?>' ).val() == 'price') {
+                                                $( '.price_mod_<?php echo $row['id']; ?>' ).show();
+                                                $( '.weight_mod_<?php echo $row['id']; ?>' ).hide();
+                                            } else if ($( '#configuration_mod_<?php echo $row['id']; ?>' ).val() == 'simple') {
+                                                $( '.weight_mod_<?php echo $row['id']; ?>, .price_mod_<?php echo $row['id']; ?>' ).hide();
                                             }
+                                        }
+                                        confMod();
+                                        $(document).on('change', '#configuration_mod_<?php echo $row['id']; ?>', function () {
+                                            //console.log($( this ).val());
+                                            confMod();
                                         });
                                     });
                                 </script>
                                 <!-- Configuration mode -->
-                                <th class="weight_mod">waga od</th>
-                                <th class="weight_mod">waga do</th>
-                                <th class="price_mod">cena od</th>
-                                <th class="price_mod">cena do</th>
+                                <th class="weight_mod_<?php echo $row['id']; ?>">waga od</th>
+                                <th class="weight_mod_<?php echo $row['id']; ?>">waga do</th>
+                                <th class="price_mod_<?php echo $row['id']; ?>">cena od</th>
+                                <th class="price_mod_<?php echo $row['id']; ?>">cena do</th>
                                 <!-- Configuration mode -->
                                 <script type="text/javascript">
                                     $(function(){
-                                        $( '.max_item_in_package' ).hide();
-                                        $(document).on('change', '#package_share', function () {
-                                            console.log($( this ).val());
-                                            if ($( this ).val() == 'yes') {
-                                                $( '.max_item_in_package' ).hide();
-                                            } else if ($( this ).val() == 'no') {
-                                                $( '.max_item_in_package' ).show();
+                                        $( '.max_item_in_package_<?php echo $row['id']; ?>' ).hide();
+                                        var packShare = function() {
+                                            if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == 'yes') {
+                                                $( '.max_item_in_package_<?php echo $row['id']; ?>' ).hide();
+                                            } else if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == 'no') {
+                                                $( '.max_item_in_package_<?php echo $row['id']; ?>' ).show();
                                             }
+                                        }
+                                        packShare();
+                                        $(document).on('change', '#package_share_<?php echo $row['id']; ?>', function () {
+                                            //console.log($( this ).val());
+                                            packShare();
                                         });
                                     });
                                 </script>
                                 <th>dziel na paczki</th>
                                 <!-- package share -->
-                                <th class="max_item_in_package">maksymalnie w paczce</th>
+                                <th class="max_item_in_package_<?php echo $row['id']; ?>">maksymalnie w paczce</th>
                                 <!-- package share -->
                                 <th>cena z przedpłata</th>
                                 <th>dopuszczać za pobraniem</th>
                                 <script type="text/javascript">
                                     $(function(){
-                                        $( '.price_ondelivery' ).show();
-                                        $(document).on('change', '#allow_ondelivery', function () {
-                                            console.log($( this ).val());
-                                            if ($( this ).val() == 'yes') {
-                                                $( '.price_ondelivery' ).show();
-                                            } else if ($( this ).val() == 'no') {
-                                                $( '.price_ondelivery' ).hide();
+                                        $( '.price_ondelivery_<?php echo $row['id']; ?>' ).show();
+                                        var allowOndel = function() {
+                                            if ($( '#allow_ondelivery_<?php echo $row['id']; ?>' ).val() == 'yes') {
+                                                $( '.price_ondelivery_<?php echo $row['id']; ?>' ).show();
+                                            } else if ($( '#allow_ondelivery_<?php echo $row['id']; ?>' ).val() == 'no') {
+                                                $( '.price_ondelivery_<?php echo $row['id']; ?>' ).hide();
                                             }
+                                        }
+                                        allowOndel();
+                                        $(document).on('change', '#allow_ondelivery_<?php echo $row['id']; ?>', function () {
+                                            //console.log($( this ).val());
+                                            allowOndel();
                                         });
                                     });
                                 </script>
-                                <th class="price_ondelivery">cena za pobraniem</th>
+                                <!-- allow ondelivery -->
+                                <th class="price_ondelivery_<?php echo $row['id']; ?>">cena za pobraniem</th>
+                                <!-- allow ondelivery -->
                                 <th>darmowa od</th>
                                 <th>
                                     <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" checked="checked" value="title_false" /></label>
@@ -399,46 +465,50 @@ if (isset($_SESSION['this_supplier'])) {
                             </tr>
                             <tr>
                                 <td>
-                                    <select id="configuration_mod" class="back-all shipping select" name="configuration_mod">
-                                        <option value="simple">Prosty</option>
-                                        <option value="weight">Przedziały wagowe</option>
-                                        <option value="price">Przedziały kwotowe</option>
+                                    <?php $val1 = $row['configuration_mod'] ;?>
+                                    <select id="configuration_mod_<?php echo $row['id']; ?>" class="back-all shipping select" name="configuration_mod">
+                                        <option <?php if ($val1 == 'simple') { echo 'selected'; } ?> value="simple">Prosty</option>
+                                        <option <?php if ($val1 == 'weight') { echo 'selected'; } ?> value="weight">Przedziały wagowe</option>
+                                        <option <?php if ($val1 == 'price') { echo 'selected'; } ?> value="price">Przedziały kwotowe</option>
                                     </select>
-                                    <?php echo $row['configuration_mod'] ;?>
+                                    
                                 </td>
                                 <!-- Configuration mode -->
-                                <td class="weight_mod"><input id="" class="back-all shipping text" type="text" name="weight_of" value="<?php echo $row['weight_of'] ;?>" /></td>
-                                <td class="weight_mod"><input id="" class="back-all shipping text" type="text" name="weight_to" value="<?php echo $row['weight_to'] ;?>" /></td>
-                                <td class="price_mod"><input id="" class="back-all shipping text" type="text" name="price_of" value="<?php echo $row['price_of'] ;?>" /></td>
-                                <td class="price_mod"><input id="" class="back-all shipping text" type="text" name="price_to" value="<?php echo $row['price_to'] ;?>" /></td>
+                                <td class="weight_mod_<?php echo $row['id']; ?>"><input id="" class="back-all shipping text" type="text" name="weight_of" value="<?php echo $row['weight_of'] ;?>" /></td>
+                                <td class="weight_mod_<?php echo $row['id']; ?>"><input id="" class="back-all shipping text" type="text" name="weight_to" value="<?php echo $row['weight_to'] ;?>" /></td>
+                                <td class="price_mod_<?php echo $row['id']; ?>"><input id="" class="back-all shipping text" type="text" name="price_of" value="<?php echo $row['price_of'] ;?>" /></td>
+                                <td class="price_mod_<?php echo $row['id']; ?>"><input id="" class="back-all shipping text" type="text" name="price_to" value="<?php echo $row['price_to'] ;?>" /></td>
                                 <!-- Configuration mode -->
                                 <td>
-                                    <select id="package_share" class="back-all shipping select" name="package_share">
-                                        <option value="yes">Tak</option>
-                                        <option value="no">Nie</option>
+                                    <?php $val2 = $row['package_share'] ;?>
+                                    <select id="package_share_<?php echo $row['id']; ?>" class="back-all shipping select" name="package_share">
+                                        <option <?php if ($val2 == 'yes') { echo 'selected'; } ?> value="yes">Tak</option>
+                                        <option <?php if ($val2 == 'no') { echo 'selected'; } ?> value="no">Nie</option>
                                     </select>
-                                    <?php echo $row['package_share'] ;?>
                                 </td>
                                 <!-- package share -->
-                                <td class="max_item_in_package"><input class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $row['max_item_in_package'] ;?>" /></td>
+                                <td class="max_item_in_package_<?php echo $row['id']; ?>"><input class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $row['max_item_in_package'] ;?>" /></td>
                                 <!-- package share -->
                                 <td><input id="" class="back-all shipping text" type="text" name="price_prepayment" value="<?php echo $row['price_prepayment'] ;?>" /></td>
                                 <td>
-                                    <select id="allow_ondelivery" class="back-all shipping select" name="allow_ondelivery">
-                                        <option value="yes">Tak</option>
-                                        <option value="no">Nie</option>
+                                    <?php $val3 = $row['allow_ondelivery'] ;?>
+                                    <select id="allow_ondelivery_<?php echo $row['id']; ?>" class="back-all shipping select" name="allow_ondelivery">
+                                        <option <?php if ($val3 == 'yes') { echo 'selected'; } ?> value="yes">Tak</option>
+                                        <option <?php if ($val3 == 'no') { echo 'selected'; } ?> value="no">Nie</option>
                                     </select>
-                                    <?php echo $row['allow_ondelivery'] ;?>
                                 </td>
-                                <td class="price_ondelivery"><input id="" class="back-all shipping text" type="text" name="price_ondelivery" value="<?php echo $row['price_ondelivery'] ;?>" /></td>
+                                <!-- allow ondelivery -->
+                                <td class="price_ondelivery_<?php echo $row['id']; ?>"><input id="" class="back-all shipping text" type="text" name="price_ondelivery" value="<?php echo $row['price_ondelivery'] ;?>" /></td>
+                                <!-- allow ondelivery -->
                                 <td><input id="" class="back-all shipping text" type="text" name="free_of" value="<?php echo $row['free_of'] ;?>" /></td>
                                 <td><input id="" class="back-all shipping text" type="text" name="" /></td>
                             </tr>
                             <tr>
-                                <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="add_new" value="Dodaj" /></td>
+                                <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="update" value="Aktualizuj" /></td>
                                 <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="cancel" value="Anuluj" /></td>
                             </tr>
                         </table>
+                        <input type="hidden" name="curent_id" value="<?php echo $row['id']; ?>" />
                     </form>
                     <?php
                     //var_dump($row);
