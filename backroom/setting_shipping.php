@@ -586,6 +586,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                 myField.value = myField.value.substring(0, startPos)
                 + myValue
                 + myField.value.substring(endPos, myField.value.length);
+                // position cursor at end
+                myField.selectionStart = startPos + myValue.length;
+                myField.selectionEnd = endPos + myValue.length;
+                //myField.focus();
             } else {
                 myField.value += myValue;
             }
@@ -598,10 +602,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                 // call custom function here
                 var tabs = '    ';
                 //console.log(tabs.length);
-                var one = $('#asd')[0].selectionStart + tabs.length;
-                var two = $('#asd')[0].selectionEnd + tabs.length;
+                //var one = $('#asd')[0].selectionStart + tabs.length;
+                //var two = $('#asd')[0].selectionEnd + tabs.length;
                 insertAtCursor(document.getElementById('asd'), tabs);
-                document.getElementById('asd').setSelectionRange(one,two);
+                //document.getElementById('asd').setSelectionRange(one,two);
             } 
         });
     });
