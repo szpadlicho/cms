@@ -561,5 +561,53 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
 		//var_dump ($_COOKIE);
 		?>
 	</div>
+    <script type="text/javascript">
+    $(function(){
+        $( '#asd' ).focus();
+        document.getElementById('asd').setSelectionRange(3,11);
+        //document.getElementById('asd').setSelectionRange(3,3);
+        $( '#asd' ).click(function(){
+            var one = $('#asd')[0].selectionStart;
+            var two = $('#asd')[0].selectionEnd;
+            //console.log(one);
+            //console.log(two);
+        });
+        function insertAtCursor(myField, myValue) {
+            //IE support
+            if (document.selection) {
+                myField.focus();
+                sel = document.selection.createRange();
+                sel.text = myValue;
+            }
+            //MOZILLA/NETSCAPE support
+            else if (myField.selectionStart || myField.selectionStart == '0') {
+                var startPos = myField.selectionStart;
+                var endPos = myField.selectionEnd;
+                myField.value = myField.value.substring(0, startPos)
+                + myValue
+                + myField.value.substring(endPos, myField.value.length);
+            } else {
+                myField.value += myValue;
+            }
+        }
+        // calling the function
+        $(document).on('keydown', '#asd', function(e) { 
+            var keyCode = e.keyCode || e.which; 
+            if (keyCode == 9) { 
+            e.preventDefault(); 
+                // call custom function here
+                var tabs = '    ';
+                //console.log(tabs.length);
+                var one = $('#asd')[0].selectionStart + tabs.length;
+                var two = $('#asd')[0].selectionEnd + tabs.length;
+                insertAtCursor(document.getElementById('asd'), tabs);
+                document.getElementById('asd').setSelectionRange(one,two);
+            } 
+        });
+    });
+    
+    
+    </script>
+    <textarea id="asd" rows="4" cols="50" >asd asdfa asfd asdasdad asdasdasd asdasdasda asdasd</textarea>
 </body>
 </html>
