@@ -147,7 +147,7 @@ if (isset($_POST['add2'])) {//dodane na kompie
 */
 if (isset($_POST['add3'])) {//dodane na kompie
     $upgrade->__setTable('product_tab');
-    //$upgrade->renameColumn('product_number', 'amount');
+    $upgrade->renameColumn('product_number', 'amount');
 }
 echo '</div>';
 ?>
@@ -168,7 +168,7 @@ echo '</div>';
                 <input type="submit" name="add1" value="product_meta_data" />
                 <input type="submit" name="add2" value="category_meta_data" />
                 -->
-                <input type="submit" name="add3" value="setting_seo_for_fun" />
+                <input type="submit" name="add3" value="product number to amount" />
             </form>
         </div>
     </section>

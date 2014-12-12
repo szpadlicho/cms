@@ -200,6 +200,19 @@ class Connect_Shipping
                                 `pr_id` = '".$pr_id."'
                                 ");
     }
+    public function deleteTable($table)
+    {
+        $con = $this->connectDB();
+        $res = $con->query('DROP TABLE `'.$table.'`');
+        return $res ? true : false;
+    }
+    public function deleteFromSupplier()
+    {
+		$con=$this->connectDB();
+		$con->query("DELETE FROM `".$_SESSION['this_supplier']."` WHERE `id` = '".$_POST['curent_id']."'");	
+		unset ($con);
+	
+	}
 }
 $obj_shipping = new Connect_Shipping();
 //next
@@ -223,9 +236,13 @@ if (isset($_POST['add_new'])) {
 if (isset($_POST['update'])) {
     $obj_shipping->updateToSupplier();
 }
-if (isset($_SESSION['this_supplier'])) {
+if (isset($_POST['delete'])) {
+    $success = $obj_shipping->deleteFromSupplier();
+}
+if (isset($_SESSION['this_supplier'])) { // must be last !important
     $show = $obj_shipping->showSupplierConfig();
 }
+
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -505,7 +522,7 @@ if (isset($_SESSION['this_supplier'])) {
                             </tr>
                             <tr>
                                 <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="update" value="Aktualizuj" /></td>
-                                <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="cancel" value="Anuluj" /></td>
+                                <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="delete" value="Usuń" /></td>
                             </tr>
                         </table>
                         <input type="hidden" name="curent_id" value="<?php echo $row['id']; ?>" />
