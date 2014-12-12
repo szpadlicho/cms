@@ -76,9 +76,9 @@ if (isset($_POST['update_amount'])) {
                 // var_dump($llol);
             // }
         ?>
-        <div class="back-all placeholder index">
+        <div class="back-all index placeholder">
                 <!--<form enctype="multipart/form-data" method="POST">-->
-                    <table class="back-all table index">
+                    <table class="back-all index table">
                         <tr>
 							<th colspan="4">Produkty na wyczerpaniu:</th>
 						</tr>
@@ -127,17 +127,17 @@ if (isset($_POST['update_amount'])) {
                             <form enctype="multipart/form-data" method="POST">
                                 <td>
                                     <?php echo $row['id']; ?>
-                                    <input id="" class="back-all text index" type="hidden" name="id" value="<?php echo $row['id']; ?>" />
+                                    <input id="" class="back-all index text" type="hidden" name="id" value="<?php echo $row['id']; ?>" />
                                 </td>
                                 <td>
                                     <?php echo $row['product_name']; ?>
-                                    <input id="" class="back-all text index" type="hidden" name="name" value="<?php echo $row['product_name']; ?>" />
+                                    <input id="" class="back-all index text" type="hidden" name="name" value="<?php echo $row['product_name']; ?>" />
                                 </td>
                                 <td>
-                                    <input id="" class="back-all text index color" type="text" name="amount" value="<?php echo $row['amount']; ?>" />
+                                    <input id="" class="back-all index text color" type="text" name="amount" value="<?php echo $row['amount']; ?>" />
                                 </td>
                                 <td>
-                                    <input id="" class="back-all submit index" type="submit" name="update_amount" value="Zapisz" />
+                                    <input id="" class="back-all index submit" type="submit" name="update_amount" value="Zapisz" />
                                 </td>
                             </form>
 						</tr>
