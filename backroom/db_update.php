@@ -145,10 +145,10 @@ if (isset($_POST['add2'])) {//dodane na kompie
     $upgrade->addRow('keywords');
 }
 */
-// if (isset($_POST['add3'])) {//dodane na kompie
-    // $upgrade->__setTable('product_tab');
-    // $upgrade->renameColumn('product_number', 'amount');
-// }
+if (isset($_POST['add3'])) {//dodane na kompie
+    $upgrade->__setTable('product_tab');
+    $upgrade->renameColumn('product_number', 'amount');
+}
 if (isset($_POST['add4'])) {//dodane na kompie
     $upgrade->__setTable('product_tab');
     //$upgrade->renameColumn('product_number', 'amount');
@@ -183,8 +183,9 @@ echo '</div>';
                 <!--
                 <input type="submit" name="add1" value="product_meta_data" />
                 <input type="submit" name="add2" value="category_meta_data" />
-                <input type="submit" name="add3" value="product number to amount" />
                 -->
+                <input type="submit" name="add3" value="product number to amount" />
+                
                 <input type="submit" name="add4" value="shipping add to product tab" />
             </form>
         </div>
