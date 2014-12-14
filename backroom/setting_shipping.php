@@ -48,8 +48,8 @@ class Connect_Shipping
     public function createSupplier($supplier_name)
     {
         
-
-        $prepare_name = str_replace(' ', '_', $supplier_name);
+        $prepare_name = str_replace(array('ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż'), array('a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z'), $supplier_name);
+        $prepare_name = str_replace(' ', '_', $prepare_name);
         $prepare_name = strtolower($prepare_name);
         //$prepare_name = strtr($prepare_name, 'ĘÓĄŚŁŻŹĆŃęóąśłżźćń', 'EOASLZZCNeoaslzzcn');
         //echo $prepare_name ;
@@ -78,7 +78,7 @@ class Connect_Shipping
                             `supplier_name`,
                             `supplier_name_d`
                             ) VALUES (
-                            '".$prepare_name."',
+                            '".$supplier_name."',
                             '".$supplier_name."'
                             )");
             if ($res2) {
@@ -289,6 +289,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                     //var_dump($name);
                     //echo $name['supplier_name'].'<br />';
                     ?>
+                    <!--<input id="" class="" type="submit" name="set_this2" value="<?php //echo $name['supplier_name_d']; ?>" />-->
                     <input id="" class="" type="submit" name="set_this" value="<?php echo $name['supplier_name']; ?>" />
                     <?php
                 }
