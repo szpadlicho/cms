@@ -165,6 +165,14 @@ if (isset($_POST['add4'])) {//dodane na kompie
         );
     $upgrade->addRowDynamic2($arr_row);
 }
+if (isset($_POST['add5'])) {//dodane na kompie
+    $upgrade->__setTable('supplier');
+    //$upgrade->renameColumn('product_number', 'amount');
+    $arr_row = array(
+        'supplier_name_d'              =>'VARCHAR(30)'
+        );
+    $upgrade->addRowDynamic2($arr_row);
+}
 echo '</div>';
 ?>
 <!DOCTYPE HTML>
@@ -187,6 +195,7 @@ echo '</div>';
                 <input type="submit" name="add3" value="product number to amount" />
                 
                 <input type="submit" name="add4" value="shipping add to product tab" />
+                <input type="submit" name="add5" value="supplier_name_d" />
             </form>
         </div>
     </section>

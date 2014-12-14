@@ -33,7 +33,8 @@ class Connect_Shipping
         $con = $this->connectDB();
         $res = $con->query("CREATE TABLE IF NOT EXISTS `".$this->table."`(
                             `id` INTEGER AUTO_INCREMENT,            
-                            `supplier_name` VARCHAR(20) UNIQUE,
+                            `supplier_name` VARCHAR(30) UNIQUE,
+                            `supplier_name_d` VARCHAR(30),
                             `mod` INTEGER(10),
                             PRIMARY KEY(`id`)
                             )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
@@ -46,6 +47,12 @@ class Connect_Shipping
     }
     public function createSupplier($supplier_name)
     {
+        
+
+        $prepare_name = str_replace(' ', '_', $supplier_name);
+        $prepare_name = strtolower($prepare_name);
+        //$prepare_name = strtr($prepare_name, 'ĘÓĄŚŁŻŹĆŃęóąśłżźćń', 'EOASLZZCNeoaslzzcn');
+        //echo $prepare_name ;
         $con = $this->connectDB();
         $res = $con->query("CREATE TABLE IF NOT EXISTS `".$supplier_name."`(
                             `id` INTEGER AUTO_INCREMENT,            
@@ -68,8 +75,10 @@ class Connect_Shipping
                             );
         if ($res) {
             $res2 = $con->query("INSERT INTO `".$this->table."`(
-                            `supplier_name`
+                            `supplier_name`,
+                            `supplier_name_d`
                             ) VALUES (
+                            '".$prepare_name."',
                             '".$supplier_name."'
                             )");
             if ($res2) {
