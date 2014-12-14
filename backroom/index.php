@@ -144,16 +144,41 @@ if (isset($_POST['update_amount'])) {
                         <?php } ?>
                     </table>
                 <!--</form>-->
+                <script type="text/javascript">
+                    $(function(){
+                        $(document).on('keyup', '#search, #search2', function() {
+                            //console.log( $( this ).val() );
+                            var string = $( this ).val();
+                            $.ajax({
+                                type: 'POST',
+                                url: 'search_backroom.php',
+                                data: {string : string }, 
+                                cache: false,
+                                dataType: 'text',
+                                success: function(data){
+                                    //$('#show').html(data);
+                                    // setTimeout(function(){ 
+                                        // $('#show').html(data); 
+                                    // }, 500)
+                                    $('#search-result').html(data);
+                                }
+                            });
+                        });
+                    });
+                </script>
+                
+                <div id="search-div">Szukaj: <input id="search" type="text" placeholder="szukaj" /></div><!--<input id="search2" type="search" results="5" autosave="a_unique_value" />-->
+                <div id="search-result"></div>
         </div>
 	<footer>
 	<!--<div id="count"></div><div id="count2"></div>-->
 	</footer>
 	<div id="debugger">
 		<?php
-		//echo "post";
-		//var_dump (@$_POST);
-		//echo "session";
-		//var_dump ($_SESSION);
+		echo "post";
+		var_dump (@$_POST);
+		echo "session";
+		var_dump ($_SESSION);
 		// echo "files";
 		// var_dump (@$_FILES);
 		// echo "var2";

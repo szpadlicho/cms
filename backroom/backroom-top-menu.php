@@ -27,5 +27,6 @@
         </li>
         <li><a href="product_add.php">Add product</a></li>
         <li><a href="product_list.php">Product lista</a></li>
+        <li><a href="product_shipping.php">Product shipping</a></li>
     </ul>
 </nav>

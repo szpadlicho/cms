@@ -670,6 +670,30 @@ $get_setting = $obj_gen->__getRow(1);
                         <a class="login-field button" name="user_register" href="../users/user_register.php" >Register</a>
                     <?php } ?>
                     </form>
+                    <!-- search -->
+                    <script type="text/javascript">
+                        $(function(){
+                            $(document).on('keyup', '#search, #search2', function() {
+                                //console.log( $( this ).val() );
+                                var string = $( this ).val();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../backroom/search_index.php',
+                                    data: {string : string }, 
+                                    cache: false,
+                                    dataType: 'text',
+                                    success: function(data){
+                                        //$('#show').html(data);
+                                        // setTimeout(function(){ 
+                                            // $('#show').html(data); 
+                                        // }, 500)
+                                        $('#wrapper4').html(data);
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                    <input id="search" type="text" placeholder="Szukaj..." />
 			</div>
 			<div id="wrapper1-1"></div>
 		</div>

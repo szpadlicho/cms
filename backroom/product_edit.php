@@ -74,6 +74,27 @@ class ProduktEditCls
         isset($_POST['title']) ? $title = $_POST['title'] : $title = null ;
         isset($_POST['description']) ? $description = substr($_POST['description'], 0, 200) : $description = null ;
         isset($_POST['keywords']) ? $keywords = $_POST['keywords'] : $keywords = null ;
+        /*SHIPPING*/
+        if (isset($_POST['shipping_mod'])) {
+            if ($_POST['shipping_mod'] == 'suppliers_false') {
+                $shipping_mod = 0;
+                ?><script>console.log('0up');</script><?php
+            } elseif ($_POST['shipping_mod'] == 'suppliers_true') {
+                $shipping_mod = 1;
+                ?><script>console.log('1up');</script><?php
+            }
+        } else {
+            $shipping_mod = 0;
+            ?><script>console.log('0down');</script><?php
+        }
+        isset($_POST['predefined']) ? $predefined = $_POST['predefined'] : $predefined = null ;
+        isset($_POST['weight']) ? $weight = $_POST['weight'] : $weight = null ;
+        isset($_POST['allow_prepaid']) ? $allow_prepaid = $_POST['allow_prepaid'] : $allow_prepaid = null ;
+        isset($_POST['price_prepaid']) ? $price_prepaid = $_POST['price_prepaid'] : $price_prepaid = null ;
+        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = null ;
+        isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null ;
+        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = null ;
+        isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null ;
 		$con = $this->connectDB();        
 			$feedback = $con->query("
                 UPDATE 
@@ -92,7 +113,16 @@ class ProduktEditCls
                 `file_name` = '".$this->createFileName($what)."',
                 `product_title` = '".trim($title)."',
                 `product_description` = '".trim($description)."',
-                `product_keywords` = '".trim($keywords)."'
+                `product_keywords` = '".trim($keywords)."',
+                `shipping_mod` = '".$shipping_mod."',
+                `predefined` = '".$predefined."',
+                `weight` = '".$weight."',
+                `allow_prepaid` = '".$allow_prepaid."',
+                `price_prepaid` = '".$price_prepaid."',
+                `allow_ondelivery` = '".$allow_ondelivery."',
+                `price_ondelivery` = '".$price_ondelivery."',
+                `package_share` = '".$package_share."',
+                `max_item_in_package` = '".$max_item_in_package."' 
                 WHERE 
                 `id`='".$what."'");	
 		unset ($con);	
@@ -106,7 +136,7 @@ class ProduktEditCls
 	public function showCategory()
     {
 		$con=$this->connectDB();
-		$q = $con->query("SELECT `".$this->table."` FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
+		$q = $con->query("SELECT `".$this->table."` FROM `".$this->table."`");// return false if table not exist
 		unset ($con);
 		return $q;
 	}
@@ -165,12 +195,19 @@ class ProduktEditCls
     }
     public function showAll()
     {
-		$con=$this->connectDB();
-		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `id` = '1'");/*zwraca false jesli tablica nie istnieje*/
-        $q = $q->fetch(PDO::FETCH_ASSOC);
-		unset ($con);
-		return $q;
+		//$con=$this->connectDB();
+		//$q = $con->query("SELECT * FROM `".$this->table."` WHERE `id` = '1'");/*zwraca false jesli tablica nie istnieje*/
+        //$q = $q->fetch(PDO::FETCH_ASSOC);
+		//unset ($con);
+		//return $q;
 	}
+    public function __getAllSupplierName()
+    {
+        $con = $this->connectDB();
+        $res = $con->query("SELECT * FROM `".$this->table."`");
+        //$res = $res->fetch(PDO::FETCH_ASSOC);
+        return $res;
+    }
 }
 $product = new ProduktEditCls();
 $product->__setTable('product_tab');
@@ -198,8 +235,8 @@ if (isset($_POST['delete'])) {
 <head>
 	<title>Edycja</title>
 	<?php include ("meta5.html"); ?>
-    <link href="../upload/uploadfile.css" rel="stylesheet">    
-    <script src="../upload/jquery.uploadfile.js"></script>
+    <link  rel="stylesheet" href="../upload/uploadfile.css" />    
+    <script type="text/javascript" src="../upload/jquery.uploadfile.js"></script>
 </head>
 <body>
 	<section id="place-holder">
@@ -323,6 +360,161 @@ if (isset($_POST['delete'])) {
                             </td>
 						</tr>
 						<tr>
+							<th>Zapisz:</th>
+							<td colspan="3">
+                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
+                            </td>
+						</tr>
+                        <!-- SHIPPING -->
+                        <tr>
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    $('input[type="radio"]').each(function() { 
+                                        $(this).change(function(){
+                                            if( $('input[value="suppliers_true"]').is(":checked") ) {
+                                                $('.suppliers-tr-two').show();
+                                                $('.suppliers-tr-one').hide();
+                                            } else {
+                                                $('.suppliers-tr-two').hide();
+                                                $('.suppliers-tr-one').show();
+                                            }
+                                        });
+                                    });
+                                });
+                                $(window).load(function() {
+                                    $('input[type="radio"]').each(function() { 
+                                        if( $('input[value="suppliers_true"]').is(":checked") ) {
+                                            $('.suppliers-tr-two').show();
+                                            $('.suppliers-tr-one').hide();
+                                        } else {
+                                            $('.suppliers-tr-two').hide();
+                                            $('.suppliers-tr-one').show();
+                                        }
+                                    }); 
+                                });
+                            </script>
+                            <th>
+                                Tryb dostawców
+                            </th>
+                            <td colspan="3">
+                                <label><input id="" class="back-all edit radio suppliers-radio" type="radio" name="shipping_mod" value="suppliers_false" <?php echo $wyn['shipping_mod']==0 ? 'checked="checked"' : '' ; ?> />Użyj zdefiniowanych.</label><br />
+                                <label><input id="" class="back-all edit radio suppliers-radio" type="radio" name="shipping_mod" value="suppliers_true" <?php echo $wyn['shipping_mod']==1 ? 'checked="checked"' : '' ; ?> />Skonfiguruj indywidualnie.</label>
+                            </td>
+						</tr>
+						<tr class="suppliers-tr-one">
+							<th>Dostawca:</th>
+							<td>
+								<select class="back-all edit select" name="predefined">
+									<!--<option></option>-->
+                                    <?php
+                                    $shippng_name = new ProduktEditCls();
+                                    $shippng_name->__setTable('supplier');
+                                    if ($shippng_name->__getAllSupplierName()) {
+                                        foreach ($shippng_name->__getAllSupplierName() as $cat) {
+                                            echo '<option value="'.$cat['supplier_name'].'"';
+                                            if ($cat['supplier_name'] == $wyn['predefined']) {
+                                                echo ' selected ';
+                                            }
+                                            echo '">';
+                                            echo $cat['supplier_name'];
+                                            echo '</option>';
+                                        }
+                                    }
+                                    ?>
+								</select>
+							</td>
+                            <th>Waga</th>
+							<td>
+                                <input id="product-weight" type="text" name="weight" value="<?php echo $wyn['weight']; ?>"/>
+							</td>
+						</tr>
+                        <tr class="suppliers-tr-two">
+                            <th>Dopuszczać przedpłatą</th>
+                            <script type="text/javascript">
+                                $(function(){
+                                    //$( '.price_prepaid' ).show();
+                                    var prepaid = function(){
+                                        if ($( '#allow_prepaid' ).val() == '1') {
+                                            $( '#price_prepaid' ).removeAttr("disabled");
+                                        } else if ($( '#allow_prepaid' ).val() == '0') {
+                                            $( '#price_prepaid' ).attr("disabled", "disabled");
+                                        }
+                                        //console.log('prepaid');
+                                    }
+                                    prepaid();
+                                    $(document).on('change', '#allow_prepaid', function () {
+                                        //console.log($( this ).val());
+                                        prepaid();
+                                    });
+                                });
+                            </script>
+                            <td>
+                                <select id="allow_prepaid" class="back-all shipping select" name="allow_prepaid">
+                                    <option value="1" <?php echo $wyn['allow_prepaid'] == 1 ? 'selected' : '' ; ?> >Tak</option>
+                                    <option value="0" <?php echo $wyn['allow_prepaid'] == 0 ? 'selected' : '' ; ?> >Nie</option>
+                                </select>
+                            </td>
+                            <th>Dopuszczać pobranie</th>
+                            <script type="text/javascript">
+                                $(function(){
+                                    var ondelivery = function(){
+                                        if ($( '#allow_ondelivery' ).val() == '1') {
+                                            $( '#price_ondelivery' ).removeAttr("disabled");
+                                        } else if ($( '#allow_ondelivery' ).val() == '0') {
+                                            $( '#price_ondelivery' ).attr("disabled", "disabled");
+                                        }
+                                    }
+                                    ondelivery();
+                                    //$( '.price_ondelivery' ).show();
+                                    $(document).on('change', '#allow_ondelivery', function () {
+                                        //console.log($( this ).val());
+                                        ondelivery();
+                                    });
+                                });
+                            </script>
+                            <td>
+                                <select id="allow_ondelivery" class="back-all shipping select" name="allow_ondelivery">
+                                    <option value="1" <?php echo $wyn['allow_ondelivery'] == 1 ? 'selected' : '' ; ?> >Tak</option>
+                                    <option value="0" <?php echo $wyn['allow_ondelivery'] == 0 ? 'selected' : '' ; ?>>Nie</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="suppliers-tr-two">
+                            <th>Cena za przedpłatą</th>
+                            <td><input id="price_prepaid" type="text" name="price_prepaid" value="<?php echo $wyn['price_prepaid']; ?>" /></td>
+                            <th>Cena za pobraniem</th>
+                            <td><input id="price_ondelivery" type="text" name="price_ondelivery" value="<?php echo $wyn['price_ondelivery']; ?>" /></td>
+                        </tr>
+                        <tr class="suppliers-tr-two">
+                            <script type="text/javascript">
+                                $(function(){
+                                    var share = function() {
+                                        if ($( '#package_share' ).val() == '1') {
+                                            $( '#max_item_in_package' ).removeAttr("disabled");
+                                        } else if ($( '#package_share' ).val() == '0') {
+                                            $( '#max_item_in_package' ).attr("disabled", "disabled");
+                                        }
+                                    }
+                                    share();
+                                    //$( '#max_item_in_package' ).attr("disabled", "disabled");
+                                    $(document).on('change', '#package_share', function () {
+                                        //console.log($( this ).val());
+                                        share();
+                                    });
+                                });
+                            </script>
+                            <th>Każdy w osobnej paczce</th>
+                            <td>
+                                <select id="package_share" class="back-all shipping select" name="package_share">
+                                    <option value="0" <?php echo $wyn['package_share'] == 0 ? 'selected' : '' ; ?> >Tak</option>
+                                    <option value="1" <?php echo $wyn['package_share'] == 1 ? 'selected' : '' ; ?>>Nie</option>
+                                </select>
+                            </td>
+                            <th>maksymalnie w paczce</th>
+                            <td><input  id="max_item_in_package" class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $wyn['max_item_in_package']; ?>" /></td>
+                        </tr>
+                        <!-- SHIPPING -->
+                        <tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
                                 <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />

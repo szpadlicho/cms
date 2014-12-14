@@ -139,7 +139,16 @@ if (isset($_POST['crt'])) {
         'file_name'                 =>'TEXT',
         'product_title'             =>'TEXT',
         'product_description'       =>'TEXT',
-        'product_keywords'          =>'TEXT'
+        'product_keywords'          =>'TEXT',
+        'shipping_mod'              =>'INTEGER(10) UNSIGNED', 
+        'predefined'                =>'VARCHAR(50)', 
+        'weight'                    =>'INTEGER(100) UNSIGNED', 
+        'allow_prepaid'             =>'INTEGER(10) UNSIGNED',
+        'price_prepaid'             =>'VARCHAR(50)',
+        'allow_ondelivery'          =>'INTEGER(10) UNSIGNED',
+        'price_ondelivery'          =>'VARCHAR(50)',
+        'package_share'             =>'INTEGER(10) UNSIGNED',
+        'max_item_in_package'       =>'INTEGER(100) UNSIGNED'
         );
     $arr_val = array();
 	$return['product_tab'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);

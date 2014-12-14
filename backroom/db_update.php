@@ -19,7 +19,7 @@ class UpgradeCls
     {
 		$this->table = $tab_name;
 	}
-    public function _setRow($row_name)
+    public function __setRow($row_name)
     {
 		$this->row = $row_name;
 	}
@@ -31,7 +31,7 @@ class UpgradeCls
 	}
     public function addRow($name)
     {
-        $this->_setRow($name);
+        $this->__setRow($name);
         $con = $this->connectDB();
         $res = $con->query("ALTER TABLE `".$this->table."` ADD `".$this->row."` TEXT ");
         if ($res) {
@@ -131,23 +131,39 @@ if (isset($_POST['add1'])) {//dodane na kompie
 if (isset($_POST['add2'])) {//dodane na kompie
     $upgrade->__setTable('product_category_main'); 
     $upgrade->addRow('mod');
-    $upgrade->_setRow('mod');
+    $upgrade->__setRow('mod');
     $upgrade->recRowAll('0');
     $upgrade->addRow('title');
     $upgrade->addRow('description');
     $upgrade->addRow('keywords');
-    $upgrade->_setTable('product_category_sub'); 
+    $upgrade->__setTable('product_category_sub'); 
     $upgrade->addRow('mod');
-    $upgrade->_setRow('mod');
+    $upgrade->__setRow('mod');
     $upgrade->recRowAll('0');
     $upgrade->addRow('title');
     $upgrade->addRow('description');
     $upgrade->addRow('keywords');
 }
 */
-if (isset($_POST['add3'])) {//dodane na kompie
+// if (isset($_POST['add3'])) {//dodane na kompie
+    // $upgrade->__setTable('product_tab');
+    // $upgrade->renameColumn('product_number', 'amount');
+// }
+if (isset($_POST['add4'])) {//dodane na kompie
     $upgrade->__setTable('product_tab');
-    $upgrade->renameColumn('product_number', 'amount');
+    //$upgrade->renameColumn('product_number', 'amount');
+    $arr_row = array(
+        'shipping_mod'              =>'INTEGER(10) UNSIGNED', 
+        'predefined'                =>'VARCHAR(50)', 
+        'weight'                    =>'INTEGER(100) UNSIGNED', 
+        'allow_prepaid'             =>'INTEGER(10) UNSIGNED',
+        'price_prepaid'             =>'VARCHAR(50)',
+        'allow_ondelivery'          =>'INTEGER(10) UNSIGNED',
+        'price_ondelivery'          =>'VARCHAR(50)',
+        'package_share'             =>'INTEGER(10) UNSIGNED',
+        'max_item_in_package'       =>'INTEGER(100) UNSIGNED'
+        );
+    $upgrade->addRowDynamic2($arr_row);
 }
 echo '</div>';
 ?>
@@ -167,8 +183,9 @@ echo '</div>';
                 <!--
                 <input type="submit" name="add1" value="product_meta_data" />
                 <input type="submit" name="add2" value="category_meta_data" />
-                -->
                 <input type="submit" name="add3" value="product number to amount" />
+                -->
+                <input type="submit" name="add4" value="shipping add to product tab" />
             </form>
         </div>
     </section>

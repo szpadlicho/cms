@@ -98,7 +98,7 @@ h2{
 #titi{
     color: #fff;/*welcome to my..*/
 }
-#debugger{position:fixed; bottom:0em; right:0em; background-color:rgba(134,115,161,0.5); padding:0.6em; z-index:1000; color:white;}
+#debugger{position:fixed; bottom:0em; right:0em; background-color:rgba(134,115,161,0.5); padding:0.6em; z-index:1000; color:white; width:90%;}
 .catch{position:fixed; bottom:0em; left:0em; background-color:rgba(134,115,161,0.5); padding:0.6em; z-index:1001;}
 .catch_span{display:block;}
 .center{text-align:center; width:21.428em; margin:0 auto;}

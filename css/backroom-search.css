@@ -1,0 +1,15 @@
+#search-div{
+    text-align: center;
+}
+#search{
+/*     position:absolute;
+    left:6em;
+    top:0.5em; */
+    width:10em;
+    background :white;
+    border: 1px solid #999;
+    padding:6px 15px 6px 30px;
+	#margin:3px;
+    border-radius:15px;
+    background: white url('../images/search.png') no-repeat 8px 6px; 
+}
