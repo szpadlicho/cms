@@ -451,7 +451,7 @@ if (isset($_POST['delete'])) {
                             <td>
                                 <select id="allow_prepaid" class="back-all shipping select" name="allow_prepaid">
                                     <option value="1" <?php echo $wyn['allow_prepaid'] == 1 ? 'selected' : '' ; ?> >Tak</option>
-                                    <option value="0" <?php echo $wyn['allow_prepaid'] == 0 ? 'selected' : '' ; ?> >Nie</option>
+                                    <!--<option value="0" <?php //echo $wyn['allow_prepaid'] == 0 ? 'selected' : '' ; ?> >Nie</option>-->
                                 </select>
                             </td>
                             <th>Dopuszczać pobranie</th>

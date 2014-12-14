@@ -174,12 +174,17 @@ class ProductDisplay
                     <?php echo $cat['product_name']; ?>
                 </div>
                 <?php if (isset($_SESSION['user_id'])) { ?>
-                <form method="POST">
-                    <input class="basket-field text" type="text" name="amount" value="1" />
-                    <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
-                    <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
-                </form>
+                <div class="pr-sq add">
+                    <form method="POST">
+                        <input class="basket-field text" type="text" name="amount" value="1" />
+                        <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
+                        <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
+                    </form>
+                </div>
                 <?php } ?>
+                <div class="pr-sq shipping">
+                    <?php echo $this->showShippingPrice($cat['id']); ?>
+                </div>
             </div>
         </a>
         <?php
@@ -193,12 +198,17 @@ class ProductDisplay
                     <img class="mini-image-pr-list" src="<?php echo $this->showMiniImg($cat['id']); ?>" alt="mini image" />
                 </div>
                 <div class="full-name"><?php echo $cat['product_name']; ?></div>
+                <div class="full shipping">
+                    <?php echo $this->showShippingPrice($cat['id']); ?>
+                </div>
                 <?php if (isset($_SESSION['user_id'])) { ?>
-                <form method="POST">
-                    <input class="basket-field text" type="text" name="amount" value="1" />
-                    <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
-                    <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
-                </form>
+                <div class="full add">
+                    <form method="POST">
+                        <input class="basket-field text" type="text" name="amount" value="1" />
+                        <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
+                        <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
+                    </form>
+                </div>
                 <?php } ?>
             </div>          
             <div class="full-down-place-holder">
@@ -224,6 +234,55 @@ class ProductDisplay
             </div>
         </div>        
         <?php
+    }
+    public function showShippingPrice($id)
+    {
+        $con = $this->connectDB();
+		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `id` = '".$id."'");/*zwraca false jesli tablica nie istnieje*/
+        $q = $q->fetch(PDO::FETCH_ASSOC);
+		unset ($con);
+		$mod = $q['shipping_mod'];
+        if ($mod == 0) {
+            $con = $this->connectDB();
+            $k = $con->query("SELECT * FROM `".$q['predefined']."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
+            $k = $k->fetch(PDO::FETCH_ASSOC);
+            unset ($con);
+            echo 'Przesyłka od:';
+            echo '<br />';
+            if ($k) {
+                echo $k['price_prepayment'];
+            } else {
+                $con = $this->connectDB();
+                $d = $con->query("SELECT * FROM `".$q['predefined']."` WHERE `price_of` <= ".$q['product_price']." AND `price_to` >= ".$q['product_price']."");
+                $d = $d->fetch(PDO::FETCH_ASSOC);
+                unset ($con);
+                if ($d) {
+                    echo $d['price_prepayment'];
+                } else {
+                    $con = $this->connectDB();
+                    $f = $con->query("SELECT * FROM `".$q['predefined']."` WHERE `configuration_mod` = 'simple'");
+                    $f = $f->fetch(PDO::FETCH_ASSOC);
+                    //var_dump($f);
+                    unset ($con);
+                    if ($f) {
+                        echo $f['price_prepayment'];
+                    } else {
+                        echo ('niezdefi-<br />niowane');
+                    }
+                }
+            }
+        } elseif ($mod == 1) {
+            echo 'Przesyłka od:';
+            echo '<br />';
+            if ($q['allow_prepaid'] == 1 && !empty($q['price_prepaid'])) {
+                echo $q['price_prepaid'];
+            } elseif ($q['allow_ondelivery'] == 1 && !empty($q['price_ondelivery'])) {
+                echo $q['price_ondelivery'];
+            } else {
+                echo ('niezdefi-<br />niowane');
+            }
+            
+        }
     }
 }
 if (isset($_POST['topmenu'])) {

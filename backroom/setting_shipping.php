@@ -411,11 +411,14 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                             if ($( '#configuration_mod_<?php echo $row['id']; ?>' ).val() == 'weight') {
                                                 $( '.weight_mod_<?php echo $row['id']; ?>' ).show();
                                                 $( '.price_mod_<?php echo $row['id']; ?>' ).hide();
+                                                $( '.price_mod_<?php echo $row['id']; ?> > input' ).removeAttr('value');//clear unused field
                                             } else if ($( '#configuration_mod_<?php echo $row['id']; ?>' ).val() == 'price') {
                                                 $( '.price_mod_<?php echo $row['id']; ?>' ).show();
                                                 $( '.weight_mod_<?php echo $row['id']; ?>' ).hide();
+                                                $( '.weight_mod_<?php echo $row['id']; ?> > input' ).removeAttr('value');//clear unused field
                                             } else if ($( '#configuration_mod_<?php echo $row['id']; ?>' ).val() == 'simple') {
                                                 $( '.weight_mod_<?php echo $row['id']; ?>, .price_mod_<?php echo $row['id']; ?>' ).hide();
+                                                $( '.weight_mod_<?php echo $row['id']; ?> > input, .price_mod_<?php echo $row['id']; ?> > input' ).removeAttr('value');//clear unused field
                                             }
                                         }
                                         confMod();

@@ -22,16 +22,33 @@
     width:10em;
     display:inline-block;
     margin:0.25em;
+    #border:1px solid lime;
 }
 .full-name{
     position:absolute;
     margin-top:0.25em;
-    margin-left:1em;
+    left: 4.35em;
     #text-align:center;
     display:inline-block;
     font-size:3em;
-    #border:1px solid black;
+    #border:1px solid lime;
     padding:0.1em 0.2em 0.2em 0.2em;
+}
+.full.shipping{
+    position: absolute;
+    top: 20%;
+    left: 13.6em;
+    padding:0.1em 0.2em 0.2em 0.2em;
+    #border:1px solid lime;
+    display:inline-block;
+}
+.full.add{
+    position: absolute;
+    top: 35%;
+    left: 13.65em;
+    padding:0.1em 0.2em 0.2em 0.2em;
+    #border:1px solid lime;
+    display:inline-block;
 }
 .color{
     color:black;
