@@ -78,14 +78,11 @@ class ProduktEditCls
         if (isset($_POST['shipping_mod'])) {
             if ($_POST['shipping_mod'] == 'suppliers_false') {
                 $shipping_mod = 0;
-                ?><script>console.log('0up');</script><?php
             } elseif ($_POST['shipping_mod'] == 'suppliers_true') {
                 $shipping_mod = 1;
-                ?><script>console.log('1up');</script><?php
             }
         } else {
             $shipping_mod = 0;
-            ?><script>console.log('0down');</script><?php
         }
         if (isset($_POST['predefined'])) {
             $value = explode('|', $_POST['predefined']);
@@ -109,7 +106,7 @@ class ProduktEditCls
                 SET 
                 `product_name` = '".$_POST['product_name']."', 
                 `product_price` = '".str_replace(",",".",$_POST['product_price'])."', 
-                `amount` = '".$_POST['amount']."',
+                `amount` = '".(int)$_POST['amount']."',
                 `product_category_main` = '".$_POST['product_category_main']."',
                 `product_category_sub` = '".$_POST['product_category_sub']."',
                 `product_description_small` = '".$_POST['product_description_small']."',
@@ -121,16 +118,16 @@ class ProduktEditCls
                 `product_title` = '".trim($title)."',
                 `product_description` = '".trim($description)."',
                 `product_keywords` = '".trim($keywords)."',
-                `shipping_mod` = '".$shipping_mod."',
+                `shipping_mod` = '".(int)$shipping_mod."',
                 `predefined` = '".$predefined."',
                 `predefined_d` = '".$predefined_d."',
-                `weight` = '".$weight."',
-                `allow_prepaid` = '".$allow_prepaid."',
-                `price_prepaid` = '".$price_prepaid."',
-                `allow_ondelivery` = '".$allow_ondelivery."',
-                `price_ondelivery` = '".$price_ondelivery."',
-                `package_share` = '".$package_share."',
-                `max_item_in_package` = '".$max_item_in_package."' 
+                `weight` = '".str_replace(",",".",$weight)."',
+                `allow_prepaid` = '".(int)$allow_prepaid."',
+                `price_prepaid` = '".str_replace(',', '.',$price_prepaid)."',
+                `allow_ondelivery` = '".(int)$allow_ondelivery."',
+                `price_ondelivery` = '".str_replace(',', '.',$price_ondelivery)."',
+                `package_share` = '".(int)$package_share."',
+                `max_item_in_package` = '".(int)$max_item_in_package."' 
                 WHERE 
                 `id`='".$what."'");	
 		unset ($con);	
@@ -237,7 +234,7 @@ if (isset($_POST['delete'])) {
     header('Location: product_list.php');
     //echo("<script>location.href = 'product_list.php';</script>");
 }
-isset($_POST['back']) ? $_SESSION['id_post'] = $_SESSION['id_post'] - 1 : '' ;
+isset($_POST['prev']) ? $_SESSION['id_post'] = $_SESSION['id_post'] - 1 : '' ;
 isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
 ?>
 <!DOCTYPE HTML>
@@ -254,8 +251,10 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
         <div class="back-all edit placeholder">
             <?php foreach ($product->showOne() as $wyn) { ?>
                 <form enctype="multipart/form-data" method="POST">
-                    <input type="submit" name="back" value="back"/>
-                    <input type="submit" name="next" value="next"/>
+                    <div class="center">
+                        <input type="submit" name="prev" value="prev"/>
+                        <input type="submit" name="next" value="next"/>
+                    </div>
                     <table class="back-all edit table">
                         <tr>
 							<th>ID:</th>
@@ -293,7 +292,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
 							<th>Przypisz do Kategorii<br />Pozycji w górnym Menu:</th>
 							<td>
 								<select class="back-all edit select" name="product_category_main">
-									<option></option>
+									<!--<option></option>-->
                                     <?php
                                     $main= new ProduktEditCls();
                                     $main->__setTable('product_category_main');
@@ -314,7 +313,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
                             <th>Przypisz do Podkategorii<br />Pozycji w lewym Menu:</th>
 							<td>
 								<select class="back-all edit select" name="product_category_sub">
-									<option></option>
+									<!--<option></option>-->
                                     <?php
                                     $sub = new ProduktEditCls();
                                     $sub->__setTable('product_category_sub');

@@ -33,9 +33,9 @@ class Connect_Shipping
         $con = $this->connectDB();
         $res = $con->query("CREATE TABLE IF NOT EXISTS `shipping_".$this->table."`(
                             `id` INTEGER AUTO_INCREMENT,            
-                            `supplier_name` VARCHAR(30) UNIQUE,
-                            `supplier_name_d` VARCHAR(30),
-                            `mod` INTEGER(10),
+                            `supplier_name` VARCHAR(50) UNIQUE,
+                            `supplier_name_d` VARCHAR(50),
+                            `mod` INTEGER(2),
                             PRIMARY KEY(`id`)
                             )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
                             );
@@ -55,21 +55,21 @@ class Connect_Shipping
         $con = $this->connectDB();
         $res = $con->query("CREATE TABLE IF NOT EXISTS `shipping_".$prepare_name."`(
                             `id` INTEGER AUTO_INCREMENT,            
-                            `name` VARCHAR(30),
-                            `name_d` VARCHAR(30),
-                            `configuration_mod` VARCHAR(20),
-                            `weight_of` VARCHAR(20),
-                            `weight_to` VARCHAR(20),
+                            `name` VARCHAR(50),
+                            `name_d` VARCHAR(50),
+                            `configuration_mod` INTEGER(1) UNSIGNED,
+                            `weight_of` INTEGER(100) UNSIGNED,
+                            `weight_to` INTEGER(100) UNSIGNED,
                             `price_of` VARCHAR(20),
                             `price_to` VARCHAR(20),
-                            `package_share` VARCHAR(20),
-                            `max_item_in_package` VARCHAR(20),
-                            `allow_prepayment` VARCHAR(20),
+                            `package_share` INTEGER(1) UNSIGNED,
+                            `max_item_in_package` INTEGER(100) UNSIGNED,
+                            `allow_prepayment` INTEGER(1) UNSIGNED,
                             `price_prepayment` VARCHAR(20),
-                            `allow_ondelivery` VARCHAR(20),
+                            `allow_ondelivery` INTEGER(1) UNSIGNED,
                             `price_ondelivery` VARCHAR(20),
                             `free_of` VARCHAR(20),
-                            `mod` INTEGER(10),
+                            `mod` INTEGER(2) UNSIGNED,
                             PRIMARY KEY(`id`)
                             )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
                             );
@@ -109,7 +109,8 @@ class Connect_Shipping
         isset($_POST['price_to']) ? $price_to = $_POST['price_to'] : $price_to = null;
         isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = null;
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null;
-        isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = null;
+        //isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = null;
+        $allow_prepayment = 1;
         isset($_POST['price_prepayment']) ? $price_prepayment = $_POST['price_prepayment'] : $price_prepayment = null;
         isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = null;
         isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null;
@@ -135,18 +136,18 @@ class Connect_Shipping
                                 ) VALUES (
                                 '".$this_supplier."',
                                 '".$this_supplier_d."',
-                                '".$configuration_mod."',
-                                '".$weight_of."',
-                                '".$weight_to."',
-                                '".$price_of."',
-                                '".$price_to."',
-                                '".$package_share."',
-                                '".$max_item_in_package."',
-                                '".$allow_prepayment."',
-                                '".$price_prepayment."',
-                                '".$allow_ondelivery."',
-                                '".$price_ondelivery."',
-                                '".$free_of."',
+                                '".(int)$configuration_mod."',
+                                '".str_replace(',', '.',$weight_of)."',
+                                '".str_replace(',', '.',$weight_to)."',
+                                '".str_replace(',', '.',$price_of)."',
+                                '".str_replace(',', '.',$price_to)."',
+                                '".(int)$package_share."',
+                                '".(int)$max_item_in_package."',
+                                '".(int)$allow_prepayment."',
+                                '".str_replace(',', '.',$price_prepayment)."',
+                                '".(int)$allow_ondelivery."',
+                                '".str_replace(',', '.',$price_ondelivery)."',
+                                '".str_replace(',', '.',$free_of)."',
                                 '0'
                                 )");
         if ($res) {
@@ -174,7 +175,8 @@ class Connect_Shipping
         isset($_POST['price_to']) ? $price_to = $_POST['price_to'] : $price_to = null;
         isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = null;
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null;
-        isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = null;
+        //isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = null;
+        $allow_prepayment = 1;
         isset($_POST['price_prepayment']) ? $price_prepayment = $_POST['price_prepayment'] : $price_prepayment = null;
         isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = null;
         isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null;
@@ -185,18 +187,18 @@ class Connect_Shipping
                                 SET
                                 `name` = '".$this_supplier."',
                                 `name_d` = '".$this_supplier_d."',
-                                `configuration_mod` = '".$configuration_mod."',
-                                `weight_of` = '".$weight_of."',
-                                `weight_to` = '".$weight_to."',
-                                `price_of` = '".$price_of."',
-                                `price_to` = '".$price_to."',
-                                `package_share` = '".$package_share."',
-                                `max_item_in_package` = '".$max_item_in_package."',
-                                `allow_prepayment` = '".$allow_prepayment."',
-                                `price_prepayment` = '".$price_prepayment."',
-                                `allow_ondelivery` = '".$allow_ondelivery."',
-                                `price_ondelivery` = '".$price_ondelivery."',
-                                `free_of` = '".$free_of."',
+                                `configuration_mod` = '".(int)$configuration_mod."',
+                                `weight_of` = '".str_replace(',', '.',$weight_of)."',
+                                `weight_to` = '".str_replace(',', '.',$weight_to)."',
+                                `price_of` = '".str_replace(',', '.',$price_of)."',
+                                `price_to` = '".str_replace(',', '.',$price_to)."',
+                                `package_share` = '".(int)$package_share."',
+                                `max_item_in_package` = '".(int)$max_item_in_package."',
+                                `allow_prepayment` = '".(int)$allow_prepayment."',
+                                `price_prepayment` = '".str_replace(',', '.',$price_prepayment)."',
+                                `allow_ondelivery` = '".(int)$allow_ondelivery."',
+                                `price_ondelivery` = '".str_replace(',', '.',$price_ondelivery)."',
+                                `free_of` = '".str_replace(',', '.',$free_of)."',
                                 `mod` = '0'
                                 WHERE
                                 `id` = '".$_POST['curent_id']."'
@@ -214,12 +216,15 @@ class Connect_Shipping
                                 // `pr_id` = '".$pr_id."'
                                 // ");
     }
-    // public function deleteTable($table)
-    // {
-        // $con = $this->connectDB();
-        // $res = $con->query('DROP TABLE `'.$table.'`');
-        // return $res ? true : false;
-    // }
+    public function deleteSupplier()
+    {
+        $id = $_POST['delete_id'];
+        $table = $_POST['set_this'];
+        $con = $this->connectDB();
+        $con->query("DELETE FROM `shipping_".$this->table."` WHERE `id` = '".$id."'");	
+        $res = $con->query('DROP TABLE `shipping_'.$table.'`');
+        return $res ? true : false;
+    }
     public function deleteFromSupplier()
     {
 		$con=$this->connectDB();
@@ -236,7 +241,6 @@ if (isset($_POST['add']) && ! empty($_POST['supplier_name']) && $_POST['supplier
     $success = $obj_shipping->createSupplier($_POST['supplier_name']);
 }
 $obj_shipping->__setTable('supplier');
-$names = $obj_shipping->__getAllSupplierName();
 //var_dump($names);
 if (isset($_POST['set_this'])) {
     $_SESSION['this_supplier'] = $_POST['set_this'];
@@ -253,9 +257,19 @@ if (isset($_POST['update'])) {
 if (isset($_POST['delete'])) {
     $success = $obj_shipping->deleteFromSupplier();
 }
+if (isset($_POST['delete_this'])) {
+    $delete = $obj_shipping->deleteSupplier();
+    unset($_SESSION['this_supplier']);
+    
+}
+/**
+* SHOW MUST BE LAST !IMPORTANT
+**/
+$names = $obj_shipping->__getAllSupplierName(); // must be last !important
 if (isset($_SESSION['this_supplier'])) { // must be last !important
     $show = $obj_shipping->showSupplierConfig();
 }
+
 
 ?>
 <!DOCTYPE HTML>
@@ -298,6 +312,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         <!--<input id="" class="" type="submit" name="set_this2" value="<?php //echo $name['supplier_name_d']; ?>" />-->
                         <input id="" class="" type="submit" name="set_this2" value="<?php echo $name['supplier_name_d']; ?>" />
                         <input id="" class="" type="hidden" name="set_this" value="<?php echo $name['supplier_name']; ?>" />
+                        <input id="" class="" type="submit" name="delete_this" value="Usuń" />
+                        <input id="" class="" type="hidden" name="delete_id" value="<?php echo $name['id']; ?>" />
                     </form>
                     <?php
                 }
@@ -342,9 +358,9 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 $( '.max_item_in_package' ).hide();
                                 $(document).on('change', '#package_share', function () {
                                     //console.log($( this ).val());
-                                    if ($( this ).val() == 'yes') {
+                                    if ($( this ).val() == '0') {
                                         $( '.max_item_in_package' ).hide();
-                                    } else if ($( this ).val() == 'no') {
+                                    } else if ($( this ).val() == '1') {
                                         $( '.max_item_in_package' ).show();
                                     }
                                 });
@@ -361,9 +377,9 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 $( '.price_ondelivery' ).show();
                                 $(document).on('change', '#allow_ondelivery', function () {
                                     //console.log($( this ).val());
-                                    if ($( this ).val() == 'yes') {
+                                    if ($( this ).val() == '1') {
                                         $( '.price_ondelivery' ).show();
-                                    } else if ($( this ).val() == 'no') {
+                                    } else if ($( this ).val() == '0') {
                                         $( '.price_ondelivery' ).hide();
                                     }
                                 });
@@ -392,8 +408,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         <!-- Configuration mode -->
                         <td>
                             <select id="package_share" class="back-all shipping select" name="package_share">
-                                <option value="yes">Tak</option>
-                                <option value="no">Nie</option>
+                                <option value="0">Tak</option>
+                                <option value="1">Nie</option>
                             </select>
                         </td>
                         <!-- package share -->
@@ -402,8 +418,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         <td><input id="" class="back-all shipping text" type="text" name="price_prepayment" /></td>
                         <td>
                             <select id="allow_ondelivery" class="back-all shipping select" name="allow_ondelivery">
-                                <option value="yes">Tak</option>
-                                <option value="no">Nie</option>
+                                <option value="1">Tak</option>
+                                <option value="0">Nie</option>
                             </select>
                         </td>
                         <td class="price_ondelivery"><input id="" class="back-all shipping text" type="text" name="price_ondelivery" /></td>
@@ -458,9 +474,9 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                     $(function(){
                                         $( '.max_item_in_package_<?php echo $row['id']; ?>' ).hide();
                                         var packShare = function() {
-                                            if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == 'yes') {
+                                            if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == '0') {
                                                 $( '.max_item_in_package_<?php echo $row['id']; ?>' ).hide();
-                                            } else if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == 'no') {
+                                            } else if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == '1') {
                                                 $( '.max_item_in_package_<?php echo $row['id']; ?>' ).show();
                                             }
                                         }
@@ -481,9 +497,9 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                     $(function(){
                                         $( '.price_ondelivery_<?php echo $row['id']; ?>' ).show();
                                         var allowOndel = function() {
-                                            if ($( '#allow_ondelivery_<?php echo $row['id']; ?>' ).val() == 'yes') {
+                                            if ($( '#allow_ondelivery_<?php echo $row['id']; ?>' ).val() == '1') {
                                                 $( '.price_ondelivery_<?php echo $row['id']; ?>' ).show();
-                                            } else if ($( '#allow_ondelivery_<?php echo $row['id']; ?>' ).val() == 'no') {
+                                            } else if ($( '#allow_ondelivery_<?php echo $row['id']; ?>' ).val() == '0') {
                                                 $( '.price_ondelivery_<?php echo $row['id']; ?>' ).hide();
                                             }
                                         }
@@ -522,8 +538,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 <td>
                                     <?php $val2 = $row['package_share'] ;?>
                                     <select id="package_share_<?php echo $row['id']; ?>" class="back-all shipping select" name="package_share">
-                                        <option <?php if ($val2 == 'yes') { echo 'selected'; } ?> value="yes">Tak</option>
-                                        <option <?php if ($val2 == 'no') { echo 'selected'; } ?> value="no">Nie</option>
+                                        <option <?php if ($val2 == '0') { echo 'selected'; } ?> value="0">Tak</option>
+                                        <option <?php if ($val2 == '1') { echo 'selected'; } ?> value="1">Nie</option>
                                     </select>
                                 </td>
                                 <!-- package share -->
@@ -533,8 +549,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 <td>
                                     <?php $val3 = $row['allow_ondelivery'] ;?>
                                     <select id="allow_ondelivery_<?php echo $row['id']; ?>" class="back-all shipping select" name="allow_ondelivery">
-                                        <option <?php if ($val3 == 'yes') { echo 'selected'; } ?> value="yes">Tak</option>
-                                        <option <?php if ($val3 == 'no') { echo 'selected'; } ?> value="no">Nie</option>
+                                        <option <?php if ($val3 == '1') { echo 'selected'; } ?> value="1">Tak</option>
+                                        <option <?php if ($val3 == '0') { echo 'selected'; } ?> value="0">Nie</option>
                                     </select>
                                 </td>
                                 <!-- allow ondelivery -->
@@ -567,6 +583,9 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                 } else {
                     echo 'Błąd';
                 }
+            }
+            if (isset($delete)) {
+                echo $delete == true ? 'Usunięto' : 'Błąd';
             }
         ?>
     </div>

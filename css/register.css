@@ -83,10 +83,9 @@ div.inline{
     display:inline-box;
     padding:1em;
 }
-.basket-field{
+.basket-field{ /*inputs*/
     background: rgba(255,255,255,0.8);
     padding:0.2em;
-    
 }
 .basket-field.text{
     width:2em;
@@ -116,6 +115,8 @@ div.inline{
 }
 .bs-sq{/*all in*/
     padding:0.5em;
+    font-weight:bold;
+    #font-family: arial,verdana;
 }
 .bs-sq.img{
     width:5em;
@@ -140,48 +141,97 @@ div.inline{
 .bs-sq.amount{
     display:inline-block;
     position:absolute;
-    top:2.5em;
-    left:22em;
+    top:0em;
+    right:0em;
 }
-.bs-sq.suma{
+.bs-sq.amount2{
     display:inline-block;
     position:absolute;
     top:2.5em;
-    left:32em;
+    left:18em;
+}
+.bs-sq.cost{
+    display:inline-block;
+    position:absolute;
+    top:1.0em;
+    right:20em;
+}
+.bs-sq.shipping{
+    display:inline-block;
+    position:absolute;
+    top:2.5em;
+    right:20em;
+}
+.bs-sq.line{
+    display:inline-block;
+    position:absolute;
+    padding:0;
+    margin:0;
+    top:4.5em;
+    right:20em;
+    width:9em;
+}
+.bs-sq.sum{
+    display:inline-block;
+    position:absolute;
+    top:4.6em;
+    right:20em;
 }
 .bs-sq.del{
     display:inline-block;
     position:absolute;
-    top:2.5em;
-    right:2em;
+    bottom:0em;
+    right:0em;
 }
-.bs-sq.drop{
+.bs-sq.cost-all{
     display:inline-block;
     position:absolute;
-    top:12.5em;
+    top:0.5em;
     right:2em;
 }
-.bs-sq.sumar{
+.bs-sq.shipping-all{
     display:inline-block;
     position:absolute;
-    top:2.5em;
+    top:2.0em;
     right:2em;
 }
-.bs-sq.send{
+.bs-sq.line-all{
+    display:inline-block;
+    position:absolute;
+    padding:0;
+    margin:0;
+    top:4.3em;
+    right:2em;
+    width:9em;
+    border:1px solid silver;
+}
+.bs-sq.sum-all{
     display:inline-block;
     position:absolute;
     top:4.5em;
     right:2em;
 }
-.bs-sq.all{
+.bs-sq.drop{
     display:inline-block;
     position:absolute;
-    top:6.5em;
+    top:9.5em;
+    right:2em;
+}
+.bs-sq.pre{
+    display:inline-block;
+    position:absolute;
+    top:12.5em;
+    right:2em;
+}
+.bs-sq.on{
+    display:inline-block;
+    position:absolute;
+    top:15.5em;
     right:2em;
 }
 .bs-sq.pay{
     display:inline-block;
     position:absolute;
-    top:9.5em;
+    top:18.5em;
     right:2em;
 }

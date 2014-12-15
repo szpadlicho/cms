@@ -424,8 +424,15 @@ if (isset($_POST['user_check'])) {
 class Connect_Basket extends Connect
 {
     private $sumar=array();
+    private $sum_shipping=array();
     public function __getSumar(){
         return $this->sumar;
+    }
+    public function __setSumShipping($value){
+        $this->sum_shipping = $value;
+    }
+    public function __getSumShipping(){
+        return $this->sum_shipping;
     }
     public function basketAdd($table, $pr_id, $amount)
     {
@@ -433,7 +440,7 @@ class Connect_Basket extends Connect
         * jesli produkt juz jest w koszyku zwiekszyc tylko ilosc
         **/
         $con = $this->connectDB();
-        $res = $con->query("CREATE TABLE IF NOT EXISTS `".$table."`(
+        $res = $con->query("CREATE TABLE IF NOT EXISTS `basket_".$table."`(
                             `id` INTEGER AUTO_INCREMENT,            
                             `pr_id` INTEGER(10) UNSIGNED,
                             `amount` INTEGER(10) UNSIGNED,
@@ -443,24 +450,24 @@ class Connect_Basket extends Connect
                             );
         // tu musze pobrac pole o pr_id jesli jest pobrac i zwiekszyc tylko amount (update)
         // jesli nie to zostawic normalnie !it done
-        $check = $con->query("SELECT `amount` FROM `".$table."` WHERE `pr_id` = '".$pr_id."'");
+        $check = $con->query("SELECT `amount` FROM `basket_".$table."` WHERE `pr_id` = '".$pr_id."'");
         $check = $check->fetch(PDO::FETCH_ASSOC);
         //var_dump($check);
         if ($check) {// if exist sum and add only amount
             $value = $check['amount'] + $amount;
-            $res = $con->query("UPDATE `".$table."` 
+            $res = $con->query("UPDATE `basket_".$table."` 
                                 SET
-                                `amount` = '".$value."'
+                                `amount` = '".(int)$value."'
                                 WHERE
                                 `pr_id` = '".$pr_id."'
                                 ");
         } else {// if product not exist in basket yet 
-            $res = $con->query("INSERT INTO `".$table."`(
+            $res = $con->query("INSERT INTO `basket_".$table."`(
                                 `pr_id`,
                                 `amount`
                                 ) VALUES (
                                 '".$pr_id."',
-                                '".$amount."'
+                                '".(int)$amount."'
                                 )");
         }
         //$q = $con->query("SELECT * FROM `".$table."`");
@@ -473,12 +480,12 @@ class Connect_Basket extends Connect
         * regulowanie ilosci produktu w koszyku
         **/
         $con = $this->connectDB();
-        $check = $con->query("SELECT `amount` FROM `".$table."` WHERE `id` = '".$id."'");
+        $check = $con->query("SELECT `amount` FROM `basket_".$table."` WHERE `id` = '".$id."'");
         $check = $check->fetch(PDO::FETCH_ASSOC);
         if ($check) {
-            $res = $con->query("UPDATE `".$table."` 
+            $res = $con->query("UPDATE `basket_".$table."` 
             SET
-			`amount` = '".$amount_new."'
+			`amount` = '".(int)$amount_new."'
 			WHERE
             `id` = '".$id."'
             ");
@@ -491,19 +498,19 @@ class Connect_Basket extends Connect
     public function basketDrop($table)
     {
         $con = $this->connectDB();
-        $res = $con->query('DROP TABLE `'.$table.'`');
+        $res = $con->query('DROP TABLE `basket_'.$table.'`');
         return $res ? true : false;
     }
     public function basketItemDrop($table, $id)
     {
         $con = $this->connectDB();
-        $res = $con->query("DELETE FROM `".$table."` WHERE `id` = '".$id."'");
+        $res = $con->query("DELETE FROM `basket_".$table."` WHERE `id` = '".$id."'");
         return $res ? true : false;
     }
     public function basketGet($table)
     {
         $con = $this->connectDB();
-        $q = $con->query("SELECT * FROM `".$table."`");
+        $q = $con->query("SELECT * FROM `basket_".$table."`");
         //$q = $q->fetch(PDO::FETCH_ASSOC);
         return $q;
 		unset ($con);
@@ -526,21 +533,21 @@ class Connect_Basket extends Connect
                 <div class="bs-sq img">
                     <img class="mini-image-bs-list" src="<?php echo $min_img->showMiniImg($wyn['id']); ?>" alt="mini image" />
                 </div>
-                <div class="bs-sq price">
-                    Cena: <?php echo $wyn['product_price']; ?>
-                </div>
                 <!--
                 <div class="bs-sq cat-main">
-                    <?php echo $wyn['product_category_main']; ?>
+                    <?php //echo $wyn['product_category_main']; ?>
                 </div>
                 <div class="bs-sq cat-sub">
-                    <?php echo $wyn['product_category_sub']; ?>
+                    <?php //echo $wyn['product_category_sub']; ?>
                 </div>
                 -->
                 <div class="bs-sq name">
                     <a class="bs-square-link" href="../product/<?php echo $wyn['file_name'].'.php'; ?>">
                         <?php echo $wyn['product_name']; ?>
                     </a>
+                </div>
+                <div class="bs-sq price">
+                    Cena: <?php echo $wyn['product_price']; ?>
                 </div>
                 <div class="bs-sq amount">
                     <form method="POST">
@@ -549,8 +556,18 @@ class Connect_Basket extends Connect
                         <input type="hidden" name="basket_item_update_id" value="<?php echo $id; ?>" />
                     </form>
                 </div>
-                <div class="bs-sq suma">
-                    Razem: <?php echo $wyn['product_price']*$amount; ?> PLN
+                <div class="bs-sq amount2">
+                    Ilość: <?php echo $amount; ?>
+                </div>
+                <div class="bs-sq cost">
+                    Koszt: <?php echo $sum = $wyn['product_price']*$amount; ?> PLN
+                </div>
+                <div class="bs-sq shipping">
+                    Przesyłka: <?php echo $shipping = $this->basketShipping($id, $pr_id, $amount); ?> PLN
+                </div>
+                <div class="bs-sq line"></div>
+                <div class="bs-sq sum">
+                    Razem: <?php echo $sum + $shipping; ?> PLN
                 </div>
                 <div class="bs-sq del">
                     <form method="POST">
@@ -570,14 +587,10 @@ class Connect_Basket extends Connect
         // $sumar = $sumar->fetch(PDO::FETCH_ASSOC);
         // return $sumar;
     // }
-    public function basketSubtraction($table)
-    {
-        $con = $this->connectDB();
-    }
     public function basketAccept($table)
     {
         $con = $this->connectDB();
-        $check = $con->query("SELECT * FROM `".$table."`");
+        $check = $con->query("SELECT * FROM `basket_".$table."`");
         //$check = $check->fetch(PDO::FETCH_ASSOC);
         //var_dump($check);
         if ($check) {
@@ -591,12 +604,117 @@ class Connect_Basket extends Connect
                 //echo $value;
                 $res = $con->query("UPDATE `product_tab` 
                     SET
-                    `amount` = '".$value."'
+                    `amount` = '".(int)$value."'
                     WHERE
                     `id` = '".$row['pr_id']."'
                     ");
             }
         }
+    }
+    public function basketShipping($id, $pr_id, $amount) //id numer w koszyku pr_id id zakupionego przedmiotu amoun ilosc
+    {
+        //$user = $_SESSION['user_id'];// użytkownik jednocześnie nazwa tabeli
+        //$user_basket = 'basket_'.$_SESSION['user_id']; // koszyk (nazwa w bazie)
+        $product_tab = 'product_tab';
+        if (isset($_SESSION['paid_mod'])) {
+            $_SESSION['paid_mod'] == 1 ? $paid_mod = 1 : $paid_mod = 0;
+        } else {
+            $paid_mod = 0; // domyslne
+        }
+        $con = $this->connectDB();
+		$q = $con->query("SELECT * FROM `".$product_tab."` WHERE `id` = '".$pr_id."'");/*zwraca false jeśli tablica nie istnieje*/
+        $q = $q->fetch(PDO::FETCH_ASSOC);
+		unset ($con);
+		$mod = $q['shipping_mod'];
+        if ($mod == 0) {
+            $con = $this->connectDB();
+            $k = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
+            $k = $k->fetch(PDO::FETCH_ASSOC);
+            unset ($con);
+            if ($k) {
+                $pre = (float)$k['price_prepayment'];
+                $on = (float)$k['price_ondelivery'];
+                if ($k['package_share'] == 1) {
+                    $max = (int)$k['max_item_in_package'];
+                    $a = 0;
+                    while( $amount > 0) {
+                        $amount = $amount - $max;
+                        $a++;
+                    }
+                    (int)$amount = $a;
+                }
+            } else {
+                $con = $this->connectDB();
+                $d = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `price_of` <= ".$q['product_price']." AND `price_to` >= ".$q['product_price']."");
+                $d = $d->fetch(PDO::FETCH_ASSOC);
+                unset ($con);
+                if ($d) {
+                    $pre = (float)$d['price_prepayment'];
+                    $on = (float)$d['price_ondelivery'];
+                    if ($d['package_share'] == 1) {
+                        $max = (int)$d['max_item_in_package'];
+                        $a = 0;
+                        while( $amount > 0) {
+                            $amount = $amount - $max;
+                            $a++;
+                        }
+                        (int)$amount = $a;
+                    }
+                } else {
+                    $con = $this->connectDB();
+                    $f = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `configuration_mod` = 'simple'");
+                    $f = $f->fetch(PDO::FETCH_ASSOC);
+                    //var_dump($f);
+                    unset ($con);
+                    if ($f) {
+                        $pre = (float)$f['price_prepayment'];
+                        $on = (float)$f['price_ondelivery'];
+                        if ($f['package_share'] == 1) {
+                            $max = (int)$f['max_item_in_package'];
+                            $a = 0;
+                            while( $amount > 0) {
+                                $amount = $amount - $max;
+                                $a++;
+                            }
+                            (int)$amount = $a;
+                        }
+                    } else {
+                        $pre = 0;
+                        $on = 0;
+                    }
+                }
+            }
+        } elseif ($mod == 1) {
+            if ($q['allow_prepaid'] == 1 && !empty($q['price_prepaid'])) {
+                $pre = (float)$q['price_prepaid'];
+            } else {
+                $pre = 0;
+            }
+            if ($q['allow_ondelivery'] == 1 && !empty($q['price_ondelivery'])) {
+                $on = (float)$q['price_ondelivery'];
+            } else {
+                $on = 0;
+            }
+            if ($q['package_share'] == 1) {
+                $max = (int)$q['max_item_in_package'];
+                $a = 0;
+                while( $amount > 0) {
+                    $amount = $amount - $max;
+                    $a++;
+                }
+                (int)$amount = $a;
+            }
+        }
+        if ($paid_mod == 0) {//prepaid
+            $add = $pre*$amount;
+            $this->sum_shipping[] = $add;
+            return $add;
+        } elseif ($paid_mod == 1) {//ondelivery
+            $add = $on*$amount;
+            $this->sum_shipping[] = $add;
+            return $add;
+        }
+        
     }
 }
 
@@ -621,6 +739,8 @@ if (isset($_POST['basket_accept'])) {
     $obj_basket_add = new Connect_Basket;
     $drop = $obj_basket_add->basketAccept($_SESSION['user_id']);
 }
+isset($_POST['set_prepaid']) ? $_SESSION['paid_mod'] = 0 : '' ;
+isset($_POST['set_ondelivery']) ? $_SESSION['paid_mod'] = 1 : '' ;
 include_once('../classes/connect/general.php');
 $obj_gen = new Connect_General;
 $obj_gen->__setTable('setting_gen');
@@ -906,30 +1026,34 @@ $get_setting = $obj_gen->__getRow(1);
                 //------------------------------------------------
                 } elseif (isset($user_basket) && ! isset($user_edit)  && ! isset($user_register)) {
                     $obj_basket_show = new Connect_Basket;
+                    $obj_shipping_get = new Connect_Basket;// tworze nowe bo raz wyswietliłem na poszczegolnych polach w koszyku i to sie by dodało jescze raz
                     $foo = $obj_basket_show->basketGet($_SESSION['user_id']);
                     if ($foo) {
                         while ($row = $foo->fetch(PDO::FETCH_ASSOC)) {
                             $obj_basket_show->basketShow($row['id'], $row['pr_id'], $row['amount']);
+                            $obj_shipping_get->basketShipping($row['id'], $row['pr_id'], $row['amount']);
                         }
                     }
                     $bar = $obj_basket_show->__getSumar();
+                    //$obj_basket_show->__setSumShipping(0); 
+                    $foo = $obj_shipping_get->__getSumShipping();
                     //var_dump($bar);                    
                     $sumar = array_sum($bar);
+                    $send = array_sum($foo);
                     ?>
-                    <div class="bs-sq sumar">Do zapłaty: <?php echo $sumar; ?> PLN</div>
-                    <div class="bs-sq send">+ koszty przesyłki: <?php echo $send = 2; ?> PLN</div>
-                    <div class="bs-sq all">Razem: <?php echo $sumar+$send; ?> PLN</div>
+                    <div class="bs-sq cost-all">Koszt: <?php echo $sumar; ?> PLN</div>
+                    <div class="bs-sq shipping-all">Przesyłka: <?php echo $send; ?> PLN</div>
+                    <div class="bs-sq line-all"></div>
+                    <div class="bs-sq sum-all">Do zapłaty: <?php echo $sumar+$send; ?> PLN</div>
                     <form method="POST">                        
                         <input class="basket-field button bs-sq drop" type="submit" name="basket_drop" value="Opróżnij koszyk" />
                         <input class="basket-field button bs-sq pay" type="submit" name="basket_accept" value="Zapłać" />
                     </form>
-                    <?php                    
-                }
-				?>
-            <!--
-			<br />
-			<br />
-			-->
+                    <form method="POST">                        
+                        <input class="basket-field button bs-sq pre" type="submit" name="set_prepaid" value="Płace przelewem" />
+                        <input class="basket-field button bs-sq on" type="submit" name="set_ondelivery" value="Płacę przy odbiorze" />
+                    </form>
+                <?php } ?>
 			</div>				
 		</div>		
 		<div>

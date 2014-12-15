@@ -77,7 +77,7 @@ class DatabaseInstall
                 "CREATE TABLE IF NOT EXISTS `".$this->table."`(
                 `id` INTEGER AUTO_INCREMENT,            
                 ".$columns."
-                `mod` INTEGER(10),
+                `mod` INTEGER(2),
                 PRIMARY KEY(`id`)
                 )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
                 );
@@ -128,7 +128,7 @@ if (isset($_POST['crt'])) {
 	$obj_install->__setTable('product_tab');
     $arr_row = array(
         'product_name'              =>'TEXT', 
-        'product_price'             =>'VARCHAR(10)', 
+        'product_price'             =>'VARCHAR(20)',
         'amount'                    =>'INTEGER(10) UNSIGNED', 
         'product_category_main'     =>'TEXT',
         'product_category_sub'      =>'TEXT',
@@ -140,15 +140,15 @@ if (isset($_POST['crt'])) {
         'product_title'             =>'TEXT',
         'product_description'       =>'TEXT',
         'product_keywords'          =>'TEXT',
-        'shipping_mod'              =>'INTEGER(10) UNSIGNED', 
+        'shipping_mod'              =>'INTEGER(1) UNSIGNED', 
         'predefined'                =>'VARCHAR(50)',
-        'predefined_d'                =>'VARCHAR(50)',
+        'predefined_d'              =>'VARCHAR(50)',
         'weight'                    =>'INTEGER(100) UNSIGNED', 
-        'allow_prepaid'             =>'INTEGER(10) UNSIGNED',
-        'price_prepaid'             =>'VARCHAR(50)',
-        'allow_ondelivery'          =>'INTEGER(10) UNSIGNED',
-        'price_ondelivery'          =>'VARCHAR(50)',
-        'package_share'             =>'INTEGER(10) UNSIGNED',
+        'allow_prepaid'             =>'INTEGER(1) UNSIGNED',
+        'price_prepaid'             =>'VARCHAR(20)',
+        'allow_ondelivery'          =>'INTEGER(1) UNSIGNED',
+        'price_ondelivery'          =>'VARCHAR(20)',
+        'package_share'             =>'INTEGER(1) UNSIGNED',
         'max_item_in_package'       =>'INTEGER(100) UNSIGNED'
         );
     $arr_val = array();
@@ -178,10 +178,10 @@ if (isset($_POST['crt'])) {
     
     $obj_install->__setTable('setting_img');
     $arr_row = array(
-        'small_width'   =>'INT(4) UNSIGNED', 
-        'small_height'  =>'INT(4) UNSIGNED', 
-        'large_width'   =>'INT(4) UNSIGNED', 
-        'large_height'  =>'INT(4) UNSIGNED'
+        'small_width'   =>'INT(5) UNSIGNED', 
+        'small_height'  =>'INT(5) UNSIGNED', 
+        'large_width'   =>'INT(5) UNSIGNED', 
+        'large_height'  =>'INT(5) UNSIGNED'
         );
     $arr_val = array(
         'small_width'   =>200,  
