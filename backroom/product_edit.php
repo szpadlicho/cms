@@ -87,7 +87,14 @@ class ProduktEditCls
             $shipping_mod = 0;
             ?><script>console.log('0down');</script><?php
         }
-        isset($_POST['predefined']) ? $predefined = $_POST['predefined'] : $predefined = null ;
+        if (isset($_POST['predefined'])) {
+            $value = explode('|', $_POST['predefined']);
+            isset($value[0]) ? $predefined = $value[0] : $predefined = null ;
+            isset($value[1]) ? $predefined_d = $value[1] : $predefined_d = null ;
+        }   else {
+            $predefined = null;
+            $predefined_d = null;
+        }
         isset($_POST['weight']) ? $weight = $_POST['weight'] : $weight = null ;
         isset($_POST['allow_prepaid']) ? $allow_prepaid = $_POST['allow_prepaid'] : $allow_prepaid = null ;
         isset($_POST['price_prepaid']) ? $price_prepaid = $_POST['price_prepaid'] : $price_prepaid = null ;
@@ -116,6 +123,7 @@ class ProduktEditCls
                 `product_keywords` = '".trim($keywords)."',
                 `shipping_mod` = '".$shipping_mod."',
                 `predefined` = '".$predefined."',
+                `predefined_d` = '".$predefined_d."',
                 `weight` = '".$weight."',
                 `allow_prepaid` = '".$allow_prepaid."',
                 `price_prepaid` = '".$price_prepaid."',
@@ -204,7 +212,7 @@ class ProduktEditCls
     public function __getAllSupplierName()
     {
         $con = $this->connectDB();
-        $res = $con->query("SELECT * FROM `".$this->table."`");
+        $res = $con->query("SELECT * FROM `shipping_".$this->table."`");
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
@@ -229,6 +237,8 @@ if (isset($_POST['delete'])) {
     header('Location: product_list.php');
     //echo("<script>location.href = 'product_list.php';</script>");
 }
+isset($_POST['back']) ? $_SESSION['id_post'] = $_SESSION['id_post'] - 1 : '' ;
+isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -244,6 +254,8 @@ if (isset($_POST['delete'])) {
         <div class="back-all edit placeholder">
             <?php foreach ($product->showOne() as $wyn) { ?>
                 <form enctype="multipart/form-data" method="POST">
+                    <input type="submit" name="back" value="back"/>
+                    <input type="submit" name="next" value="next"/>
                     <table class="back-all edit table">
                         <tr>
 							<th>ID:</th>
@@ -411,17 +423,18 @@ if (isset($_POST['delete'])) {
                                     $shippng_name->__setTable('supplier');
                                     if ($shippng_name->__getAllSupplierName()) {
                                         foreach ($shippng_name->__getAllSupplierName() as $cat) {
-                                            echo '<option value="'.$cat['supplier_name'].'"';
+                                            echo '<option value="'.$cat['supplier_name'].'|'.$cat['supplier_name_d'].'"';
                                             if ($cat['supplier_name'] == $wyn['predefined']) {
                                                 echo ' selected ';
                                             }
                                             echo '">';
-                                            echo $cat['supplier_name'];
+                                            echo $cat['supplier_name_d'];
                                             echo '</option>';
                                         }
                                     }
                                     ?>
 								</select>
+                                <!--<input type="hidden" name="predefined_d" value="<?php //echo $cat['supplier_name_d']; ?> " />-->
 							</td>
                             <th>Waga</th>
 							<td>

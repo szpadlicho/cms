@@ -28,10 +28,10 @@ class Connect_Shipping
             var_dump($lol2);
         }
     }
-    public function createSupplierTableName()
+    public function createSupplierTableName() //to mozna dodac do install mysle
     {
         $con = $this->connectDB();
-        $res = $con->query("CREATE TABLE IF NOT EXISTS `".$this->table."`(
+        $res = $con->query("CREATE TABLE IF NOT EXISTS `shipping_".$this->table."`(
                             `id` INTEGER AUTO_INCREMENT,            
                             `supplier_name` VARCHAR(30) UNIQUE,
                             `supplier_name_d` VARCHAR(30),
@@ -51,12 +51,12 @@ class Connect_Shipping
         $prepare_name = str_replace(array('ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż'), array('a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z'), $supplier_name);
         $prepare_name = str_replace(' ', '_', $prepare_name);
         $prepare_name = strtolower($prepare_name);
-        //$prepare_name = strtr($prepare_name, 'ĘÓĄŚŁŻŹĆŃęóąśłżźćń', 'EOASLZZCNeoaslzzcn');
         //echo $prepare_name ;
         $con = $this->connectDB();
-        $res = $con->query("CREATE TABLE IF NOT EXISTS `".$supplier_name."`(
+        $res = $con->query("CREATE TABLE IF NOT EXISTS `shipping_".$prepare_name."`(
                             `id` INTEGER AUTO_INCREMENT,            
-                            `name` VARCHAR(20),
+                            `name` VARCHAR(30),
+                            `name_d` VARCHAR(30),
                             `configuration_mod` VARCHAR(20),
                             `weight_of` VARCHAR(20),
                             `weight_to` VARCHAR(20),
@@ -74,11 +74,11 @@ class Connect_Shipping
                             )ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1"
                             );
         if ($res) {
-            $res2 = $con->query("INSERT INTO `".$this->table."`(
+            $res2 = $con->query("INSERT INTO `shipping_".$this->table."`(
                             `supplier_name`,
                             `supplier_name_d`
                             ) VALUES (
-                            '".$supplier_name."',
+                            '".$prepare_name."',
                             '".$supplier_name."'
                             )");
             if ($res2) {
@@ -94,13 +94,14 @@ class Connect_Shipping
     public function __getAllSupplierName()
     {
         $con = $this->connectDB();
-        $res = $con->query("SELECT * FROM `".$this->table."`");
+        $res = $con->query("SELECT * FROM `shipping_".$this->table."`");
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
     public function addToSupplier()
     {
         isset($_SESSION['this_supplier']) ? $this_supplier = $_SESSION['this_supplier'] : $this_supplier = null;
+        isset($_SESSION['this_supplier']) ? $this_supplier_d = $_SESSION['this_supplier'] : $this_supplier_d = null;//bedzie z posta
         isset($_POST['configuration_mod']) ? $configuration_mod = $_POST['configuration_mod'] : $configuration_mod = null;
         isset($_POST['weight_of']) ? $weight_of = $_POST['weight_of'] : $weight_of = null;
         isset($_POST['weight_to']) ? $weight_to = $_POST['weight_to'] : $weight_to = null;
@@ -115,8 +116,9 @@ class Connect_Shipping
         isset($_POST['free_of']) ? $free_of = $_POST['free_of'] : $free_of = null;
         
         $con = $this->connectDB();
-        $res = $con->query("INSERT INTO `".$_SESSION['this_supplier']."`(
+        $res = $con->query("INSERT INTO `shipping_".$_SESSION['this_supplier']."`(
                                 `name`,
+                                `name_d`,
                                 `configuration_mod`,
                                 `weight_of`,
                                 `weight_to`,
@@ -132,6 +134,7 @@ class Connect_Shipping
                                 `mod`
                                 ) VALUES (
                                 '".$this_supplier."',
+                                '".$this_supplier_d."',
                                 '".$configuration_mod."',
                                 '".$weight_of."',
                                 '".$weight_to."',
@@ -156,13 +159,14 @@ class Connect_Shipping
     public function showSupplierConfig()
     {
         $con = $this->connectDB();
-        $res = $con->query("SELECT * FROM `".$_SESSION['this_supplier']."`");
+        $res = $con->query("SELECT * FROM `shipping_".$_SESSION['this_supplier']."`");
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
         public function updateToSupplier()
     {
         isset($_SESSION['this_supplier']) ? $this_supplier = $_SESSION['this_supplier'] : $this_supplier = null;
+        isset($_SESSION['this_supplier']) ? $this_supplier_d = $_SESSION['this_supplier'] : $this_supplier_d = null;
         isset($_POST['configuration_mod']) ? $configuration_mod = $_POST['configuration_mod'] : $configuration_mod = null;
         isset($_POST['weight_of']) ? $weight_of = $_POST['weight_of'] : $weight_of = null;
         isset($_POST['weight_to']) ? $weight_to = $_POST['weight_to'] : $weight_to = null;
@@ -177,9 +181,10 @@ class Connect_Shipping
         isset($_POST['free_of']) ? $free_of = $_POST['free_of'] : $free_of = null;
         
         $con = $this->connectDB();
-        $res = $con->query("UPDATE `".$_SESSION['this_supplier']."`
+        $res = $con->query("UPDATE `shipping_".$_SESSION['this_supplier']."`
                                 SET
                                 `name` = '".$this_supplier."',
+                                `name_d` = '".$this_supplier_d."',
                                 `configuration_mod` = '".$configuration_mod."',
                                 `weight_of` = '".$weight_of."',
                                 `weight_to` = '".$weight_to."',
@@ -202,23 +207,23 @@ class Connect_Shipping
                 return false;
             }
         unset($con);
-        $res = $con->query("UPDATE `".$table."` 
-                                SET
-                                `amount` = '".$value."'
-                                WHERE
-                                `pr_id` = '".$pr_id."'
-                                ");
+        // $res = $con->query("UPDATE `".$table."` 
+                                // SET
+                                // `amount` = '".$value."'
+                                // WHERE
+                                // `pr_id` = '".$pr_id."'
+                                // ");
     }
-    public function deleteTable($table)
-    {
-        $con = $this->connectDB();
-        $res = $con->query('DROP TABLE `'.$table.'`');
-        return $res ? true : false;
-    }
+    // public function deleteTable($table)
+    // {
+        // $con = $this->connectDB();
+        // $res = $con->query('DROP TABLE `'.$table.'`');
+        // return $res ? true : false;
+    // }
     public function deleteFromSupplier()
     {
 		$con=$this->connectDB();
-		$con->query("DELETE FROM `".$_SESSION['this_supplier']."` WHERE `id` = '".$_POST['curent_id']."'");	
+		$con->query("DELETE FROM `shipping_".$_SESSION['this_supplier']."` WHERE `id` = '".$_POST['curent_id']."'");	
 		unset ($con);
 	
 	}
@@ -289,16 +294,21 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                     //var_dump($name);
                     //echo $name['supplier_name'].'<br />';
                     ?>
-                    <!--<input id="" class="" type="submit" name="set_this2" value="<?php //echo $name['supplier_name_d']; ?>" />-->
-                    <input id="" class="" type="submit" name="set_this" value="<?php echo $name['supplier_name']; ?>" />
+                    <form method="POST" >
+                        <!--<input id="" class="" type="submit" name="set_this2" value="<?php //echo $name['supplier_name_d']; ?>" />-->
+                        <input id="" class="" type="submit" name="set_this2" value="<?php echo $name['supplier_name_d']; ?>" />
+                        <input id="" class="" type="hidden" name="set_this" value="<?php echo $name['supplier_name']; ?>" />
+                    </form>
                     <?php
                 }
                 ?>
-                <input id="" class="" type="submit" name="unset_this" value="Zamknij" />
+                <form method="POST" >
+                    <input id="" class="" type="submit" name="unset_this" value="Zamknij" />
+                </form>
                 <?php
             }
             ?>
-            </form>
+            
             <?php if (isset($_SESSION['this_supplier'])) { ?>
             <form method="POST" >
                 <table class="back-all shipping table">

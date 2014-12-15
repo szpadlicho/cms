@@ -242,9 +242,12 @@ class ProductDisplay
         $q = $q->fetch(PDO::FETCH_ASSOC);
 		unset ($con);
 		$mod = $q['shipping_mod'];
+        $prepare_name = str_replace(array('ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż'), array('a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z'), $q['predefined']);
+        $prepare_name = str_replace(' ', '_', $prepare_name);
+        $predefined = strtolower($prepare_name);
         if ($mod == 0) {
             $con = $this->connectDB();
-            $k = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
+            $k = $con->query("SELECT * FROM `shipping_".$predefined."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
             $k = $k->fetch(PDO::FETCH_ASSOC);
             unset ($con);
             echo 'Przesyłka od:';
@@ -253,14 +256,14 @@ class ProductDisplay
                 echo $k['price_prepayment'];
             } else {
                 $con = $this->connectDB();
-                $d = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `price_of` <= ".$q['product_price']." AND `price_to` >= ".$q['product_price']."");
+                $d = $con->query("SELECT * FROM `shipping_".$predefined."` WHERE `price_of` <= ".$q['product_price']." AND `price_to` >= ".$q['product_price']."");
                 $d = $d->fetch(PDO::FETCH_ASSOC);
                 unset ($con);
                 if ($d) {
                     echo $d['price_prepayment'];
                 } else {
                     $con = $this->connectDB();
-                    $f = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `configuration_mod` = 'simple'");
+                    $f = $con->query("SELECT * FROM `shipping_".$predefined."` WHERE `configuration_mod` = 'simple'");
                     $f = $f->fetch(PDO::FETCH_ASSOC);
                     //var_dump($f);
                     unset ($con);

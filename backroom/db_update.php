@@ -100,6 +100,18 @@ class UpgradeCls
             }
         }
     }
+    public function addRowDynamic3($arr_row)
+    {
+        $con = $this->connectDB();
+        foreach ($arr_row as $name => $value) {
+            $res = $con->query("ALTER TABLE `".$this->table."` ADD COLUMN `".$name."` ".$value." AFTER predefined");
+            if ($res) {
+                echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." OK!</div>";
+            } else {
+                echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." ERROR!</div>";
+            }
+        }
+    }
     public function renameColumn($old_name, $new_name)
     {
         $con = $this->connectDB();
@@ -173,6 +185,13 @@ if (isset($_POST['add5'])) {//dodane na kompie
         );
     $upgrade->addRowDynamic2($arr_row);
 }
+if (isset($_POST['add6'])) {//dodane na kompie
+    $upgrade->__setTable('product_tab');
+    $arr_row = array(
+        'predefined_d'              =>'VARCHAR(30)'
+        );
+    $upgrade->addRowDynamic3($arr_row);
+}
 echo '</div>';
 ?>
 <!DOCTYPE HTML>
@@ -196,6 +215,7 @@ echo '</div>';
                 
                 <input type="submit" name="add4" value="shipping add to product tab" />
                 <input type="submit" name="add5" value="supplier_name_d" />
+                <input type="submit" name="add6" value="predefined_d" />
             </form>
         </div>
     </section>
