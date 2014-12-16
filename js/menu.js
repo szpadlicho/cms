@@ -6,9 +6,24 @@ $(document).ready(function(){
         localStorage.setItem('topMenu', id);
         //localStorage.getItem();
         //localStorage.removeItem();
+        var main = $(this).text();
+        $.ajax({ // na potrzby wyszukiwania
+            type: 'POST',
+            url: '../set_session.php',
+            data: {value : main }, 
+            cache: false,
+            async: false
+        });
     });
     $('a#top-menu-1').click( function () {
         localStorage.removeItem('topMenu');
+        $.ajax({// na potrzeby wyszukiwania
+            type: 'POST',
+            url: '../unset_session.php',
+            data: {value : 'main' }, 
+            cache: false,
+            async: false
+        });
     });
     var ids = localStorage.getItem('topMenu');
     if( ids == 'top-menu-1'){
