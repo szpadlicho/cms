@@ -423,8 +423,9 @@ if (isset($_POST['user_check'])) {
 }
 class Connect_Basket extends Connect
 {
-    private $sumar=array();
-    private $sum_shipping=array();
+    private $sumar = array();
+    private $sum_shipping = array();
+    private $arr = array();
     public function __getSumar(){
         return $this->sumar;
     }
@@ -433,6 +434,9 @@ class Connect_Basket extends Connect
     }
     public function __getSumShipping(){
         return $this->sum_shipping;
+    }
+    public function __getArr(){
+        return $this->arr;
     }
     public function basketAdd($table, $pr_id, $amount)
     {
@@ -626,7 +630,7 @@ class Connect_Basket extends Connect
         $q = $q->fetch(PDO::FETCH_ASSOC);
 		unset ($con);
 		$mod = $q['shipping_mod'];
-        if ($mod == 0) {
+        if ($mod == 0) { // supplier setup
             $con = $this->connectDB();
             $k = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
             $k = $k->fetch(PDO::FETCH_ASSOC);
@@ -684,17 +688,20 @@ class Connect_Basket extends Connect
                     }
                 }
             }
-        } elseif ($mod == 1) {
+        } elseif ($mod == 1) { // own setup
+            // prepaid
             if ($q['allow_prepaid'] == 1 && !empty($q['price_prepaid'])) {
                 $pre = (float)$q['price_prepaid'];
             } else {
                 $pre = 0;
             }
+            // on delivery
             if ($q['allow_ondelivery'] == 1 && !empty($q['price_ondelivery'])) {
                 $on = (float)$q['price_ondelivery'];
             } else {
                 $on = 0;
             }
+            // calculate amount for package share 
             if ($q['package_share'] == 1) {
                 $max = (int)$q['max_item_in_package'];
                 $a = 0;
@@ -703,13 +710,19 @@ class Connect_Basket extends Connect
                     $a++;
                 }
                 (int)$amount = $a;
+                // calculate amount for connect package
+                //$arr = array();
+                if ($q['connect_package'] == 1) {
+                    $this->arr[$pr_id] = $a;
+                }
             }
         }
-        if ($paid_mod == 0) {//prepaid
+        /*amount*/
+        if ($paid_mod == 0) { // prepaid
             $add = $pre*$amount;
             $this->sum_shipping[] = $add;
             return $add;
-        } elseif ($paid_mod == 1) {//ondelivery
+        } elseif ($paid_mod == 1) { // on delivery
             $add = $on*$amount;
             $this->sum_shipping[] = $add;
             return $add;
@@ -1053,6 +1066,10 @@ $get_setting = $obj_gen->__getRow(1);
                         <input class="basket-field button bs-sq pre" type="submit" name="set_prepaid" value="Płace przelewem" />
                         <input class="basket-field button bs-sq on" type="submit" name="set_ondelivery" value="Płacę przy odbiorze" />
                     </form>
+                    <?php
+                    $arr = $obj_shipping_get->__getArr();
+                    var_dump($arr);
+                    ?>
                 <?php } ?>
 			</div>				
 		</div>		
