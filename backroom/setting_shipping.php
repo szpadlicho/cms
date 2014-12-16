@@ -66,8 +66,8 @@ class Connect_Shipping
                             `max_item_in_package` INTEGER(100) UNSIGNED,
                             `connect_package` INTEGER(1) UNSIGNED,
                             `only_if_the_same` INTEGER(1) UNSIGNED,
-                            `allow_prepayment` INTEGER(1) UNSIGNED,
-                            `price_prepayment` VARCHAR(20),
+                            `allow_prepaid` INTEGER(1) UNSIGNED,
+                            `price_prepaid` VARCHAR(20),
                             `allow_ondelivery` INTEGER(1) UNSIGNED,
                             `price_ondelivery` VARCHAR(20),
                             `free_of` VARCHAR(20),
@@ -113,9 +113,9 @@ class Connect_Shipping
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null;
         isset($_POST['connect_package']) ? $connect_package = $_POST['connect_package'] : $connect_package = 0;
         isset($_POST['only_if_the_same']) ? $only_if_the_same = $_POST['only_if_the_same'] : $only_if_the_same = 0;
-        isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = 1;
-        $allow_prepayment = 1;
-        isset($_POST['price_prepayment']) ? $price_prepayment = $_POST['price_prepayment'] : $price_prepayment = null;
+        isset($_POST['allow_prepaid']) ? $allow_prepaid = $_POST['allow_prepaid'] : $allow_prepaid = 1;
+        $allow_prepaid = 1;
+        isset($_POST['price_prepaid']) ? $price_prepaid = $_POST['price_prepaid'] : $price_prepaid = null;
         isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = 1;
         isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null;
         isset($_POST['free_of']) ? $free_of = $_POST['free_of'] : $free_of = null;
@@ -133,8 +133,8 @@ class Connect_Shipping
                                 `max_item_in_package`,
                                 `connect_package`,
                                 `only_if_the_same`,
-                                `allow_prepayment`,
-                                `price_prepayment`,
+                                `allow_prepaid`,
+                                `price_prepaid`,
                                 `allow_ondelivery`,
                                 `price_ondelivery`,
                                 `free_of`,
@@ -151,8 +151,8 @@ class Connect_Shipping
                                 '".(int)$max_item_in_package."',
                                 '".(int)$connect_package."',
                                 '".(int)$only_if_the_same."',
-                                '".(int)$allow_prepayment."',
-                                '".str_replace(',', '.',$price_prepayment)."',
+                                '".(int)$allow_prepaid."',
+                                '".str_replace(',', '.',$price_prepaid)."',
                                 '".(int)$allow_ondelivery."',
                                 '".str_replace(',', '.',$price_ondelivery)."',
                                 '".str_replace(',', '.',$free_of)."',
@@ -185,9 +185,9 @@ class Connect_Shipping
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null;
         isset($_POST['connect_package']) ? $connect_package = $_POST['connect_package'] : $connect_package = 0;
         isset($_POST['only_if_the_same']) ? $only_if_the_same = $_POST['only_if_the_same'] : $only_if_the_same = 0;
-        isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = 1;
-        $allow_prepayment = 1;
-        isset($_POST['price_prepayment']) ? $price_prepayment = $_POST['price_prepayment'] : $price_prepayment = null;
+        isset($_POST['allow_prepaid']) ? $allow_prepaid = $_POST['allow_prepaid'] : $allow_prepaid = 1;
+        $allow_prepaid = 1;
+        isset($_POST['price_prepaid']) ? $price_prepaid = $_POST['price_prepaid'] : $price_prepaid = null;
         isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = 1;
         isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null;
         isset($_POST['free_of']) ? $free_of = $_POST['free_of'] : $free_of = null;
@@ -206,8 +206,8 @@ class Connect_Shipping
                                 `max_item_in_package` = '".(int)$max_item_in_package."',
                                 `connect_package` = '".(int)$connect_package."',
                                 `only_if_the_same` = '".(int)$only_if_the_same."',
-                                `allow_prepayment` = '".(int)$allow_prepayment."',
-                                `price_prepayment` = '".str_replace(',', '.',$price_prepayment)."',
+                                `allow_prepaid` = '".(int)$allow_prepaid."',
+                                `price_prepaid` = '".str_replace(',', '.',$price_prepaid)."',
                                 `allow_ondelivery` = '".(int)$allow_ondelivery."',
                                 `price_ondelivery` = '".str_replace(',', '.',$price_ondelivery)."',
                                 `free_of` = '".str_replace(',', '.',$free_of)."',
@@ -432,7 +432,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                             <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
                         </td>
                         <!-- package share -->
-                        <td><input id="" class="back-all shipping text" type="text" name="price_prepayment" /></td>
+                        <td><input id="" class="back-all shipping text" type="text" name="price_prepaid" /></td>
                         <td>
                             <select id="allow_ondelivery" class="back-all shipping select" name="allow_ondelivery">
                                 <option value="1">Tak</option>
@@ -567,7 +567,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                         <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" <?php echo $row['only_if_the_same'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
                                 </td>
                                 <!-- package share -->
-                                <td><input id="" class="back-all shipping text" type="text" name="price_prepayment" value="<?php echo $row['price_prepayment'] ;?>" /></td>
+                                <td><input id="" class="back-all shipping text" type="text" name="price_prepaid" value="<?php echo $row['price_prepaid'] ;?>" /></td>
                                 <td>
                                     <?php $val3 = $row['allow_ondelivery'] ;?>
                                     <select id="allow_ondelivery_<?php echo $row['id']; ?>" class="back-all shipping select" name="allow_ondelivery">

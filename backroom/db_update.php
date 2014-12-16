@@ -132,7 +132,7 @@ class UpgradeCls
             }
         }
     }
-    public function renameColumn($old_name, $new_name)
+    public function renameColumn($old_name, $new_name, $type)
     {
         $con = $this->connectDB();
         // foreach ($arr_row as $name => $value) {
@@ -143,7 +143,7 @@ class UpgradeCls
                 // echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." ERROR!</div>";
             // }
         // }
-        $res = $con->query("ALTER TABLE `".$this->table."` CHANGE ".$old_name." ".$new_name." INTEGER(10) UNSIGNED");
+        $res = $con->query("ALTER TABLE `".$this->table."` CHANGE ".$old_name." ".$new_name." ".$type." ");
         if ($res) {
             echo "<div class=\"center\" >Zmiana nazwy z ".$old_name." na ".$new_name." OK!</div>";
         } else {
@@ -232,6 +232,17 @@ if (isset($_POST['add8'])) {//dodane na kompie
         );
     $upgrade->addRowDynamic4($arr_row);
 }
+if (isset($_POST['add9'])) {//dodane na kompie
+    $upgrade->__setTable('supplier');
+    //$upgrade->renameColumn('product_number', 'amount');
+    $upgrade->__setTable('shipping_supplier');
+    $wyn = $upgrade->__getAll();
+    foreach ($wyn as $row) {
+        $upgrade->__setTable('shipping_'.$row['supplier_name']);
+        $upgrade->renameColumn('allow_prepayment', 'allow_prepaid', 'INTEGER(1) UNSIGNED');
+        $upgrade->renameColumn('price_prepayment', 'price_prepaid', 'VARCHAR(20)');
+    }
+}
 echo '</div>';
 ?>
 <!DOCTYPE HTML>
@@ -258,6 +269,7 @@ echo '</div>';
                 <input type="submit" name="add6" value="predefined_d" />
                 <input type="submit" name="add7" value="shipping_supplier connect add" />
                 <input type="submit" name="add8" value="product_tab connect add" />
+                <input type="submit" name="add9" value="prepayment -> prepaid" />
             </form>
         </div>
     </section>
