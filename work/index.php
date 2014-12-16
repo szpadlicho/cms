@@ -1,102 +1,244 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
-session_start();
-class ShippingSetCls
+class asd
 {
-
+    private $host='sql.bdl.pl';
+	private $port='';
+	private $dbname='szpadlic_cms';
+	private $charset='utf8';
+	private $user='szpadlic_baza';
+	private $pass='haslo';
+	private $table;
+	public function __setTable($tab_name)
+    {
+		$this->table=$tab_name;
+	}
+	public function connectDB()
+    {
+		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
+		return $con;
+		unset ($con);
+	}
+    public function showMiniImg($id)
+    {
+        //losowy obrazek z katalogu                                           
+        $dir_mini = '../data/'.$id.'/mini/';                                        
+        if (@opendir($dir_mini)) {//sprawdzam czy sciezka istnieje
+            $q = (count(glob($dir_mini."/*")) === 0) ? 'Empty' : 'Not empty';
+            if ($q=="Empty") {
+                echo "Brak"; // mozna by tu dodac fotke ze braz fotki
+            } else {
+                $folder = opendir($dir_mini);
+                $i = 0;
+                while (false !=($plik = readdir($folder))) {
+                    if ($plik != "." && $plik != "..") {
+                        $obrazki[$i]= $plik;//tablica z obrazkami
+                        $i++;
+                    }
+                }
+                closedir($folder);
+                $losowy=rand(0,count(@$obrazki)-1);//losuje obrazek
+                return $dir_mini.@$obrazki[$losowy];//link do obrazka 'src'
+                unset($obrazki);
+            }                                               
+        } else {
+            echo 'Brak';//mozna by tu dodac fotke ze braz fotki
+        }
+    }
+    public function showAllImg($id)
+    {
+        //wszystkie orazki z katalogu                                         
+        $dir_all = '../data/'.$id.'/';                                        
+        if (@opendir($dir_all)) {//sprawdzam czy sciezka istnieje
+            $q = (count(glob($dir_all."/*")) === 1) ? 'Empty' : 'Not empty';
+            if ($q=="Empty") {
+                //echo "Chwilowo Brak";
+                return false;
+            } else {
+                $folder = opendir($dir_all);
+                $i = 0;
+                while (false !=($plik = readdir($folder))) {
+                    if ($plik != "." && $plik != ".." && $plik != "mini") {
+                        $obrazki[$i]= $dir_all.$plik;//tablica z obrazkami
+                        $i++;
+                    }
+                }
+                closedir($folder);
+                //$losowy=rand(0,count(@$obrazki)-1);//losuje obrazek
+                return $obrazki;//link do obrazka 'src'
+                unset($obrazki);
+            }                                               
+        } else {
+            //echo 'Brak';
+            return false;
+        }
+    }
+    public function showSquare($cat)
+    {
+        ?>
+        <a class="square-link" href="../product/<?php echo $cat['file_name'].'.php'; ?>">
+            <div class="product-square">
+                <div class="pr-sq img">
+                   <img class="mini-image-pr-list" src="<?php echo $this->showMiniImg($cat['id']); ?>" alt="mini image" />
+                </div>
+                <div class="pr-sq price">
+                    Cena: <?php echo $cat['product_price']; ?> PLN
+                </div>
+                <div class="pr-sq cat-main">
+                    <?php echo $cat['product_category_main']; ?>
+                </div>
+                <div class="pr-sq cat-sub">
+                    <?php echo $cat['product_category_sub']; ?>
+                </div>
+                <div class="pr-sq name">
+                    <?php echo $cat['product_name']; ?>
+                </div>
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                <div class="pr-sq add">
+                    <form method="POST">
+                        <input class="basket-field text" type="text" name="amount" value="1" />
+                        <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
+                        <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
+                    </form>
+                </div>
+                <?php } ?>
+                <div class="pr-sq shipping">
+                    <?php echo $this->showShippingPrice($cat['id']); ?>
+                </div>
+            </div>
+        </a>
+        <?php
+    }
+    public function showFullSquare($cat)
+    {
+        ?>
+        <div class="product-full-square">
+            <div class="full-up-place-holder">
+                <div class="full-mini-img">
+                    <img class="mini-image-pr-list" src="<?php echo $this->showMiniImg($cat['id']); ?>" alt="mini image" />
+                </div>
+                <div class="full-name"><?php echo $cat['product_name']; ?></div>
+                <div class="full shipping">
+                    <?php echo $this->showShippingPrice($cat['id']); ?>
+                </div>
+                <?php if (isset($_SESSION['user_id'])) { ?>
+                <div class="full add">
+                    <form method="POST">
+                        <input class="basket-field text" type="text" name="amount" value="1" />
+                        <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
+                        <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
+                    </form>
+                </div>
+                <?php } ?>
+            </div>          
+            <div class="full-down-place-holder">
+                <div class="full-description-button color full-click active">Opis</div>
+                <div class="full-description-container color"><?php echo $cat['product_description_large']; ?></div>
+                <div class="full-gallery-button color full-click">Galeria</div>
+                <div class="full-gallery-container color">
+                    <?php
+                    $img_tab = $this->showAllImg($cat['id']);
+                    if ($img_tab) {
+                        foreach ($img_tab as $img) {
+                            ?>
+                            <div class="full-img-gallery">
+                                <img class="mini-image-pr-list" src="<?php echo $img; ?>" alt="<?php echo $cat['product_name']; ?>" />
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+                <div class="full-other-button color full-click">Inne</div>
+                <div class="full-other-container color"><?php echo $cat['product_description_small']; ?></div>
+            </div>
+        </div>        
+        <?php
+    }
 }
+$work = new asd();
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
-	<title>Koszty dostaw</title>
-	<?php include ("../backroom/meta5.html"); ?>
-    <link href="../upload/uploadfile.css" rel="stylesheet">    
-    <script src="../upload/jquery.uploadfile.js"></script>
+	<?php include ("../meta5.html"); ?>
+	<script type="text/javascript" src="../js/menu.js"></script>
+    <style>
+        .lightbox{
+            position: absolute;
+            top: 0em;
+            left: 0em;
+            display: none;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.2);         
+        }
+        .lightbox-in{
+            display:table;
+            vertical-align: middle;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+        }
+        .lightbox-in-in{
+            display:table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .lightbox-button{
+            position:relative;
+            display: inline-block;
+        }
+        .now-displayed-image{
+            max-width: 50em;
+            margin: 0 auto;
+        }
+        .close{
+            position:absolute;
+            top:1em;
+            right:1em;
+            font-size: 3em;
+            cursor: default;
+            cursor: pointer;
+            z-index: 100;
+            color:white;
+            background-color:white;
+        }
+    </style>
+    <script type="text/javascript">
+    $(function(){
+        $( '.mini-image-pr-list' ).click(function(){
+            var src = $( this ).attr('src');// zwraca sciezke wzglwdna
+            var src = $( this ).prop('src');// zwraca sciezke bezwzgledna
+            console.log(src);
+            $( '.lightbox' ).show();
+            $( '.lightbox-in-in' ).html( '<div class="lightbox-button" ><img class="now-displayed-image" src="'+src+'" /><div class="close">x</div></div>' );
+        });
+        $( document ).on('click', '.close', function(){
+            $( '.lightbox' ).hide();
+        });
+    });
+    </script>
 </head>
-<body>
-	<section id="place-holder">				
-		<?php include ('../backroom/backroom-top-menu.php'); ?>
-		<div class="back-shipping-placeholder">
-            <form enctype="multipart/form-data" action="" method="POST" >
-                <table class="back-shipping-table">
-                    <tr>
-                        <th>nazwa</th>
-                        <th>cena</th>
-                        <th>waga od</th>
-                        <th>waga do</th>
-                        <th>dziel na paczki</th>
-                        <th>tryb konfiguracji</th>
-                        <th>dopuszczac za pobraniem</th>
-                        <th>doplata do pobrania</th>
-                        <th>darmowa od</th>
-                        <th>
-                            <label><input id="" class="back-shipping-radio seo-radio" type="radio" name="shipping" checked="checked" value="title_false" /></label>
-                            <label><input id="" class="back-shipping-radio seo-radio" type="radio" name="shipping" value="title_true" /></label>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td><input id="" class="back-shipping-text" type="text" name="shipping" /></td>
-                        <td><input id="" class="back-shipping-text" type="text" name="shipping" /></td>
-                        <td><input id="" class="back-shipping-text" type="text" name="shipping" /></td>
-                        <td><input id="" class="back-shipping-text" type="text" name="shipping" /></td>
-                        <td>
-                            <select class="back-shipping-select" name="shipping">
-                                <option>Tak</option>
-                                <option>Nie</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="back-shipping-select" name="shipping">
-                                <option>Prosty</option>
-                                <option>Przedzialy wagowe</option>
-                                <option>Przedzialy kwotowe</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="back-shipping-select" name="shipping">
-                                <option>Tak</option>
-                                <option>Nie</option>
-                            </select>
-                        </td>
-                        <td><input id="" class="back-shipping-text" type="text" name="shipping" /></td>
-                        <td><input id="" class="back-shipping-text" type="text" name="shipping" /></td>
-                        <td><input id="" class="back-shipping-text" type="text" name="shipping" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="5"><input id="" class="back-shipping-submit" type="submit" name="save" value="Zapisz" /></td>
-                        <td colspan="5"><input id="" class="back-shipping-submit" type="submit" name="cancel" value="Anuluj" /></td>
-                    </tr>
-                </table>
-            </form>
-		</div>
-	</section>
-	<footer></footer>
-    <div class="catch">
+<body style="color:black;">
+    <div class="full-gallery-containerr color">
         <?php
-            if (isset($success)) {
-                //echo 'isset';
-                if ($success == true) {
-                    echo 'Zapis udany';
-                } else {
-                    echo 'Błąd';
-                }
+        $img_tab = $work->showAllImg(6);
+        //var_dump($img_tab);
+        if ($img_tab) {
+            foreach ($img_tab as $img) {
+                ?>
+                <div class="full-img-gallery">
+                    <img class="mini-image-pr-list" src="<?php echo $img; ?>" alt="" />
+                </div>
+                <?php
             }
+        }
         ?>
+        <div class="lightbox"><div class="lightbox-in"><div class="lightbox-in-in"></div></div></div>
     </div>
-	<div id="debugger">
-		<?php
-		echo "post";
-		var_dump (@$_POST);
-		//echo "session";
-		//var_dump ($_SESSION);
-		// echo "files";
-		// var_dump (@$_FILES);
-		// echo "var2";
-		 // var_dump ($var2);	
-		//echo "cookies";
-		//var_dump ($_COOKIE);
-		?>
-	</div>
 </body>
 </html>
+
+
+
+
