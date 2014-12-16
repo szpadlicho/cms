@@ -61,12 +61,14 @@ class ProduktSetCls
             $predefined_d = null;
         }
         isset($_POST['weight']) ? $weight = $_POST['weight'] : $weight = null ;
-        isset($_POST['allow_prepaid']) ? $allow_prepaid = $_POST['allow_prepaid'] : $allow_prepaid = null ;
+        isset($_POST['allow_prepaid']) ? $allow_prepaid = $_POST['allow_prepaid'] : $allow_prepaid = 1 ;
         isset($_POST['price_prepaid']) ? $price_prepaid = $_POST['price_prepaid'] : $price_prepaid = null ;
-        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = null ;
+        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = 1 ;
         isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null ;
-        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = null ;
+        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = 0 ;
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null ;
+        isset($_POST['connect_package']) ? $connect_package = $_POST['connect_package'] : $connect_package = 0;
+        isset($_POST['only_if_the_same']) ? $only_if_the_same = $_POST['only_if_the_same'] : $only_if_the_same = 0;
 		$con=$this->connectDB();
 		//$q = $con->query("SELECT * FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
 		//$count = $q -> fetch();/*konwertor na tablice*/
@@ -95,7 +97,9 @@ class ProduktSetCls
             `allow_ondelivery`,
             `price_ondelivery`,
             `package_share`,
-            `max_item_in_package`
+            `max_item_in_package`,
+            `connect_package`,
+            `only_if_the_same`
 			) VALUES (
 			'".$_POST['product_name']."',
 			'".str_replace(",",".",$_POST['product_price'])."',
@@ -120,7 +124,9 @@ class ProduktSetCls
             '".(int)$allow_ondelivery."',
             '".str_replace(',', '.',$price_ondelivery)."',
             '".(int)$package_share."',
-            '".(int)$max_item_in_package."'
+            '".(int)$max_item_in_package."',
+            '".(int)$connect_package."',
+            '".(int)$only_if_the_same."'
 			)");
 		unset ($con);
         //echo "<div class=\"center\" >zapis udany</div>";
@@ -460,8 +466,10 @@ if (isset($_POST['save'])) {
                                     var share = function() {
                                         if ($( '#package_share' ).val() == '1') {
                                             $( '#max_item_in_package' ).removeAttr("disabled");
+                                            $( '.max_item_in_package' ).show();
                                         } else if ($( '#package_share' ).val() == '0') {
                                             $( '#max_item_in_package' ).attr("disabled", "disabled");
+                                            $( '.max_item_in_package' ).hide();
                                         }
                                     }
                                     share();
@@ -472,7 +480,7 @@ if (isset($_POST['save'])) {
                                     });
                                 });
                             </script>
-                            <th>Każdy w osobnej paczce</th>
+                            <th>Osobne paczki</th>
                             <td>
                                 <select id="package_share" class="back-all shipping select" name="package_share">
                                     <option value="0" >Tak</option>
@@ -481,6 +489,13 @@ if (isset($_POST['save'])) {
                             </td>
                             <th>maksymalnie w paczce</th>
                             <td><input  id="max_item_in_package" class="back-all shipping text" type="text" name="max_item_in_package" /></td>
+                        </tr>
+                        <tr class="suppliers-tr-two">
+                            <th class="max_item_in_package">Zasady łączenia</th>
+                            <td colspan="3" class="max_item_in_package">
+                                <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
+                                <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                            </td>
                         </tr>
                         <!-- SHIPPING -->
                     <tr>

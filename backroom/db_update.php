@@ -29,6 +29,14 @@ class UpgradeCls
 		return $con;
 		unset ($con);
 	}
+    public function __getAll()
+    {
+		$con=$this->connectDB();
+		$q = $con->query("SELECT * FROM `".$this->table."` ");/*zwraca false jesli tablica nie istnieje*/
+        //$q = $q->fetch(PDO::FETCH_ASSOC);
+		unset ($con);
+		return $q;
+	}
     public function addRow($name)
     {
         $this->__setRow($name);
@@ -105,6 +113,18 @@ class UpgradeCls
         $con = $this->connectDB();
         foreach ($arr_row as $name => $value) {
             $res = $con->query("ALTER TABLE `".$this->table."` ADD COLUMN `".$name."` ".$value." AFTER predefined");
+            if ($res) {
+                echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." OK!</div>";
+            } else {
+                echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." ERROR!</div>";
+            }
+        }
+    }
+    public function addRowDynamic4($arr_row)
+    {
+        $con = $this->connectDB();
+        foreach ($arr_row as $name => $value) {
+            $res = $con->query("ALTER TABLE `".$this->table."` ADD COLUMN `".$name."` ".$value." AFTER max_item_in_package");
             if ($res) {
                 echo "<div class=\"center\" >Dodanie kolumny: add ".$name."=>".$value." OK!</div>";
             } else {
@@ -192,6 +212,26 @@ if (isset($_POST['add6'])) {//dodane na kompie
         );
     $upgrade->addRowDynamic3($arr_row);
 }
+if (isset($_POST['add7'])) {//dodane na kompie
+    $upgrade->__setTable('shipping_supplier');
+    $wyn = $upgrade->__getAll();
+    foreach ($wyn as $row) {
+        $upgrade->__setTable('shipping_'.$row['supplier_name']);
+        $arr_row = array(
+            'only_if_the_same'          =>'INTEGER(1) UNSIGNED',
+            'connect_package'           =>'INTEGER(1) UNSIGNED'
+        );
+        $upgrade->addRowDynamic4($arr_row);
+    }
+}
+if (isset($_POST['add8'])) {//dodane na kompie
+    $upgrade->__setTable('product_tab');
+    $arr_row = array(
+        'only_if_the_same'          =>'INTEGER(1) UNSIGNED',
+        'connect_package'           =>'INTEGER(1) UNSIGNED'
+        );
+    $upgrade->addRowDynamic4($arr_row);
+}
 echo '</div>';
 ?>
 <!DOCTYPE HTML>
@@ -216,6 +256,8 @@ echo '</div>';
                 <input type="submit" name="add4" value="shipping add to product tab" />
                 <input type="submit" name="add5" value="supplier_name_d" />
                 <input type="submit" name="add6" value="predefined_d" />
+                <input type="submit" name="add7" value="shipping_supplier connect add" />
+                <input type="submit" name="add8" value="product_tab connect add" />
             </form>
         </div>
     </section>

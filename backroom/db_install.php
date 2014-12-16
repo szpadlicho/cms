@@ -149,7 +149,9 @@ if (isset($_POST['crt'])) {
         'allow_ondelivery'          =>'INTEGER(1) UNSIGNED',
         'price_ondelivery'          =>'VARCHAR(20)',
         'package_share'             =>'INTEGER(1) UNSIGNED',
-        'max_item_in_package'       =>'INTEGER(100) UNSIGNED'
+        'max_item_in_package'       =>'INTEGER(100) UNSIGNED',
+        'connect_package'           =>'INTEGER(1) UNSIGNED',
+        'only_if_the_same'          =>'INTEGER(1) UNSIGNED'
         );
     $arr_val = array();
 	$return['product_tab'] = $obj_install->createTbDynamicRow($arr_row, $arr_val);

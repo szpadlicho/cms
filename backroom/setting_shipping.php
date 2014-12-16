@@ -57,13 +57,15 @@ class Connect_Shipping
                             `id` INTEGER AUTO_INCREMENT,            
                             `name` VARCHAR(50),
                             `name_d` VARCHAR(50),
-                            `configuration_mod` INTEGER(1) UNSIGNED,
+                            `configuration_mod` VARCHAR(50),
                             `weight_of` INTEGER(100) UNSIGNED,
                             `weight_to` INTEGER(100) UNSIGNED,
                             `price_of` VARCHAR(20),
                             `price_to` VARCHAR(20),
                             `package_share` INTEGER(1) UNSIGNED,
                             `max_item_in_package` INTEGER(100) UNSIGNED,
+                            `connect_package` INTEGER(1) UNSIGNED,
+                            `only_if_the_same` INTEGER(1) UNSIGNED,
                             `allow_prepayment` INTEGER(1) UNSIGNED,
                             `price_prepayment` VARCHAR(20),
                             `allow_ondelivery` INTEGER(1) UNSIGNED,
@@ -107,12 +109,14 @@ class Connect_Shipping
         isset($_POST['weight_to']) ? $weight_to = $_POST['weight_to'] : $weight_to = null;
         isset($_POST['price_of']) ? $price_of = $_POST['price_of'] : $price_of = null;
         isset($_POST['price_to']) ? $price_to = $_POST['price_to'] : $price_to = null;
-        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = null;
+        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = 0;
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null;
-        //isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = null;
+        isset($_POST['connect_package']) ? $connect_package = $_POST['connect_package'] : $connect_package = 0;
+        isset($_POST['only_if_the_same']) ? $only_if_the_same = $_POST['only_if_the_same'] : $only_if_the_same = 0;
+        isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = 1;
         $allow_prepayment = 1;
         isset($_POST['price_prepayment']) ? $price_prepayment = $_POST['price_prepayment'] : $price_prepayment = null;
-        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = null;
+        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = 1;
         isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null;
         isset($_POST['free_of']) ? $free_of = $_POST['free_of'] : $free_of = null;
         
@@ -127,6 +131,8 @@ class Connect_Shipping
                                 `price_to`,
                                 `package_share`,
                                 `max_item_in_package`,
+                                `connect_package`,
+                                `only_if_the_same`,
                                 `allow_prepayment`,
                                 `price_prepayment`,
                                 `allow_ondelivery`,
@@ -136,13 +142,15 @@ class Connect_Shipping
                                 ) VALUES (
                                 '".$this_supplier."',
                                 '".$this_supplier_d."',
-                                '".(int)$configuration_mod."',
+                                '".$configuration_mod."',
                                 '".str_replace(',', '.',$weight_of)."',
                                 '".str_replace(',', '.',$weight_to)."',
                                 '".str_replace(',', '.',$price_of)."',
                                 '".str_replace(',', '.',$price_to)."',
                                 '".(int)$package_share."',
                                 '".(int)$max_item_in_package."',
+                                '".(int)$connect_package."',
+                                '".(int)$only_if_the_same."',
                                 '".(int)$allow_prepayment."',
                                 '".str_replace(',', '.',$price_prepayment)."',
                                 '".(int)$allow_ondelivery."',
@@ -173,12 +181,14 @@ class Connect_Shipping
         isset($_POST['weight_to']) ? $weight_to = $_POST['weight_to'] : $weight_to = null;
         isset($_POST['price_of']) ? $price_of = $_POST['price_of'] : $price_of = null;
         isset($_POST['price_to']) ? $price_to = $_POST['price_to'] : $price_to = null;
-        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = null;
+        isset($_POST['package_share']) ? $package_share = $_POST['package_share'] : $package_share = 0;
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null;
-        //isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = null;
+        isset($_POST['connect_package']) ? $connect_package = $_POST['connect_package'] : $connect_package = 0;
+        isset($_POST['only_if_the_same']) ? $only_if_the_same = $_POST['only_if_the_same'] : $only_if_the_same = 0;
+        isset($_POST['allow_prepayment']) ? $allow_prepayment = $_POST['allow_prepayment'] : $allow_prepayment = 1;
         $allow_prepayment = 1;
         isset($_POST['price_prepayment']) ? $price_prepayment = $_POST['price_prepayment'] : $price_prepayment = null;
-        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = null;
+        isset($_POST['allow_ondelivery']) ? $allow_ondelivery = $_POST['allow_ondelivery'] : $allow_ondelivery = 1;
         isset($_POST['price_ondelivery']) ? $price_ondelivery = $_POST['price_ondelivery'] : $price_ondelivery = null;
         isset($_POST['free_of']) ? $free_of = $_POST['free_of'] : $free_of = null;
         
@@ -187,13 +197,15 @@ class Connect_Shipping
                                 SET
                                 `name` = '".$this_supplier."',
                                 `name_d` = '".$this_supplier_d."',
-                                `configuration_mod` = '".(int)$configuration_mod."',
+                                `configuration_mod` = '".$configuration_mod."',
                                 `weight_of` = '".str_replace(',', '.',$weight_of)."',
                                 `weight_to` = '".str_replace(',', '.',$weight_to)."',
                                 `price_of` = '".str_replace(',', '.',$price_of)."',
                                 `price_to` = '".str_replace(',', '.',$price_to)."',
                                 `package_share` = '".(int)$package_share."',
                                 `max_item_in_package` = '".(int)$max_item_in_package."',
+                                `connect_package` = '".(int)$connect_package."',
+                                `only_if_the_same` = '".(int)$only_if_the_same."',
                                 `allow_prepayment` = '".(int)$allow_prepayment."',
                                 `price_prepayment` = '".str_replace(',', '.',$price_prepayment)."',
                                 `allow_ondelivery` = '".(int)$allow_ondelivery."',
@@ -366,9 +378,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 });
                             });
                         </script>
-                        <th>Każdy w osobnej paczce</th>
+                        <th>Osobne paczki</th>
                         <!-- package share -->
                         <th class="max_item_in_package">maksymalnie w paczce</th>
+                        <th class="max_item_in_package">zasady łączenia</th>
                         <!-- package share -->
                         <th>cena z przedpłata</th>
                         <th>dopuszczać za pobraniem</th>
@@ -414,6 +427,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         </td>
                         <!-- package share -->
                         <td class="max_item_in_package"><input class="back-all shipping text" type="text" name="max_item_in_package" /></td>
+                        <td class="max_item_in_package">
+                            <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
+                            <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                        </td>
                         <!-- package share -->
                         <td><input id="" class="back-all shipping text" type="text" name="price_prepayment" /></td>
                         <td>
@@ -487,9 +504,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                         });
                                     });
                                 </script>
-                                <th>dziel na paczki</th>
+                                <th>Osobne paczki</th>
                                 <!-- package share -->
                                 <th class="max_item_in_package_<?php echo $row['id']; ?>">maksymalnie w paczce</th>
+                                <th class="max_item_in_package_<?php echo $row['id']; ?>">zasady łączenia</th>
                                 <!-- package share -->
                                 <th>cena z przedpłata</th>
                                 <th>dopuszczać za pobraniem</th>
@@ -544,6 +562,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 </td>
                                 <!-- package share -->
                                 <td class="max_item_in_package_<?php echo $row['id']; ?>"><input class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $row['max_item_in_package'] ;?>" /></td>
+                                <td class="max_item_in_package_<?php echo $row['id']; ?>">
+                                    <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" <?php echo $row['connect_package'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz z innymi produktami w paczki</label>
+                                        <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" <?php echo $row['only_if_the_same'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                                </td>
                                 <!-- package share -->
                                 <td><input id="" class="back-all shipping text" type="text" name="price_prepayment" value="<?php echo $row['price_prepayment'] ;?>" /></td>
                                 <td>
