@@ -425,10 +425,19 @@ class Connect_Basket extends Connect
 {
     private $sumar = array();
     private $sum_shipping = array();
-    private $arrPrePr = array();
-    private $arrOnPr = array();
-    private $arrPreSu = array();
-    private $arrOnSu = array();
+    //private $arrPrePr = array();
+    //private $arrOnPr = array();
+    //private $arrPreSu = array();
+    //private $arrOnSu = array();
+    //**//
+    private $noPre = array(); //1
+    private $noOn = array(); //2
+    private $shPre = array(); //3
+    private $shOn = array(); //4
+    private $shConPre = array(); //5
+    private $shConOn = array(); //6
+    private $conFixPre = array();
+    private $conFixOn = array();
     public function __getSumar(){
         return $this->sumar;
     }
@@ -438,17 +447,29 @@ class Connect_Basket extends Connect
     public function __getSumShipping(){
         return $this->sum_shipping;
     }
-    public function __getArrPrePr(){
-        return $this->arrPrePr;
+    public function __getNoPre(){
+        return $this->noPre; //1
     }
-    public function __getArrOnPr(){
-        return $this->arrOnPr;
+    public function __getNoOn(){
+        return $this->noOn; //2
     }
-    public function __getArrPreSu(){
-        return $this->arrPreSu;
+    public function __getShPre(){
+        return $this->shPre; //3
     }
-    public function __getArrOnSu(){
-        return $this->arrOnSu;
+    public function __getShOn(){
+        return $this->shOn; //4
+    }
+    public function __getShConPre(){
+        return $this->shConPre; //5
+    }
+    public function __getShConOn(){
+        return $this->shConOn; //6
+    }
+    public function __getConFixPre(){
+        return $this->conFixPre; //7
+    }
+    public function __getConFixOn(){
+        return $this->conFixOn; //8
     }
     public function basketAdd($table, $pr_id, $amount)
     {
@@ -629,48 +650,52 @@ class Connect_Basket extends Connect
     }
     public function basketShipping($id, $pr_id, $amount) //id numer w koszyku pr_id id zakupionego przedmiotu amoun ilosc
     {
-        //$user = $_SESSION['user_id'];// użytkownik jednocześnie nazwa tabeli
-        //$user_basket = 'basket_'.$_SESSION['user_id']; // koszyk (nazwa w bazie)
         $product_tab = 'product_tab';
-        if (isset($_SESSION['paid_mod'])) {
+        if (isset($_SESSION['paid_mod'])) { // pre or on
             $_SESSION['paid_mod'] == 1 ? $paid_mod = 1 : $paid_mod = 0;
         } else {
-            $paid_mod = 0; // domyslne
+            $paid_mod = 0; // domyslne pre
         }
+        $amount2 = $amount;
         $con = $this->connectDB();
-		$q = $con->query("SELECT * FROM `".$product_tab."` WHERE `id` = '".$pr_id."'");/*zwraca false jeśli tablica nie istnieje*/
+        $q = $con->query("SELECT * FROM `".$product_tab."` WHERE `id` = '".$pr_id."'");/*zwraca false jeśli tablica nie istnieje*/
         $q = $q->fetch(PDO::FETCH_ASSOC);
-		unset ($con);
-		$mod = $q['shipping_mod'];
+        unset ($con);
+        $mod = $q['shipping_mod']; // Pr or Su
+        
         if ($mod == 0) { // supplier setup
             $con = $this->connectDB();
             $k = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
             $k = $k->fetch(PDO::FETCH_ASSOC);
             unset ($con);
-            if ($k) {
-                $pre = (float)$k['price_prepaid'];
-                $on = (float)$k['price_ondelivery'];
+            if ($k) { // if weight
+                if ($k['package_share'] == 0) {
+                    $this->noPre[] = (float)$k['price_prepaid'] * $amount;//cena w sumie no share
+                    $this->noOn[] = (float)$k['price_ondelivery'] * $amount;//cena w sumie no share
+                }
                 if ($k['package_share'] == 1) {
-                    $max = (int)$k['max_item_in_package'];
-                    $a = 0;
-                    while( $amount > 0) {
-                        $amount = $amount - $max;
-                        $a++;
+                    if ($k['connect_package'] == 0) {
+                        $max = (int)$k['max_item_in_package'];
+                        $a = 0;
+                        while( $amount > 0) {
+                            $amount = $amount - $max;
+                            $a++;
+                        }
+                        (int)$am = $a;
+                        $this->shPre[] = (float)$k['price_prepaid'] * $am;//cena w sumie with share
+                        $this->shOn[] = (float)$k['price_ondelivery'] * $am;//cena w sumie with share
                     }
-                    (int)$amount = $a;
                     if ($k['connect_package'] == 1) {
-                        //$this->arrPreSu[$k['price_prepaid']][$pr_id] = $a;
-                        //$this->arrOnSu[$k['price_ondelivery']][$pr_id] = $a;
-                        if (! array_key_exists($k['price_prepaid'], $this->arrPreSu)) {
-                            $this->arrPreSu[$k['price_prepaid']] = $a;
+                        if (! array_key_exists($k['price_prepaid'], $this->shConPre)) {
+                            $this->shConPre[$k['price_prepaid']] = (int)$amount; // cena => ilosc
                         } else {
-                            $this->arrPreSu[$k['price_prepaid']] += $a;
+                            $this->shConPre[$k['price_prepaid']] += (int)$amount; // cena => ilosc
                         }
                         
-                        if (! array_key_exists($k['price_ondelivery'], $this->arrOnSu)) {
-                            $this->arrOnSu[$k['price_ondelivery']] = $a;
+                        if (! array_key_exists($k['price_ondelivery'], $this->shConOn)) {
+                            $this->shConOn[$k['price_ondelivery']] = (int)$amount; // cena => ilosc
                         } else {
-                            $this->arrOnSu[$k['price_ondelivery']] += $a;
+                            $this->shConOn[$k['price_ondelivery']] += (int)$amount; // cena => ilosc
                         }
                     }
                 }
@@ -680,29 +705,33 @@ class Connect_Basket extends Connect
                 $d = $d->fetch(PDO::FETCH_ASSOC);
                 unset ($con);
                 if ($d) {
-                    $pre = (float)$d['price_prepaid'];
-                    $on = (float)$d['price_ondelivery'];
+                    if ($k['package_share'] == 0) {
+                        $this->noPre[] = (float)$d['price_prepaid'] * $amount;//cena w sumie no share
+                        $this->noOn[] = (float)$d['price_ondelivery'] * $amount;//cena w sumie no share
+                    }
                     if ($d['package_share'] == 1) {
-                        $max = (int)$d['max_item_in_package'];
-                        $a = 0;
-                        while( $amount > 0) {
-                            $amount = $amount - $max;
-                            $a++;
+                        if ($k['connect_package'] == 0) {
+                            $max = (int)$d['max_item_in_package'];
+                            $a = 0;
+                            while( $amount > 0) {
+                                $amount = $amount - $max;
+                                $a++;
+                            }
+                            (int)$am = $a;
+                            $this->shPre[] = (float)$d['price_prepaid'] * $am;//cena w sumie with share
+                            $this->shOn[] = (float)$d['price_ondelivery'] * $am;//cena w sumie with share
                         }
-                        (int)$amount = $a;
                         if ($d['connect_package'] == 1) {
-                            //$this->arrPreSu[$d['price_prepaid']][$pr_id] = $a;
-                            //$this->arrOnSu[$d['price_ondelivery']][$pr_id] = $a;
-                            if (! array_key_exists($d['price_prepaid'], $this->arrPreSu)) {
-                                $this->arrPreSu[$d['price_prepaid']] = $a;
+                            if (! array_key_exists($d['price_prepaid'], $this->shConPre)) {
+                                $this->shConPre[$d['price_prepaid']] = (int)$amount; // cena => ilosc
                             } else {
-                                $this->arrPreSu[$d['price_prepaid']] += $a;
+                                $this->shConPre[$d['price_prepaid']] += (int)$amount; // cena => ilosc
                             }
                             
-                            if (! array_key_exists($d['price_ondelivery'], $this->arrOnSu)) {
-                                $this->arrOnSu[$d['price_ondelivery']] = $a;
+                            if (! array_key_exists($d['price_ondelivery'], $this->shConOn)) {
+                                $this->shConOn[$d['price_ondelivery']] = (int)$amount; // cena => ilosc
                             } else {
-                                $this->arrOnSu[$d['price_ondelivery']] += $a;
+                                $this->shConOn[$d['price_ondelivery']] += (int)$amount; // cena => ilosc
                             }
                         }
                     }
@@ -713,117 +742,320 @@ class Connect_Basket extends Connect
                     //var_dump($f);
                     unset ($con);
                     if ($f) {
-                        $pre = (float)$f['price_prepaid'];
-                        $on = (float)$f['price_ondelivery'];
+                        if ($k['package_share'] == 0) {
+                            $this->noPre[] = (float)$f['price_prepaid'] * $amount;//cena w sumie no share
+                            $this->noOn[] = (float)$f['price_ondelivery'] * $amount;//cena w sumie no share
+                        }
                         if ($f['package_share'] == 1) {
-                            $max = (int)$f['max_item_in_package'];
-                            $a = 0;
-                            while( $amount > 0) {
-                                $amount = $amount - $max;
-                                $a++;
+                            if ($k['connect_package'] == 0) {
+                                $max = (int)$f['max_item_in_package'];
+                                $a = 0;
+                                while( $amount > 0) {
+                                    $amount = $amount - $max;
+                                    $a++;
+                                }
+                                (int)$am = $a;
+                                $this->shPre[] = (float)$f['price_prepaid'] * $am;//cena w sumie with share
+                                $this->shOn[] = (float)$f['price_ondelivery'] * $am;//cena w sumie with share
                             }
-                            (int)$amount = $a;
                             if ($f['connect_package'] == 1) {
-                                //$this->arrPreSu[$f['price_prepaid']][$pr_id] = $a;
-                                //$this->arrOnSu[$f['price_ondelivery']][$pr_id] = $a;
-                                if (! array_key_exists($f['price_prepaid'], $this->arrPreSu)) {
-                                    $this->arrPreSu[$f['price_prepaid']] = $a;
+                                if (! array_key_exists($f['price_prepaid'], $this->shConPre)) {
+                                    $this->shConPre[$f['price_prepaid']] = (int)$amount; // cena => ilosc
                                 } else {
-                                    $this->arrPreSu[$f['price_prepaid']] += $a;
+                                    $this->shConPre[$f['price_prepaid']] += (int)$amount; // cena => ilosc
                                 }
                                 
-                                if (! array_key_exists($f['price_ondelivery'], $this->arrOnSu)) {
-                                    $this->arrOnSu[$f['price_ondelivery']] = $a;
+                                if (! array_key_exists($f['price_ondelivery'], $this->shConOn)) {
+                                    $this->shConOn[$f['price_ondelivery']] = (int)$amount; // cena => ilosc
                                 } else {
-                                    $this->arrOnSu[$f['price_ondelivery']] += $a;
+                                    $this->shConOn[$f['price_ondelivery']] += (int)$amount; // cena => ilosc
                                 }
                             }
                         }
                     } else {
-                        $pre = 0;
-                        $on = 0;
+                        // ???
                     }
                 }
             }
         } elseif ($mod == 1) { // own setup
-            // prepaid
-            if ($q['allow_prepaid'] == 1 && !empty($q['price_prepaid'])) {
-                $pre = (float)$q['price_prepaid'];
-            } else {
-                $pre = 0;
-            }
-            // on delivery
-            if ($q['allow_ondelivery'] == 1 && !empty($q['price_ondelivery'])) {
-                $on = (float)$q['price_ondelivery'];
-            } else {
-                $on = 0;
+            if ($q['package_share'] == 0) {
+                // prepaid
+                if ($q['allow_prepaid'] == 1) {
+                    $this->noPre[] = (float)$q['price_prepaid'] * $amount;//cena w sumie no share;
+                }
+                // on delivery
+                if ($q['allow_ondelivery'] == 1) {
+                    $this->noOn[] = (float)$q['price_ondelivery'] * $amount;//cena w sumie no share;
+                }
             }
             // calculate amount for package share
-            // if ($q['package_share'] == 1) {
-                // $max = (int)$q['max_item_in_package'];
-                // $a = 0;
-                // while( $amount > 0) {
-                    // $amount = $amount - $max;
-                    // $a++;
-                // }
-                // (int)$amount = $a;
-                // // calculate amount for connect package
-                // //$arr = array();
-                // if ($q['connect_package'] == 1) {
-                    // if (! array_key_exists($q['price_prepaid'], $this->arrPrePr)) {
-                        // $this->arrPrePr[$q['price_prepaid']] = $a;
-                    // } else {
-                        // $this->arrPrePr[$q['price_prepaid']] += $a;
-                    // }
-                    
-                    // if (! array_key_exists($q['price_ondelivery'], $this->arrOnPr)) {
-                        // $this->arrOnPr[$q['price_ondelivery']] = $a;
-                    // } else {
-                        // $this->arrOnPr[$q['price_ondelivery']] += $a;
-                    // }
-                    // /*tu cos powinno byc - to z elsifa matki $pre i $on powinny wynosic co inneg albo 0*/
-                    // /*jesli to sie wykonyje to rodzic elseif nie powinien sie dodac*/
-                // }
-            // }
             if ($q['package_share'] == 1) {
-                if ($q['connect_package'] == 1) {
-                    if (! array_key_exists($q['price_prepaid'], $this->arrPrePr)) {
-                        $this->arrPrePr[$q['price_prepaid']] = (float)$amount;
-                    } else {
-                        $this->arrPrePr[$q['price_prepaid']] += (float)$amount;
-                    }
-                    if (! array_key_exists($q['price_ondelivery'], $this->arrOnPr)) {
-                        $this->arrOnPr[$q['price_ondelivery']] = (float)$amount;
-                    } else {
-                        $this->arrOnPr[$q['price_ondelivery']] += (float)$amount;
-                    }
-                    /**/
-                } else {
+                if ($q['connect_package'] == 0) {
                     $max = (int)$q['max_item_in_package'];
                     $a = 0;
                     while( $amount > 0) {
                         $amount = $amount - $max;
                         $a++;
                     }
-                    (int)$amount = $a;
+                    (int)$am = $a;
+                    $this->shPre[] = (float)$q['price_prepaid'] * $am;//cena w sumie with share
+                    $this->shOn[] = (float)$q['price_ondelivery'] * $am;//cena w sumie with share
+                }
+                // calculate amount for connect package
+                if ($q['connect_package'] == 1) {
+                    if (! array_key_exists($q['price_prepaid'], $this->shConPre)) {
+                        $this->shConPre[$q['price_prepaid']] = (int)$amount2; // cena => ilosc
+                    } else {
+                        $this->shConPre[$q['price_prepaid']] += (int)$amount2; // cena => ilosc
+                    }
+                    
+                    if (! array_key_exists($q['price_ondelivery'], $this->shConOn)) {
+                        $this->shConOn[$q['price_ondelivery']] = (int)$amount2; // cena => ilosc
+                    } else {
+                        $this->shConOn[$q['price_ondelivery']] += (int)$amount2; // cena => ilosc
+                    }
                 }
             }
         }
         /*amount*/
-        if (! $q['connect_package'] == 1) {
-            if ($paid_mod == 0) { // prepaid
-                $add = $pre*$amount;
-                $this->sum_shipping[] = $add;
-                return $add;
-            } elseif ($paid_mod == 1) { // on delivery
-                $add = $on*$amount;
-                $this->sum_shipping[] = $add;
-                return $add;
+        // if (! $q['connect_package'] == 1) {
+            // if ($paid_mod == 0) { // prepaid
+                // $add = $pre*$amount;
+                // $this->sum_shipping[] = $add;
+                // return $add;
+            // } elseif ($paid_mod == 1) { // on delivery
+                // $add = $on*$amount;
+                // $this->sum_shipping[] = $add;
+                // return $add;
+            // }
+        // } else {
+            // // co ?
+        // }
+    }
+    public function shConFixPre($arr, $max)
+    {
+        foreach ($arr as $price => $amount) {
+            //$max = (int)$q['max_item_in_package'];
+            $a = 0;
+            while( $amount > 0) {
+                $amount = $amount - $max;
+                $a++;
             }
-        } else {
-            // co ?
+            (int)$am = $a;
+            $this->conFixPre[] = (float)$price * $am;//cena w sumie with share
         }
     }
+    public function shConFixOn($arr, $max)
+    {
+        foreach ($arr as $price => $amount) {
+            //$max = (int)$q['max_item_in_package'];
+            $a = 0;
+            while( $amount > 0) {
+                $amount = $amount - $max;
+                $a++;
+            }
+            (int)$am = $a;
+            $this->conFixOn[] = (float)$price * $am;//cena w sumie with share
+        }
+    }
+    
+    // public function basketShipping22($id, $pr_id, $amount) //id numer w koszyku pr_id id zakupionego przedmiotu amoun ilosc
+    // {
+        // //$user = $_SESSION['user_id'];// użytkownik jednocześnie nazwa tabeli
+        // //$user_basket = 'basket_'.$_SESSION['user_id']; // koszyk (nazwa w bazie)
+        // $product_tab = 'product_tab';
+        // if (isset($_SESSION['paid_mod'])) {
+            // $_SESSION['paid_mod'] == 1 ? $paid_mod = 1 : $paid_mod = 0;
+        // } else {
+            // $paid_mod = 0; // domyslne
+        // }
+        // $con = $this->connectDB();
+		// $q = $con->query("SELECT * FROM `".$product_tab."` WHERE `id` = '".$pr_id."'");/*zwraca false jeśli tablica nie istnieje*/
+        // $q = $q->fetch(PDO::FETCH_ASSOC);
+		// unset ($con);
+		// $mod = $q['shipping_mod'];
+        // if ($mod == 0) { // supplier setup
+            // $con = $this->connectDB();
+            // $k = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
+            // $k = $k->fetch(PDO::FETCH_ASSOC);
+            // unset ($con);
+            // if ($k) {
+                // $pre = (float)$k['price_prepaid'];
+                // $on = (float)$k['price_ondelivery'];
+                // if ($k['package_share'] == 1) {
+                    // $max = (int)$k['max_item_in_package'];
+                    // $a = 0;
+                    // while( $amount > 0) {
+                        // $amount = $amount - $max;
+                        // $a++;
+                    // }
+                    // (int)$amount = $a;
+                    // if ($k['connect_package'] == 1) {
+                        // //$this->arrPreSu[$k['price_prepaid']][$pr_id] = $a;
+                        // //$this->arrOnSu[$k['price_ondelivery']][$pr_id] = $a;
+                        // if (! array_key_exists($k['price_prepaid'], $this->arrPreSu)) {
+                            // $this->arrPreSu[$k['price_prepaid']] = (int)$amount;
+                        // } else {
+                            // $this->arrPreSu[$k['price_prepaid']] += (int)$amount;
+                        // }
+                        
+                        // if (! array_key_exists($k['price_ondelivery'], $this->arrOnSu)) {
+                            // $this->arrOnSu[$k['price_ondelivery']] = (int)$amount;
+                        // } else {
+                            // $this->arrOnSu[$k['price_ondelivery']] += (int)$amount;
+                        // }
+                    // }
+                // }
+            // } else {
+                // $con = $this->connectDB();
+                // $d = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `price_of` <= ".$q['product_price']." AND `price_to` >= ".$q['product_price']."");
+                // $d = $d->fetch(PDO::FETCH_ASSOC);
+                // unset ($con);
+                // if ($d) {
+                    // $pre = (float)$d['price_prepaid'];
+                    // $on = (float)$d['price_ondelivery'];
+                    // if ($d['package_share'] == 1) {
+                        // $max = (int)$d['max_item_in_package'];
+                        // $a = 0;
+                        // while( $amount > 0) {
+                            // $amount = $amount - $max;
+                            // $a++;
+                        // }
+                        // (int)$amount = $a;
+                        // if ($d['connect_package'] == 1) {
+                            // //$this->arrPreSu[$d['price_prepaid']][$pr_id] = $a;
+                            // //$this->arrOnSu[$d['price_ondelivery']][$pr_id] = $a;
+                            // if (! array_key_exists($d['price_prepaid'], $this->arrPreSu)) {
+                                // $this->arrPreSu[$d['price_prepaid']] = (int)$amount;
+                            // } else {
+                                // $this->arrPreSu[$d['price_prepaid']] += (int)$amount;
+                            // }
+                            
+                            // if (! array_key_exists($d['price_ondelivery'], $this->arrOnSu)) {
+                                // $this->arrOnSu[$d['price_ondelivery']] = (int)$amount;
+                            // } else {
+                                // $this->arrOnSu[$d['price_ondelivery']] += (int)$amount;
+                            // }
+                        // }
+                    // }
+                // } else {
+                    // $con = $this->connectDB();
+                    // $f = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `configuration_mod` = 'simple'");
+                    // $f = $f->fetch(PDO::FETCH_ASSOC);
+                    // //var_dump($f);
+                    // unset ($con);
+                    // if ($f) {
+                        // $pre = (float)$f['price_prepaid'];
+                        // $on = (float)$f['price_ondelivery'];
+                        // if ($f['package_share'] == 1) {
+                            // $max = (int)$f['max_item_in_package'];
+                            // $a = 0;
+                            // while( $amount > 0) {
+                                // $amount = $amount - $max;
+                                // $a++;
+                            // }
+                            // (int)$amount = $a;
+                            // if ($f['connect_package'] == 1) {
+                                // //$this->arrPreSu[$f['price_prepaid']][$pr_id] = $a;
+                                // //$this->arrOnSu[$f['price_ondelivery']][$pr_id] = $a;
+                                // if (! array_key_exists($f['price_prepaid'], $this->arrPreSu)) {
+                                    // $this->arrPreSu[$f['price_prepaid']] = (int)$amount;
+                                // } else {
+                                    // $this->arrPreSu[$f['price_prepaid']] += (int)$amount;
+                                // }
+                                
+                                // if (! array_key_exists($f['price_ondelivery'], $this->arrOnSu)) {
+                                    // $this->arrOnSu[$f['price_ondelivery']] = (int)$amount;
+                                // } else {
+                                    // $this->arrOnSu[$f['price_ondelivery']] += (int)$amount;
+                                // }
+                            // }
+                        // }
+                    // } else {
+                        // $pre = 0;
+                        // $on = 0;
+                    // }
+                // }
+            // }
+        // } elseif ($mod == 1) { // own setup
+            // // prepaid
+            // if ($q['allow_prepaid'] == 1 && !empty($q['price_prepaid'])) {
+                // $pre = (float)$q['price_prepaid'];
+            // } else {
+                // $pre = 0;
+            // }
+            // // on delivery
+            // if ($q['allow_ondelivery'] == 1 && !empty($q['price_ondelivery'])) {
+                // $on = (float)$q['price_ondelivery'];
+            // } else {
+                // $on = 0;
+            // }
+            // // calculate amount for package share
+            // // if ($q['package_share'] == 1) {
+                // // $max = (int)$q['max_item_in_package'];
+                // // $a = 0;
+                // // while( $amount > 0) {
+                    // // $amount = $amount - $max;
+                    // // $a++;
+                // // }
+                // // (int)$amount = $a;
+                // // // calculate amount for connect package
+                // // //$arr = array();
+                // // if ($q['connect_package'] == 1) {
+                    // // if (! array_key_exists($q['price_prepaid'], $this->arrPrePr)) {
+                        // // $this->arrPrePr[$q['price_prepaid']] = $a;
+                    // // } else {
+                        // // $this->arrPrePr[$q['price_prepaid']] += $a;
+                    // // }
+                    
+                    // // if (! array_key_exists($q['price_ondelivery'], $this->arrOnPr)) {
+                        // // $this->arrOnPr[$q['price_ondelivery']] = $a;
+                    // // } else {
+                        // // $this->arrOnPr[$q['price_ondelivery']] += $a;
+                    // // }
+                    // // /*tu cos powinno byc - to z elsifa matki $pre i $on powinny wynosic co inneg albo 0*/
+                    // // /*jesli to sie wykonyje to rodzic elseif nie powinien sie dodac*/
+                // // }
+            // // }
+            // if ($q['package_share'] == 1) {
+                // if ($q['connect_package'] == 1) {
+                    // if (! array_key_exists($q['price_prepaid'], $this->arrPrePr)) {
+                        // $this->arrPrePr[$q['price_prepaid']] = (int)$amount;
+                    // } else {
+                        // $this->arrPrePr[$q['price_prepaid']] += (int)$amount;
+                    // }
+                    // if (! array_key_exists($q['price_ondelivery'], $this->arrOnPr)) {
+                        // $this->arrOnPr[$q['price_ondelivery']] = (int)$amount;
+                    // } else {
+                        // $this->arrOnPr[$q['price_ondelivery']] += (int)$amount;
+                    // }
+                    // /**/
+                // } else {
+                    // $max = (int)$q['max_item_in_package'];
+                    // $a = 0;
+                    // while( $amount > 0) {
+                        // $amount = $amount - $max;
+                        // $a++;
+                    // }
+                    // (int)$amount = $a;
+                // }
+            // }
+        // }
+        // /*amount*/
+        // if (! $q['connect_package'] == 1) {
+            // if ($paid_mod == 0) { // prepaid
+                // $add = $pre*$amount;
+                // $this->sum_shipping[] = $add;
+                // return $add;
+            // } elseif ($paid_mod == 1) { // on delivery
+                // $add = $on*$amount;
+                // $this->sum_shipping[] = $add;
+                // return $add;
+            // }
+        // } else {
+            // // co ?
+        // }
+    // }
 }
 
 if (isset($_POST['add_to_basket']) && isset($_SESSION['user_id'])) {
@@ -1162,46 +1394,64 @@ $get_setting = $obj_gen->__getRow(1);
                         <input class="basket-field button bs-sq on" type="submit" name="set_ondelivery" value="Płacę przy odbiorze" />
                     </form>
                     <?php
-                    $arrPrePr = $obj_shipping_get->__getArrPrePr();
-                    $arrOnPr = $obj_shipping_get->__getArrOnPr();
-                    $arrPreSu = $obj_shipping_get->__getArrPreSu();
-                    $arrOnSu = $obj_shipping_get->__getArrOnSu();
-                    echo ' ustawione z karty produktu pre';
-                    var_dump($arrPrePr);
-                    if (! empty($arrPrePr)) {
-                        foreach ($arrPrePr as $key => $value) {
-                            $wynPrePr[] = $key * $value;
-                        }
-                        $wynPrePr = array_sum($wynPrePr);
-                        echo $wynPrePr;
-                    }
-                    echo ' ustawione z karty produktu on';
-                    var_dump($arrOnPr);
-                    if (! empty($arrOnPr)) {
-                        foreach ($arrOnPr as $key => $value) {
-                            $wynOnPr[] = $key * $value;
-                        }
-                        $wynOnPr = array_sum($wynOnPr);
-                        echo $wynOnPr;
-                    }
-                    echo ' ustawione z supplier produktu pre';
-                    var_dump($arrPreSu);
-                    if (! empty($arrPreSu)) {
-                        foreach ($arrPreSu as $key => $value) {
-                            $wynPreSu[] = $key * $value;
-                        }
-                        $wynPreSu = array_sum($wynPreSu);
-                        echo $wynPreSu;
-                    }
-                    echo ' ustawione z supplier produktu on';
-                    var_dump($arrOnSu);
-                    if (! empty($arrOnSu)) {
-                        foreach ($arrOnSu as $key => $value) {
-                            $wynOnSu[] = $key * $value;
-                        }
-                        $wynOnSu = array_sum($wynOnSu);
-                        echo $wynOnSu;
-                    }
+                    $arrNoPre = $obj_shipping_get->__getNoPre();
+                    $arrNoOn = $obj_shipping_get->__getNoOn();
+                    $arrShPre = $obj_shipping_get->__getShPre();
+                    $arrShOn = $obj_shipping_get->__getShOn();
+                    $arrShConPre = $obj_shipping_get->__getShConPre();
+                    $arrShConOn = $obj_shipping_get->__getShConOn();
+                    var_dump($arrNoPre);
+                    var_dump($arrNoOn);
+                    var_dump($arrShPre);
+                    var_dump($arrShOn);
+                    var_dump($arrShConPre);
+                    var_dump($arrShConOn);
+                    echo '----------------------';
+                    $obj_shipping_get->shConFixPre($arrShConPre, 5);
+                    $obj_shipping_get->shConFixOn($arrShConOn, 5);
+                    
+                    $fixPre = $obj_shipping_get->__getConFixPre();
+                    $fixOn = $obj_shipping_get->__getConFixOn();
+                    var_dump($fixPre);
+                    var_dump($fixOn);
+                    echo $fixPre = array_sum($fixPre);
+                    echo $fixOn = array_sum($fixOn);
+                    // echo ' ustawione z karty produktu pre';
+                    // var_dump($arrPrePr);
+                    // if (! empty($arrPrePr)) {
+                        // foreach ($arrPrePr as $key => $value) {
+                            // $wynPrePr[] = $key * $value;
+                        // }
+                        // $wynPrePr = array_sum($wynPrePr);
+                        // echo $wynPrePr;
+                    // }
+                    // echo ' ustawione z karty produktu on';
+                    // var_dump($arrOnPr);
+                    // if (! empty($arrOnPr)) {
+                        // foreach ($arrOnPr as $key => $value) {
+                            // $wynOnPr[] = $key * $value;
+                        // }
+                        // $wynOnPr = array_sum($wynOnPr);
+                        // echo $wynOnPr;
+                    // }
+                    // echo ' ustawione z supplier produktu pre';
+                    // var_dump($arrPreSu);
+                    // if (! empty($arrPreSu)) {
+                        // foreach ($arrPreSu as $key => $value) {
+                            // $wynPreSu[] = $key * $value;
+                        // }
+                        // $wynPreSu = array_sum($wynPreSu);
+                        // echo $wynPreSu;
+                    // }
+                    // echo ' ustawione z supplier produktu on';
+                    // var_dump($arrOnSu);
+                    // if (! empty($arrOnSu)) {
+                        // foreach ($arrOnSu as $key => $value) {
+                            // $wynOnSu[] = $key * $value;
+                        // }
+                        // $wynOnSu = array_sum($wynOnSu);
+                        // echo $wynOnSu;
+                    // }
                     echo '----------------------';
                     ?>
                 <?php } ?>
