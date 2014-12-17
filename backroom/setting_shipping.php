@@ -372,8 +372,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                     //console.log($( this ).val());
                                     if ($( this ).val() == '0') {
                                         $( '.max_item_in_package' ).hide();
+                                        $( '#package_share, #max_item_in_package, #connect_one, #connect_two' ).prop( "disabled", true );
                                     } else if ($( this ).val() == '1') {
                                         $( '.max_item_in_package' ).show();
+                                        $( '#package_share, #max_item_in_package, #connect_one, #connect_two' ).prop( "disabled", false );
                                     }
                                 });
                             });
@@ -426,10 +428,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                             </select>
                         </td>
                         <!-- package share -->
-                        <td class="max_item_in_package"><input class="back-all shipping text" type="text" name="max_item_in_package" /></td>
+                        <td class="max_item_in_package"><input id="max_item_in_package" class="back-all shipping text" type="text" name="max_item_in_package" /></td>
                         <td class="max_item_in_package">
-                            <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
-                            <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                            <label><input id="connect_one" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
+                            <label><input id="connect_two" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
                         </td>
                         <!-- package share -->
                         <td><input id="" class="back-all shipping text" type="text" name="price_prepaid" /></td>
@@ -493,8 +495,11 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                         var packShare = function() {
                                             if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == '0') {
                                                 $( '.max_item_in_package_<?php echo $row['id']; ?>' ).hide();
+                                                
+                                                $( '#package_share_<?php echo $row['id']; ?>, #max_item_in_package_<?php echo $row['id']; ?>, #connect_one_<?php echo $row['id']; ?>, #connect_two_<?php echo $row['id']; ?>' ).prop( "disabled", true );
                                             } else if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == '1') {
                                                 $( '.max_item_in_package_<?php echo $row['id']; ?>' ).show();
+                                                $( '#package_share_<?php echo $row['id']; ?>, #max_item_in_package_<?php echo $row['id']; ?>, #connect_one_<?php echo $row['id']; ?>, #connect_two_<?php echo $row['id']; ?>' ).prop( "disabled", false );
                                             }
                                         }
                                         packShare();
@@ -561,10 +566,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                     </select>
                                 </td>
                                 <!-- package share -->
-                                <td class="max_item_in_package_<?php echo $row['id']; ?>"><input class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $row['max_item_in_package'] ;?>" /></td>
+                                <td class="max_item_in_package_<?php echo $row['id']; ?>"><input id="max_item_in_package_<?php echo $row['id']; ?>" class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $row['max_item_in_package'] ;?>" /></td>
                                 <td class="max_item_in_package_<?php echo $row['id']; ?>">
-                                    <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" <?php echo $row['connect_package'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz z innymi produktami w paczki</label>
-                                        <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" <?php echo $row['only_if_the_same'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                                    <label><input id="connect_one_<?php echo $row['id']; ?>" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" <?php echo $row['connect_package'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz z innymi produktami w paczki</label>
+                                        <label><input id="connect_two_<?php echo $row['id']; ?>" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" <?php echo $row['only_if_the_same'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
                                 </td>
                                 <!-- package share -->
                                 <td><input id="" class="back-all shipping text" type="text" name="price_prepaid" value="<?php echo $row['price_prepaid'] ;?>" /></td>

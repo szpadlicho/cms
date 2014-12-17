@@ -343,28 +343,27 @@ if (isset($_POST['save'])) {
                     <!-- SHIPPING -->
                         <tr>
                             <script type="text/javascript">
+                                var shipping = function(){
+                                    if( $('input[value="suppliers_true"]').is(":checked") ) {
+                                        $('.suppliers-tr-two').show();
+                                        $( '#allow_prepaid, #allow_ondelivery, #price_prepaid, #price_ondelivery, #package_share, #max_item_in_package, #connect_one, #connect_two' ).prop( "disabled", false );
+                                        $('.suppliers-tr-one').hide();
+                                    } else {
+                                        $('.suppliers-tr-two').hide();
+                                        $( '#allow_prepaid, #allow_ondelivery, #price_prepaid, #price_ondelivery, #package_share, #max_item_in_package, #connect_one, #connect_two' ).prop( "disabled", true );
+                                        $('.suppliers-tr-one').show();
+                                    }
+                                }
                                 $(document).ready(function(){
                                     $('input[type="radio"]').each(function() { 
-                                        $(this).change(function(){
-                                            if( $('input[value="suppliers_true"]').is(":checked") ) {
-                                                $('.suppliers-tr-two').show();
-                                                $('.suppliers-tr-one').hide();
-                                            } else {
-                                                $('.suppliers-tr-two').hide();
-                                                $('.suppliers-tr-one').show();
-                                            }
+                                        $( this ).change(function(){
+                                            shipping();
                                         });
                                     });
                                 });
                                 $(window).load(function() {
                                     $('input[type="radio"]').each(function() { 
-                                        if( $('input[value="suppliers_true"]').is(":checked") ) {
-                                            $('.suppliers-tr-two').show();
-                                            $('.suppliers-tr-one').hide();
-                                        } else {
-                                            $('.suppliers-tr-two').hide();
-                                            $('.suppliers-tr-one').show();
-                                        }
+                                        shipping();
                                     }); 
                                 });
                             </script>
@@ -493,8 +492,8 @@ if (isset($_POST['save'])) {
                         <tr class="suppliers-tr-two">
                             <th class="max_item_in_package">Zasady łączenia</th>
                             <td colspan="3" class="max_item_in_package">
-                                <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
-                                <label><input id="" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                                <label><input id="connect_one" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
+                                <label><input id="connect_two" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
                             </td>
                         </tr>
                         <!-- SHIPPING -->
