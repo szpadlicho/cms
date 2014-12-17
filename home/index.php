@@ -862,14 +862,14 @@ class Connect_Basket extends Connect
             }
         }
         //return
-        if ($q['package_share'] == 0) {
+        if ($q['package_share'] == 0 && $k['package_share'] != 1) { //&& $f['package_share'] == 0 && $d['package_share'] == 0 && $k['package_share'] == 0
             if ($paid_mod == 0) { // prepaid
                 return $noPre;
             } elseif ($paid_mod == 1) { // on delivery
                 return $noOn;
             }
         }
-        if ($q['package_share'] == 1) {
+        if ($q['package_share'] == 1) {// || $f['package_share'] == 1 || $d['package_share'] == 1 || $k['package_share'] == 1
             if ($q['connect_package'] == 0) {
                 if ($paid_mod == 0) { // prepaid
                     return $shPre;
@@ -877,7 +877,7 @@ class Connect_Basket extends Connect
                     return $shOn;
                 }
             }
-            if ($q['connect_package'] == 1) {
+            if ($q['connect_package'] == 1) {// || $f['connect_package'] == 1 || $d['connect_package'] == 1 || $k['connect_package'] == 1
                 if ($paid_mod == 0) { // prepaid
                     return $loPre;
                 } elseif ($paid_mod == 1) { // on delivery

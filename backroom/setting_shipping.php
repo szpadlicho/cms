@@ -496,10 +496,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                             if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == '0') {
                                                 $( '.max_item_in_package_<?php echo $row['id']; ?>' ).hide();
                                                 
-                                                $( '#package_share_<?php echo $row['id']; ?>, #max_item_in_package_<?php echo $row['id']; ?>, #connect_one_<?php echo $row['id']; ?>, #connect_two_<?php echo $row['id']; ?>' ).prop( "disabled", true );
+                                                $( ' #max_item_in_package_<?php echo $row['id']; ?>, #connect_one_<?php echo $row['id']; ?>, #connect_two_<?php echo $row['id']; ?>' ).prop( "disabled", true );
                                             } else if ($( '#package_share_<?php echo $row['id']; ?>' ).val() == '1') {
                                                 $( '.max_item_in_package_<?php echo $row['id']; ?>' ).show();
-                                                $( '#package_share_<?php echo $row['id']; ?>, #max_item_in_package_<?php echo $row['id']; ?>, #connect_one_<?php echo $row['id']; ?>, #connect_two_<?php echo $row['id']; ?>' ).prop( "disabled", false );
+                                                $( ' #max_item_in_package_<?php echo $row['id']; ?>, #connect_one_<?php echo $row['id']; ?>, #connect_two_<?php echo $row['id']; ?>' ).prop( "disabled", false );
                                             }
                                         }
                                         packShare();
