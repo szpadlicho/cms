@@ -907,7 +907,267 @@ class Connect_Basket extends Connect
                 }
             }
         }
+        //return
+        // if ($q['package_share'] == 0) { //&& $f['package_share'] == 0 && $d['package_share'] == 0 && $k['package_share'] == 0
+            // if ($paid_mod == 0) { // prepaid
+                // if (isset($noPre)) {
+                    // return $noPre;
+                // }
+            // } elseif ($paid_mod == 1) { // on delivery
+                // if (isset($noOn)) {
+                    // return $noOn;
+                // }
+            // }
+        // }
+        // if ($q['package_share'] == 1) {// || $f['package_share'] == 1 || $d['package_share'] == 1 || $k['package_share'] == 1
+            // if ($q['connect_package'] == 0) {
+                // if ($paid_mod == 0) { // prepaid
+                    // if (isset($shPre)) {
+                        // return $shPre;
+                    // }
+                // } elseif ($paid_mod == 1) { // on delivery
+                    // if (isset($shOn)) {
+                        // return $shOn;
+                    // }
+                // }
+            // }
+            // if ($q['connect_package'] == 1) {// || $f['connect_package'] == 1 || $d['connect_package'] == 1 || $k['connect_package'] == 1
+                // if ($paid_mod == 0) { // prepaid
+                    // if (isset($loPre)) {
+                        // return $loPre;
+                    // }
+                // } elseif ($paid_mod == 1) { // on delivery
+                    // if (isset($loOn)) {
+                        // return $loOn;
+                    // }
+                // }
+            // }
+        // }
     }
+    // public function shConFixPre($arr, $max)
+    // {
+        // foreach ($arr as $price => $amount) {
+            // //$max = (int)$q['max_item_in_package'];
+            // $a = 0;
+            // while( $amount > 0) {
+                // $amount = $amount - $max;
+                // $a++;
+            // }
+            // (int)$am = $a;
+            // $this->conFixPre[] = (float)$price * $am;//cena w sumie with share
+        // }
+    // }
+    // public function shConFixOn($arr, $max)
+    // {
+        // foreach ($arr as $price => $amount) {
+            // //$max = (int)$q['max_item_in_package'];
+            // $a = 0;
+            // while( $amount > 0) {
+                // $amount = $amount - $max;
+                // $a++;
+            // }
+            // (int)$am = $a;
+            // $this->conFixOn[] = (float)$price * $am;//cena w sumie with share
+        // }
+    // }
+    
+    // public function basketShipping22($id, $pr_id, $amount) //id numer w koszyku pr_id id zakupionego przedmiotu amoun ilosc
+    // {
+        // //$user = $_SESSION['user_id'];// użytkownik jednocześnie nazwa tabeli
+        // //$user_basket = 'basket_'.$_SESSION['user_id']; // koszyk (nazwa w bazie)
+        // $product_tab = 'product_tab';
+        // if (isset($_SESSION['paid_mod'])) {
+            // $_SESSION['paid_mod'] == 1 ? $paid_mod = 1 : $paid_mod = 0;
+        // } else {
+            // $paid_mod = 0; // domyslne
+        // }
+        // $con = $this->connectDB();
+		// $q = $con->query("SELECT * FROM `".$product_tab."` WHERE `id` = '".$pr_id."'");/*zwraca false jeśli tablica nie istnieje*/
+        // $q = $q->fetch(PDO::FETCH_ASSOC);
+		// unset ($con);
+		// $mod = $q['shipping_mod'];
+        // if ($mod == 0) { // supplier setup
+            // $con = $this->connectDB();
+            // $k = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `weight_of` <= ".$q['weight']." AND `weight_to` >= ".$q['weight']."");
+            // $k = $k->fetch(PDO::FETCH_ASSOC);
+            // unset ($con);
+            // if ($k) {
+                // $pre = (float)$k['price_prepaid'];
+                // $on = (float)$k['price_ondelivery'];
+                // if ($k['package_share'] == 1) {
+                    // $max = (int)$k['max_item_in_package'];
+                    // $a = 0;
+                    // while( $amount > 0) {
+                        // $amount = $amount - $max;
+                        // $a++;
+                    // }
+                    // (int)$amount = $a;
+                    // if ($k['connect_package'] == 1) {
+                        // //$this->arrPreSu[$k['price_prepaid']][$pr_id] = $a;
+                        // //$this->arrOnSu[$k['price_ondelivery']][$pr_id] = $a;
+                        // if (! array_key_exists($k['price_prepaid'], $this->arrPreSu)) {
+                            // $this->arrPreSu[$k['price_prepaid']] = (int)$amount;
+                        // } else {
+                            // $this->arrPreSu[$k['price_prepaid']] += (int)$amount;
+                        // }
+                        
+                        // if (! array_key_exists($k['price_ondelivery'], $this->arrOnSu)) {
+                            // $this->arrOnSu[$k['price_ondelivery']] = (int)$amount;
+                        // } else {
+                            // $this->arrOnSu[$k['price_ondelivery']] += (int)$amount;
+                        // }
+                    // }
+                // }
+            // } else {
+                // $con = $this->connectDB();
+                // $d = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `price_of` <= ".$q['product_price']." AND `price_to` >= ".$q['product_price']."");
+                // $d = $d->fetch(PDO::FETCH_ASSOC);
+                // unset ($con);
+                // if ($d) {
+                    // $pre = (float)$d['price_prepaid'];
+                    // $on = (float)$d['price_ondelivery'];
+                    // if ($d['package_share'] == 1) {
+                        // $max = (int)$d['max_item_in_package'];
+                        // $a = 0;
+                        // while( $amount > 0) {
+                            // $amount = $amount - $max;
+                            // $a++;
+                        // }
+                        // (int)$amount = $a;
+                        // if ($d['connect_package'] == 1) {
+                            // //$this->arrPreSu[$d['price_prepaid']][$pr_id] = $a;
+                            // //$this->arrOnSu[$d['price_ondelivery']][$pr_id] = $a;
+                            // if (! array_key_exists($d['price_prepaid'], $this->arrPreSu)) {
+                                // $this->arrPreSu[$d['price_prepaid']] = (int)$amount;
+                            // } else {
+                                // $this->arrPreSu[$d['price_prepaid']] += (int)$amount;
+                            // }
+                            
+                            // if (! array_key_exists($d['price_ondelivery'], $this->arrOnSu)) {
+                                // $this->arrOnSu[$d['price_ondelivery']] = (int)$amount;
+                            // } else {
+                                // $this->arrOnSu[$d['price_ondelivery']] += (int)$amount;
+                            // }
+                        // }
+                    // }
+                // } else {
+                    // $con = $this->connectDB();
+                    // $f = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `configuration_mod` = 'simple'");
+                    // $f = $f->fetch(PDO::FETCH_ASSOC);
+                    // //var_dump($f);
+                    // unset ($con);
+                    // if ($f) {
+                        // $pre = (float)$f['price_prepaid'];
+                        // $on = (float)$f['price_ondelivery'];
+                        // if ($f['package_share'] == 1) {
+                            // $max = (int)$f['max_item_in_package'];
+                            // $a = 0;
+                            // while( $amount > 0) {
+                                // $amount = $amount - $max;
+                                // $a++;
+                            // }
+                            // (int)$amount = $a;
+                            // if ($f['connect_package'] == 1) {
+                                // //$this->arrPreSu[$f['price_prepaid']][$pr_id] = $a;
+                                // //$this->arrOnSu[$f['price_ondelivery']][$pr_id] = $a;
+                                // if (! array_key_exists($f['price_prepaid'], $this->arrPreSu)) {
+                                    // $this->arrPreSu[$f['price_prepaid']] = (int)$amount;
+                                // } else {
+                                    // $this->arrPreSu[$f['price_prepaid']] += (int)$amount;
+                                // }
+                                
+                                // if (! array_key_exists($f['price_ondelivery'], $this->arrOnSu)) {
+                                    // $this->arrOnSu[$f['price_ondelivery']] = (int)$amount;
+                                // } else {
+                                    // $this->arrOnSu[$f['price_ondelivery']] += (int)$amount;
+                                // }
+                            // }
+                        // }
+                    // } else {
+                        // $pre = 0;
+                        // $on = 0;
+                    // }
+                // }
+            // }
+        // } elseif ($mod == 1) { // own setup
+            // // prepaid
+            // if ($q['allow_prepaid'] == 1 && !empty($q['price_prepaid'])) {
+                // $pre = (float)$q['price_prepaid'];
+            // } else {
+                // $pre = 0;
+            // }
+            // // on delivery
+            // if ($q['allow_ondelivery'] == 1 && !empty($q['price_ondelivery'])) {
+                // $on = (float)$q['price_ondelivery'];
+            // } else {
+                // $on = 0;
+            // }
+            // // calculate amount for package share
+            // // if ($q['package_share'] == 1) {
+                // // $max = (int)$q['max_item_in_package'];
+                // // $a = 0;
+                // // while( $amount > 0) {
+                    // // $amount = $amount - $max;
+                    // // $a++;
+                // // }
+                // // (int)$amount = $a;
+                // // // calculate amount for connect package
+                // // //$arr = array();
+                // // if ($q['connect_package'] == 1) {
+                    // // if (! array_key_exists($q['price_prepaid'], $this->arrPrePr)) {
+                        // // $this->arrPrePr[$q['price_prepaid']] = $a;
+                    // // } else {
+                        // // $this->arrPrePr[$q['price_prepaid']] += $a;
+                    // // }
+                    
+                    // // if (! array_key_exists($q['price_ondelivery'], $this->arrOnPr)) {
+                        // // $this->arrOnPr[$q['price_ondelivery']] = $a;
+                    // // } else {
+                        // // $this->arrOnPr[$q['price_ondelivery']] += $a;
+                    // // }
+                    // // /*tu cos powinno byc - to z elsifa matki $pre i $on powinny wynosic co inneg albo 0*/
+                    // // /*jesli to sie wykonyje to rodzic elseif nie powinien sie dodac*/
+                // // }
+            // // }
+            // if ($q['package_share'] == 1) {
+                // if ($q['connect_package'] == 1) {
+                    // if (! array_key_exists($q['price_prepaid'], $this->arrPrePr)) {
+                        // $this->arrPrePr[$q['price_prepaid']] = (int)$amount;
+                    // } else {
+                        // $this->arrPrePr[$q['price_prepaid']] += (int)$amount;
+                    // }
+                    // if (! array_key_exists($q['price_ondelivery'], $this->arrOnPr)) {
+                        // $this->arrOnPr[$q['price_ondelivery']] = (int)$amount;
+                    // } else {
+                        // $this->arrOnPr[$q['price_ondelivery']] += (int)$amount;
+                    // }
+                    // /**/
+                // } else {
+                    // $max = (int)$q['max_item_in_package'];
+                    // $a = 0;
+                    // while( $amount > 0) {
+                        // $amount = $amount - $max;
+                        // $a++;
+                    // }
+                    // (int)$amount = $a;
+                // }
+            // }
+        // }
+        // /*amount*/
+        // if (! $q['connect_package'] == 1) {
+            // if ($paid_mod == 0) { // prepaid
+                // $add = $pre*$amount;
+                // $this->sum_shipping[] = $add;
+                // return $add;
+            // } elseif ($paid_mod == 1) { // on delivery
+                // $add = $on*$amount;
+                // $this->sum_shipping[] = $add;
+                // return $add;
+            // }
+        // } else {
+            // // co ?
+        // }
+    // }
 }
 
 if (isset($_POST['add_to_basket']) && isset($_SESSION['user_id'])) {
