@@ -14,5 +14,28 @@
 <link title="deafult" rel="stylesheet" type="text/css" href="../css/backroom-add-edit-seo.css"/>
 <link title="deafult" rel="stylesheet" type="text/css" href="../css/backroom-search.css"/>
 <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery-ui.min-1.11.2.js"></script>
 <script type="text/javascript" src="../js/scrypt.js"></script>
 <script type="text/javascript" src="../js/backroom-top-menu.js"></script>
+<script>
+$(function(){
+//$( '#backroom-top-menu' ).draggable();
+var elements = function(){
+    $( '#backroom-top-menu' ).each(function(index){
+        $( '#backroom-top-menu' ).draggable({
+            containment: 'parent', 
+            drag: function(event, ui){
+                var xPos = ui.position.left;
+                var yPos = ui.position.top;
+            },
+            stop: function(event, ui) {
+                localStorage.setItem('backroom-top-menu-left', ui.position.left);
+                localStorage.setItem('backroom-top-menu-top', ui.position.top);
+            }
+        });
+        $( '#backroom-top-menu' ).css({left : parseInt(localStorage.getItem('backroom-top-menu-left')), top : parseInt(localStorage.getItem('backroom-top-menu-top'))});
+    });
+};
+elements();
+});
+</script>

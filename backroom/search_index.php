@@ -23,14 +23,14 @@ class Connect_Search
     public function __getProdyctName($string)
     {
         $con = $this->connectDB();
-        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_name` LIKE '%".$string."%'");
+        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_name` LIKE '%".$string."%' AND `visibility` = '1'");
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
     public function __getProdyctNameMain($string, $main)
     {
         $con = $this->connectDB();
-        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_name` LIKE '%".$string."%'");
+        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_name` LIKE '%".$string."%' AND `visibility` = '1'");
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
         //$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_category_sub` = '".$sub."'")
@@ -38,14 +38,14 @@ class Connect_Search
     public function __getProdyctNameSub($string, $sub)
     {
         $con = $this->connectDB();
-        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_sub` = '".$sub."' AND `product_name` LIKE '%".$string."%'");
+        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_sub` = '".$sub."' AND `product_name` LIKE '%".$string."%' AND `visibility` = '1'");
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
     public function __getProdyctNameMainSub($string, $main, $sub)
     {
         $con = $this->connectDB();
-        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_category_sub` = '".$sub."' AND `product_name` LIKE '%".$string."%'");
+        $res = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_category_sub` = '".$sub."' AND `product_name` LIKE '%".$string."%' AND `visibility` = '1'");
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
@@ -126,14 +126,14 @@ class Connect_Search
             echo 'Przesyłka od:';
             echo '<br />';
             if ($k) {
-                echo $k['price_prepayment'];
+                echo $k['price_prepaid'];
             } else {
                 $con = $this->connectDB();
                 $d = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `price_of` <= ".$q['product_price']." AND `price_to` >= ".$q['product_price']."");
                 $d = $d->fetch(PDO::FETCH_ASSOC);
                 unset ($con);
                 if ($d) {
-                    echo $d['price_prepayment'];
+                    echo $d['price_prepaid'];
                 } else {
                     $con = $this->connectDB();
                     $f = $con->query("SELECT * FROM `shipping_".$q['predefined']."` WHERE `configuration_mod` = 'simple'");
@@ -141,7 +141,7 @@ class Connect_Search
                     //var_dump($f);
                     unset ($con);
                     if ($f) {
-                        echo $f['price_prepayment'];
+                        echo $f['price_prepaid'];
                     } else {
                         echo ('niezdefi-<br />niowane');
                     }
@@ -186,7 +186,7 @@ if (isset($_SESSION['main']) && isset($_SESSION['sub'])) {
 <table id="table-list" class="back-all list table">
     <?php while ($cat = $success->fetch(PDO::FETCH_ASSOC)) { 
         $obj_search->showSquare($cat);
-     } ?>
+    } ?>
 </table>
 <?php
 // foreach ($success as $row) {

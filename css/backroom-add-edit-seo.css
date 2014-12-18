@@ -22,34 +22,43 @@ table, th, td {
 }
 .back-all.shipping.table th:nth-child(1){
     width:17%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(2){
     width:8%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(3){
     width:8%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(4){
     width:8%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(5){
     width:8%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(6){
     width:8%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(7){
     width:8%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(8){
-    width:5%;
+    width:8%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(9){
     width:4%;
+    #border: 1px solid pink !important;
 }
 .back-all.shipping.table th:nth-child(10){
-    width:17%;
-    #border: 1px solid pink;
+    width:4%;
+    #border: 1px solid pink !important;
 }
 .supplier-form{display:inline-block; position: relative;}
 .supplier-button{
@@ -92,16 +101,55 @@ table, th, td {
 /* .back-all.shipping.table td{
     text-align: center;
 } */
+.back-all.edit.submit.save{
+    background: YellowGreen !important; 
+}
+.back-all.edit.submit.delete{
+    background: Crimson !important; 
+}
+.back-all.edit.submit.nav{
+    background: DodgerBlue !important;
+    color:white;
+    width:49%;
+}
+.back-all.edit.div.nav{
+    #background: DodgerBlue !important;
+    color:white;
+    width:80%;
+    margin: 0 auto;
+    text-align:center;
+}
+.back-all.add.submit.cancel{
+    background: DodgerBlue !important;
+}
+.back-all.add.submit.save{
+    background: YellowGreen !important; 
+}
+.back-all.seo.submit.save{
+    background: YellowGreen !important; 
+}
+.back-all.index.submit.save{
+    background: YellowGreen !important; 
+    color:white; 
+}
+.back-all.index.submit.edit{
+    background: DodgerBlue !important;
+    color:white;     
+}
 .back-all.add.table,
 .back-all.edit.table,
 .back-all.seo.table,
 .back-all.main.table,
 .back-all.sub.table,
 .back-all.index.table,
+.back-all.shipping.div,
 .back-all.shipping.table{
-    width:100%; /*same as top menu ph*/
+    width:80%; /*same as top menu ph*/
     margin:0.1em auto;
     border: 1px solid rgb(43,165,230);
+}
+.back-all.shipping.div{
+    border: none;
 }
 .back-all.add.table th,
 .back-all.add.table td,
@@ -119,6 +167,10 @@ table, th, td {
 .back-all.index.table td{
     #border: 1px solid lime;
     padding:0.5em;
+}
+.back-all.index.table th,
+.back-all.index.table td{
+    border: 1px solid rgb(43,165,230);
 }
 .back-all.add.table th,
 .back-all.edit.table th {
@@ -153,8 +205,8 @@ table, th, td {
     height:93%;
 }
 input[type=radio]{
-    width:0.5em;
-    height:0.5em;
+    width:0.2em !important;
+    height:0.2em !important;
 }
 .back-all.add.table textarea,
 .back-all.edit.table textarea,

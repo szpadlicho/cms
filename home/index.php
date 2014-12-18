@@ -47,28 +47,28 @@ class ProductDisplay
 	public function showAll()
     {
 		$con = $this->connectDB();
-		$q = $con->query("SELECT * FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
+		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `visibility` = '1'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
 	public function showAllCategory($main)
     {
 		$con = $this->connectDB();
-		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."'");/*zwraca false jesli tablica nie istnieje*/
+		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `visibility` = '1'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
     public function showAllSub($sub)
     {
 		$con = $this->connectDB();
-		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_sub` = '".$sub."'");/*zwraca false jesli tablica nie istnieje*/
+		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_sub` = '".$sub."' AND `visibility` = '1'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}
 	public function showAllCategorySub($main, $sub)
     {
 		$con = $this->connectDB();
-		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_category_sub` = '".$sub."'");/*zwraca false jesli tablica nie istnieje*/
+		$q = $con->query("SELECT * FROM `".$this->table."` WHERE `product_category_main` = '".$main."' AND `product_category_sub` = '".$sub."' AND `visibility` = '1'");/*zwraca false jesli tablica nie istnieje*/
 		unset ($con);
 		return $q;
 	}

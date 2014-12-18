@@ -69,6 +69,7 @@ class ProduktSetCls
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null ;
         isset($_POST['connect_package']) ? $connect_package = $_POST['connect_package'] : $connect_package = 0;
         isset($_POST['only_if_the_same']) ? $only_if_the_same = $_POST['only_if_the_same'] : $only_if_the_same = 0;
+        isset($_POST['visibility']) ? $visibility = $_POST['visibility'] : $visibility = 1;
 		$con=$this->connectDB();
 		//$q = $con->query("SELECT * FROM `".$this->table."`");/*zwraca false jesli tablica nie istnieje*/
 		//$count = $q -> fetch();/*konwertor na tablice*/
@@ -99,7 +100,8 @@ class ProduktSetCls
             `package_share`,
             `max_item_in_package`,
             `connect_package`,
-            `only_if_the_same`
+            `only_if_the_same`,
+            `visibility`
 			) VALUES (
 			'".$_POST['product_name']."',
 			'".str_replace(",",".",$_POST['product_price'])."',
@@ -126,7 +128,8 @@ class ProduktSetCls
             '".(int)$package_share."',
             '".(int)$max_item_in_package."',
             '".(int)$connect_package."',
-            '".(int)$only_if_the_same."'
+            '".(int)$only_if_the_same."',
+            '".(int)$visibility."'
 			)");
 		unset ($con);
         //echo "<div class=\"center\" >zapis udany</div>";
@@ -261,7 +264,7 @@ if (isset($_POST['save'])) {
                     <tr>
                         <th>Zapisz:</th>
                         <td colspan="3">
-                            <input id="" class="back-all add submit" type="submit" name="save" value="Zapisz" />
+                            <input id="" class="back-all add submit save" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
@@ -309,7 +312,7 @@ if (isset($_POST['save'])) {
                     <tr>
                         <th>Zapisz:</th>
                         <td  colspan="3">
-                            <input id="" class="back-all add submit" type="submit" name="update" value="Zapisz" />
+                            <input id="" class="back-all add submit save" type="submit" name="update" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
@@ -337,7 +340,7 @@ if (isset($_POST['save'])) {
                     <tr>
                         <th>Zapisz:</th>
                         <td colspan="3">
-                            <input id="" class="back-all add submit" type="submit" name="save" value="Zapisz" />
+                            <input id="" class="back-all add submit save" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>
                     <!-- SHIPPING -->
@@ -368,9 +371,18 @@ if (isset($_POST['save'])) {
                                 });
                             </script>
                             <th>
+                                Widzialność
+                            </th>
+                            <td>
+                                <select id="visibility" class="back-all shipping select visibility" name="visibility">
+                                    <option value="1" >Tak</option>
+                                    <option value="0" >Nie</option>
+                                </select>
+                            </td>
+                            <th>
                                 Tryb dostawców
                             </th>
-                            <td colspan="3">
+                            <td>
                                 <label><input id="" class="back-all edit radio suppliers-radio" type="radio" name="shipping_mod" value="suppliers_false" checked="checked" />Użyj zdefiniowanych.</label><br />
                                 <label><input id="" class="back-all edit radio suppliers-radio" type="radio" name="shipping_mod" value="suppliers_true" />Skonfiguruj indywidualnie.</label>
                             </td>
@@ -549,13 +561,13 @@ if (isset($_POST['save'])) {
                     <tr>
                         <th>Zapisz:</th>
                         <td colspan="3">
-                            <input id="" class="back-all add submit" type="submit" name="save" value="Zapisz" />
+                            <input id="" class="back-all add submit save" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>                        
                     <tr>    
                         <th>Anuluj:</th>
                         <td colspan="3">
-                            <input id="" class="back-all add submit" type="submit" name="cancel" value="Anuluj" />
+                            <input id="" class="back-all add submit cancel" type="submit" name="cancel" value="Anuluj" />
                         </td>
                     </tr>
                 </table>

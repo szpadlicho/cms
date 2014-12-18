@@ -60,7 +60,7 @@ class GlobalSettingCls
 }
 /**/
 $setting_seo = new GlobalSettingCls();
-$setting_all seo >__setTable('setting_seo');
+$setting_seo->__setTable('setting_seo');
 if (isset($_POST['save'])) {//dodac usuwanie kodu html php itd......    
     $arr_val = array('global_title_index'=>$_POST['global_title_index'],
                     'global_keywords_index'=>$_POST['global_keywords_index'],
@@ -72,9 +72,9 @@ if (isset($_POST['save'])) {//dodac usuwanie kodu html php itd......
                     'global_keywords_product'=>$_POST['global_keywords_product'],
                     'global_description_product'=>$_POST['global_description_product']
                     );
-    $setting_all seo >__setRow($arr_val,1);
+    $setting_seo->__setRow($arr_val,1);
 }
-$get = $setting_all seo >__getRow(1);
+$get = $setting_seo->__getRow(1);
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -110,7 +110,7 @@ $get = $setting_all seo >__getRow(1);
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
-                    <td><input id="" class="back-all seo submit" type="submit" name="save" value="Zapisz" /></td>
+                    <td><input id="" class="back-all seo submit save" type="submit" name="save" value="Zapisz" /></td>
                 </tr>
                 <tr>
                     <th colspan="2">Strona Kategorii:</th>
@@ -129,7 +129,7 @@ $get = $setting_all seo >__getRow(1);
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
-                    <td><input id="" class="back-all seo submit" type="submit" name="save" value="Zapisz" /></td>
+                    <td><input id="" class="back-all seo submit save" type="submit" name="save" value="Zapisz" /></td>
                 </tr>
                 <tr>
                     <th colspan="2">Strona Towaru:</th>
@@ -148,7 +148,7 @@ $get = $setting_all seo >__getRow(1);
                 </tr>
                 <tr>
                     <th>Zapisz:</th>
-                    <td><input id="" class="back-all seo submit" type="submit" name="save" value="Zapisz" /></td>
+                    <td><input id="" class="back-all seo submit save" type="submit" name="save" value="Zapisz" /></td>
                 </tr>                
             </table>
         </form>

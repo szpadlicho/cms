@@ -33,41 +33,49 @@
     padding:1em;
     outline:0;
     margin:0;
+    border-radius: 5px;
 }
 input[name='user_email']{
     top:0.5em;
     right:13em;
-    background: rgba(181,209,73,0.8);
+    #background: rgba(181,209,73,0.8);
+    background: YellowGreen !important;
 }
 input[name='user_password']{
     top:2.7em;
     right:13em;
-    background: rgba(181,209,73,0.8);
+    #background: rgba(181,209,73,0.8);
+    background: YellowGreen;
 }
 input[name='user_check']{
     top:0.5em;
     right:7em;
-    background: rgba(181,209,73,0.8);
+    #background: rgba(181,209,73,0.8);
+    background: YellowGreen;
 }
 input[name='user_logout']{
     top:0.5em;
     right:7em;
-    background: rgba(200,24,37,0.8);
+    #background: rgba(200,24,37,0.8);
+    background: Crimson; 
 }
 a[name='user_register']{
     top:0.5em;
     right:1em;
-    background: rgba(237,155,56,0.8);
+    #background: rgba(237,155,56,0.8);
+    background: DodgerBlue;
 }
 a[name='user_edit']{
     top:0.5em;
     right:14em;
-    background: rgba(237,155,56,0.8);
+    #background: rgba(237,155,56,0.8);
+    background: YellowGreen;
 }
 a[name='user_basket']{
     top:0.5em;
     right:1em;
     #background: rgba(181,209,73,0.8);
+    background-color: DodgerBlue;
     #background-color: none;
     display:block;
     background-image: url('../images/basket.png');

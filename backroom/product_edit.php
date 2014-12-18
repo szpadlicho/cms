@@ -101,6 +101,7 @@ class ProduktEditCls
         isset($_POST['max_item_in_package']) ? $max_item_in_package = $_POST['max_item_in_package'] : $max_item_in_package = null ;
         isset($_POST['connect_package']) ? $connect_package = $_POST['connect_package'] : $connect_package = 0;
         isset($_POST['only_if_the_same']) ? $only_if_the_same = $_POST['only_if_the_same'] : $only_if_the_same = 0;
+        isset($_POST['visibility']) ? $visibility = $_POST['visibility'] : $visibility = 1;
 		$con = $this->connectDB();        
 			$feedback = $con->query("
                 UPDATE 
@@ -131,7 +132,8 @@ class ProduktEditCls
                 `package_share` = '".(int)$package_share."',
                 `max_item_in_package` = '".(int)$max_item_in_package."' ,
                 `connect_package` = '".(int)$connect_package."',
-                `only_if_the_same` = '".(int)$only_if_the_same."'
+                `only_if_the_same` = '".(int)$only_if_the_same."',
+                `visibility` = '".(int)$visibility."'
                 WHERE 
                 `id`='".$what."'");	
 		unset ($con);	
@@ -217,6 +219,52 @@ class ProduktEditCls
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
+    public function __getFirstLastId()
+    {
+        $con = $this->connectDB();
+        $aid = $con->query('SELECT MIN(id),MAX(id) FROM `product_tab`');
+        $aid = $aid->fetch(PDO::FETCH_ASSOC);
+        return $aid;
+    }
+    public function __getAllId()
+    {
+        $con = $this->connectDB();
+        $aid = $con->query('SELECT `id` FROM `product_tab`');
+        //$aid = $aid->fetch(PDO::FETCH_ASSOC);
+        return $aid;
+    }
+    public function nextId()
+    {
+        $allId = $this->__getAllId();
+        $arrId = array();
+        while ( $id = $allId->fetch(PDO::FETCH_ASSOC) ) {
+            $arrId[] = $id['id'];
+        }
+        $curentKey = array_search($_SESSION['id_post'], $arrId);
+        $keys = array_keys($arrId);
+        $flId = $this->__getFirstLastId();
+        if(@$arrId[$keys[array_search($curentKey, $keys)+1]]){
+            return $next = $arrId[$keys[array_search($curentKey, $keys)+1]];
+        } else {
+            return $flId['MIN(id)'];
+        }
+    }
+    public function prevId()
+    {
+        $allId = $this->__getAllId();
+        $arrId = array();
+        while ( $id = $allId->fetch(PDO::FETCH_ASSOC) ) {
+            $arrId[] = $id['id'];
+        }
+        $curentKey = array_search($_SESSION['id_post'], $arrId);
+        $keys = array_keys($arrId);
+        $flId = $this->__getFirstLastId();
+        if(@$arrId[$keys[array_search($curentKey, $keys)-1]]){
+            return $next = $arrId[$keys[array_search($curentKey, $keys)-1]];
+        } else {
+            return $flId['MAX(id)'];
+        }
+    }
 }
 $product = new ProduktEditCls();
 $product->__setTable('product_tab');
@@ -238,8 +286,8 @@ if (isset($_POST['delete'])) {
     header('Location: product_list.php');
     //echo("<script>location.href = 'product_list.php';</script>");
 }
-isset($_POST['prev']) ? $_SESSION['id_post'] = $_SESSION['id_post'] - 1 : '' ;
-isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
+isset($_POST['prev']) ? $_SESSION['id_post'] = $product->prevId() : '' ;
+isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
 ?>
 <!DOCTYPE HTML>
 <html lang="pl">
@@ -255,9 +303,9 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
         <div class="back-all edit placeholder">
             <?php foreach ($product->showOne() as $wyn) { ?>
                 <form enctype="multipart/form-data" method="POST">
-                    <div class="center">
-                        <input type="submit" name="prev" value="prev"/>
-                        <input type="submit" name="next" value="next"/>
+                    <div class="back-all edit div nav">
+                        <input class="back-all edit submit nav" type="submit" name="prev" value="prev"/>
+                        <input class="back-all edit submit nav"type="submit" name="next" value="next"/>
                     </div>
                     <table class="back-all edit table">
                         <tr>
@@ -283,13 +331,13 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
 						<tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
                             </td>
                         </tr>                        
                         <tr>    
                             <th>Usuń Produkt:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit" type="submit" name="delete" value="delete" />
+                                <input id="" class="back-all edit submit delete" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 						<tr>
@@ -345,7 +393,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
                         <tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>
 						<tr>
@@ -377,7 +425,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
 						<tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>
                         <!-- SHIPPING -->
@@ -408,9 +456,18 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
                                 });
                             </script>
                             <th>
+                                Widzialność
+                            </th>
+                            <td>
+                                <select id="visibility" class="back-all shipping select visibility" name="visibility">
+                                    <option <?php echo $wyn['visibility'] == 1 ? 'selected' : '' ; ?> value="1" >Tak</option>
+                                    <option <?php echo $wyn['visibility'] == 0 ? 'selected' : '' ; ?> value="0" >Nie</option>
+                                </select>
+                            </td>
+                            <th>
                                 Tryb dostawców
                             </th>
-                            <td colspan="3">
+                            <td>
                                 <label><input id="" class="back-all edit radio suppliers-radio" type="radio" name="shipping_mod" value="suppliers_false" <?php echo $wyn['shipping_mod']==0 ? 'checked="checked"' : '' ; ?> />Użyj zdefiniowanych.</label><br />
                                 <label><input id="" class="back-all edit radio suppliers-radio" type="radio" name="shipping_mod" value="suppliers_true" <?php echo $wyn['shipping_mod']==1 ? 'checked="checked"' : '' ; ?> />Skonfiguruj indywidualnie.</label>
                             </td>
@@ -533,8 +590,8 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
                         <tr class="suppliers-tr-two">
                             <th class="max_item_in_package">Łącz sztuki między paczkami:</th>
                             <td colspan="3" class="max_item_in_package">
-                                <?php $con = $row['connect_package'] ;?>
-                                <select id="connect_one_<?php echo $row['id']; ?>" class="back-all shipping select" name="connect_package">
+                                <?php $con = $wyn['connect_package'] ;?>
+                                <select id="connect_one_<?php echo $wyn['id']; ?>" class="back-all shipping select" name="connect_package">
                                     <option <?php if ($con == '1') { echo 'selected'; } ?> value="1">Tak</option>
                                     <option <?php if ($con == '0') { echo 'selected'; } ?> value="0">Nie</option>
                                 </select>
@@ -544,7 +601,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
                         <tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>                        
                         <tr>
@@ -597,13 +654,13 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
                         <tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit" type="submit" name="update" value="Zapisz" />
+                                <input id="" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
                             </td>
                         </tr>                        
                         <tr>    
                             <th>Usuń Produkt:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit" type="submit" name="delete" value="delete" />
+                                <input id="" class="back-all edit submit delete" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 					</table>

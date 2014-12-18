@@ -309,6 +309,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                     </tr>
                 </table>
             </form>
+            <div class="back-all shipping div">
             <?php
             if ($names) {
                 // foreach ($names as $name) {
@@ -344,7 +345,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                 <?php
             }
             ?>
-            
+            </div>
             <?php if (isset($_SESSION['this_supplier'])) { ?>
             <form method="POST" >
                 <table class="back-all shipping table">
@@ -421,8 +422,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         <th class="price_ondelivery">Cena za pobraniem</th>
                         <th>Darmowa od</th>
                         <th>
+                            <!--
                             <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" checked="checked" value="title_false" /></label>
                             <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" value="title_true" /></label>
+                            -->
                         </th>
                     </tr>
                     <tr class="supplier-config-tr">
@@ -463,7 +466,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         </td>
                         <td class="price_ondelivery"><input id="" class="back-all shipping text" type="text" name="price_ondelivery" /></td>
                         <td><input id="" class="back-all shipping text" type="text" name="free_of" /></td>
-                        <td><input id="" class="back-all shipping text" type="text" name="" /></td>
+                        <td><!--<input id="" class="back-all shipping text" type="text" name="" />--></td>
                     </tr>
                     <tr class="supplier-config-tr">
                         <td colspan="5" class="shipping-td-input"><input id="" class="back-all shipping submit add" type="submit" name="add_new" value="Dodaj" /></td>
@@ -558,8 +561,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 <!-- allow ondelivery -->
                                 <th>darmowa od</th>
                                 <th>
+                                    <!--
                                     <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" checked="checked" value="title_false" /></label>
                                     <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" value="title_true" /></label>
+                                    -->
                                 </th>
                             </tr>
                             <tr>
@@ -611,7 +616,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 <td class="price_ondelivery_<?php echo $row['id']; ?>"><input id="" class="back-all shipping text" type="text" name="price_ondelivery" value="<?php echo $row['price_ondelivery'] ;?>" /></td>
                                 <!-- allow ondelivery -->
                                 <td><input id="" class="back-all shipping text" type="text" name="free_of" value="<?php echo $row['free_of'] ;?>" /></td>
-                                <td><input id="" class="back-all shipping text" type="text" name="" /></td>
+                                <td><!--<input id="" class="back-all shipping text" type="text" name="" />--></td>
                             </tr>
                             <tr>
                                 <td colspan="5" class="shipping-td-input"><input id="" class="back-all shipping submit update" type="submit" name="update" value="Aktualizuj" /></td>

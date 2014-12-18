@@ -102,35 +102,33 @@ $success = $obj_search->__getProdyctName($_POST['string']);
         //echo $wyn['product_name'].'<br />';
         ?>
         <form enctype="multipart/form-data" action="product_edit.php" method="POST" >
-        <?php
-            echo '<tr>';
-                echo '<td>';
-                    echo $wyn['id'];
-                echo '</td>';
-                echo '<td>';
-                    //losowy obrazek z katalogu                                           
-                    $obj_search->showMiniImg($wyn['id']);
-                echo '</td>';
-                echo '<td>';
-                    echo $wyn['product_name']; 
-                echo '</td>';
-                echo '<td>';
-                    echo $wyn['product_category_main']; 
-                echo '</td>';
-                echo '<td>';
-                    echo $wyn['product_category_sub']; 
-                echo '</td>';
-                echo '<td>';
-                    echo $wyn['product_price']; 
-                echo '</td>';
-                echo '<td>';
-                    echo $wyn['amount']; 
-                echo '</td>';
-                echo '<td>';
-                    echo '<input type="submit" name="id_post_bt" value="Edytuj" />'; 
-                    echo '<input type="hidden" name="id_post" value="'.$wyn['id'].'" />'; 
-                echo '</td>';
-            echo '</tr>'; ?>
+            <tr>
+                <td>
+                    <?php echo $wyn['id']; ?>
+                </td>
+                <td>                                          
+                    <?php $obj_search->showMiniImg($wyn['id']);?>
+                </td>
+                <td>
+                    <?php echo $wyn['product_name']; ?>
+                </td>
+                <td>
+                    <?php echo $wyn['product_category_main']; ?>
+                </td>
+                <td>
+                    <?php echo $wyn['product_category_sub']; ?>
+                </td>
+                <td>
+                    <?php echo $wyn['product_price']; ?>
+                </td>
+                <td>
+                    <?php echo $wyn['amount']; ?>
+                </td>
+                <td>
+                    <input class="back-all list submit edit" type="submit" name="id_post_bt" value="Edytuj" />
+                    <input type="hidden" name="id_post" value="<?php echo$wyn['id']; ?>" />
+                </td>
+            </tr>
         </form>
     <?php } ?>
 </table>

@@ -80,13 +80,14 @@ if (isset($_POST['update_amount'])) {
                 <!--<form enctype="multipart/form-data" method="POST">-->
                     <table class="back-all index table">
                         <tr>
-							<th colspan="4">Produkty na wyczerpaniu:</th>
+							<th colspan="5">Produkty na wyczerpaniu:</th>
 						</tr>
                         <tr>
 							<th>ID:</th>
                             <th>Nazwa:</th>
                             <th>Dostępna ilość:</th>
                             <th>Zapisz:</th>
+                            <th>Edytuj:</th>
 						</tr>
                         <script type="text/javascript">
                             $(function(){
@@ -124,7 +125,7 @@ if (isset($_POST['update_amount'])) {
                         $wyn = $obj_backroom_inf->__getLowAmount(0,100);
                         foreach ($wyn as $row) { ?>
 						<tr>
-                            <form enctype="multipart/form-data" method="POST">
+                            <form method="POST">
                                 <td>
                                     <?php echo $row['id']; ?>
                                     <input id="" class="back-all index text" type="hidden" name="id" value="<?php echo $row['id']; ?>" />
@@ -137,7 +138,23 @@ if (isset($_POST['update_amount'])) {
                                     <input id="" class="back-all index text color" type="text" name="amount" value="<?php echo $row['amount']; ?>" />
                                 </td>
                                 <td>
-                                    <input id="" class="back-all index submit" type="submit" name="update_amount" value="Zapisz" />
+                                    <input id="" class="back-all index submit save" type="submit" name="update_amount" value="Zapisz" />
+                                </td>
+                            </form>
+                            <form action="product_edit.php" method="POST">
+                                <td>
+                                    <script type="text/javascript">
+                                        $( '[name="edit"]').click(function(){
+                                            //console.log( $( this ).val() );
+                                            var id = $( this ).next().val();//hidden input with id
+                                            console.log( id );
+                                            $.post( 'product_edit.php', { id_post: id}).done(function( data ) {
+                                                window.location = 'product_edit.php';
+                                            });
+                                        });
+                                    </script>
+                                    <input id="" class="back-all index submit edit" type="submit" name="edit" value="Edytuj" />
+                                    <input type="hidden" name="id_post" value="<?php echo$row['id']; ?>" />
                                 </td>
                             </form>
 						</tr>

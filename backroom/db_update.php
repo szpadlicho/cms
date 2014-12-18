@@ -243,6 +243,13 @@ if (isset($_POST['add9'])) {//dodane na kompie
         $upgrade->renameColumn('price_prepayment', 'price_prepaid', 'VARCHAR(20)');
     }
 }
+if (isset($_POST['add10'])) {//dodane na kompie
+    $upgrade->__setTable('product_tab');
+    $arr_row = array(
+        'visibility'              =>'INTEGER(1) UNSIGNED'
+        );
+    $upgrade->addRowDynamic2($arr_row);
+}
 echo '</div>';
 ?>
 <!DOCTYPE HTML>
@@ -270,6 +277,7 @@ echo '</div>';
                 <input type="submit" name="add7" value="shipping_supplier connect add" />
                 <input type="submit" name="add8" value="product_tab connect add" />
                 <input type="submit" name="add9" value="prepayment -> prepaid" />
+                <input type="submit" name="add10" value="add visibility" />
             </form>
         </div>
     </section>
