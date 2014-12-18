@@ -297,19 +297,18 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
 		<?php include ('backroom-top-menu.php'); ?>
 		<div class="back-all shipping placeholder">
             <form method="POST" >
-                <table class="back-all shipping table">
+                <table id="table-supplier-add" class="back-all shipping table">
                     <tr>
                         <th>Nazwa:</th>
                         <td colspan="2"><input id="" class="back-all shipping text" type="text" name="supplier_name" /></td>
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input id="" class="back-all shipping submit" type="submit" name="add" value="Dodaj" /></td>
-                        <td><input id="" class="back-all shipping submit" type="submit" name="cancel" value="Anuluj" /></td>
+                        <td class="shipping-td-input"><input id="" class="back-all shipping submit" type="submit" name="add" value="Dodaj" /></td>
+                        <td class="shipping-td-input"><input id="" class="back-all shipping submit" type="submit" name="cancel" value="Anuluj" /></td>
                     </tr>
                 </table>
             </form>
-            <form method="POST" >
             <?php
             if ($names) {
                 // foreach ($names as $name) {
@@ -320,18 +319,27 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                     //var_dump($name);
                     //echo $name['supplier_name'].'<br />';
                     ?>
-                    <form method="POST" >
+                    <form class="supplier-form" method="POST" >
                         <!--<input id="" class="" type="submit" name="set_this2" value="<?php //echo $name['supplier_name_d']; ?>" />-->
-                        <input id="" class="" type="submit" name="set_this2" value="<?php echo $name['supplier_name_d']; ?>" />
+                        <input id="" class="supplier-button" type="submit" name="set_this2" value="<?php echo $name['supplier_name_d']; ?>" />
                         <input id="" class="" type="hidden" name="set_this" value="<?php echo $name['supplier_name']; ?>" />
-                        <input id="" class="" type="submit" name="delete_this" value="Usuń" />
+                        <input id="" class="supplier-delete" type="submit" name="delete_this" value="Usuń" />
                         <input id="" class="" type="hidden" name="delete_id" value="<?php echo $name['id']; ?>" />
                     </form>
                     <?php
                 }
                 ?>
-                <form method="POST" >
-                    <input id="" class="" type="submit" name="unset_this" value="Zamknij" />
+                <form class="supplier-form" method="POST" >
+                    <script type="text/javascript">
+                        $(function(){
+                            $( '#table-supplier-add' ).hide();
+                            $(document).on('click', '.supplier-add', function () {
+                                $( '#table-supplier-add' ).show();
+                            });
+                        });
+                    </script>
+                    <input id="" class="supplier-add" type="button" name="" value="Nowy Dostawca" />
+                    <input id="" class="supplier-close" type="submit" name="unset_this" value="Zamknij" />
                 </form>
                 <?php
             }
@@ -340,7 +348,17 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
             <?php if (isset($_SESSION['this_supplier'])) { ?>
             <form method="POST" >
                 <table class="back-all shipping table">
-                    <tr>
+                    <script type="text/javascript">
+                        $(function(){
+                            $( '.supplier-config-tr' ).hide();
+                            $(document).on('click', '.supplier-config-add', function () {
+                                $( '.supplier-config-tr' ).show();
+                                $( '.supplier-config-add' ).hide();
+                            });
+                        });
+                    </script>
+                    <tr><td colspan="10"><input class="supplier-config-add" type="button" value="Dodaj nową konfigurację"/></td></tr>
+                    <tr class="supplier-config-tr">
                         <th>Tryb konfiguracji:</th>
                         <script type="text/javascript">
                             $(function(){
@@ -407,7 +425,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                             <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" value="title_true" /></label>
                         </th>
                     </tr>
-                    <tr>
+                    <tr class="supplier-config-tr">
                         <td>
                             <select id="configuration_mod" class="back-all shipping select" name="configuration_mod">
                                 <option value="simple">Prosty</option>
@@ -447,9 +465,9 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         <td><input id="" class="back-all shipping text" type="text" name="free_of" /></td>
                         <td><input id="" class="back-all shipping text" type="text" name="" /></td>
                     </tr>
-                    <tr>
-                        <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="add_new" value="Dodaj" /></td>
-                        <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="cancel" value="Anuluj" /></td>
+                    <tr class="supplier-config-tr">
+                        <td colspan="5" class="shipping-td-input"><input id="" class="back-all shipping submit add" type="submit" name="add_new" value="Dodaj" /></td>
+                        <td colspan="5" class="shipping-td-input"><input id="" class="back-all shipping submit cancel" type="submit" name="cancel" value="Anuluj" /></td>
                     </tr>
                 </table>
             </form>
@@ -596,8 +614,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 <td><input id="" class="back-all shipping text" type="text" name="" /></td>
                             </tr>
                             <tr>
-                                <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="update" value="Aktualizuj" /></td>
-                                <td colspan="5"><input id="" class="back-all shipping submit" type="submit" name="delete" value="Usuń" /></td>
+                                <td colspan="5" class="shipping-td-input"><input id="" class="back-all shipping submit update" type="submit" name="update" value="Aktualizuj" /></td>
+                                <td colspan="5" class="shipping-td-input"><input id="" class="back-all shipping submit delete" type="submit" name="delete" value="Usuń" /></td>
                             </tr>
                         </table>
                         <input type="hidden" name="curent_id" value="<?php echo $row['id']; ?>" />

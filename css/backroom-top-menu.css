@@ -14,7 +14,7 @@
   box-sizing: border-box;
 }
 #backroom-top-menu {
-  position:absolute;
+  position:fixed;
   top:0.5em;
   left: 0.5em;
   width: 200px;

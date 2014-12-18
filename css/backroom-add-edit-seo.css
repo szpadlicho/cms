@@ -51,6 +51,47 @@ table, th, td {
     width:17%;
     #border: 1px solid pink;
 }
+.supplier-form{display:inline-block; position: relative;}
+.supplier-button{
+    width: 10em;
+    height: 10em;
+    background: DodgerBlue !important;
+    color: white;
+}
+.supplier-delete{
+    position: absolute;
+    top: 0em;
+    right: 0em;
+    background: Crimson !important;
+}
+.supplier-close{
+    width: 10em;
+    height: 10em;
+}
+.supplier-add{
+    width: 10em;
+    height: 10em;
+    background: YellowGreen !important;
+}
+.back-all.shipping.submit{
+    width: 20em !important;
+    margin: 0 auto;
+    #margin-left:8em;
+}
+.shipping-td-input{
+    text-align: center;
+    width: 50%;
+}
+.supplier-config-add{
+    width:99% !important;
+    background: YellowGreen !important;    
+}
+.back-all.shipping.submit.update{background: DodgerBlue !important;}
+.back-all.shipping.submit.delete{background: Crimson !important;}
+.back-all.shipping.submit.add{background: YellowGreen !important;}
+/* .back-all.shipping.table td{
+    text-align: center;
+} */
 .back-all.add.table,
 .back-all.edit.table,
 .back-all.seo.table,
@@ -58,7 +99,7 @@ table, th, td {
 .back-all.sub.table,
 .back-all.index.table,
 .back-all.shipping.table{
-    width:80%; /*same as top menu ph*/
+    width:100%; /*same as top menu ph*/
     margin:0.1em auto;
     border: 1px solid rgb(43,165,230);
 }
