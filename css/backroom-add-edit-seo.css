@@ -13,22 +13,54 @@
     margin-top: 1em;
 }
 table, th, td {
-    border: 1px solid black;
+    #border: 1px solid rgb(43,165,230);
     vertical-align:middle;
+}
+.back-all.shipping.table th,
+.back-all.shipping.table td{
+    #border: none;
+}
+.back-all.shipping.table th:nth-child(1){
+    width:17%;
+}
+.back-all.shipping.table th:nth-child(2){
+    width:8%;
+}
+.back-all.shipping.table th:nth-child(3){
+    width:8%;
+}
+.back-all.shipping.table th:nth-child(4){
+    width:8%;
+}
+.back-all.shipping.table th:nth-child(5){
+    width:8%;
+}
+.back-all.shipping.table th:nth-child(6){
+    width:8%;
+}
+.back-all.shipping.table th:nth-child(7){
+    width:8%;
+}
+.back-all.shipping.table th:nth-child(8){
+    width:5%;
+}
+.back-all.shipping.table th:nth-child(9){
+    width:4%;
+}
+.back-all.shipping.table th:nth-child(10){
+    width:17%;
+    #border: 1px solid pink;
 }
 .back-all.add.table,
 .back-all.edit.table,
 .back-all.seo.table,
 .back-all.main.table,
 .back-all.sub.table,
-.back-all.index.table{
-    width:46.5em; /*same as top menu ph*/
-    margin:0.1em auto;
-    border: 1px solid lime;
-}
+.back-all.index.table,
 .back-all.shipping.table{
+    width:80%; /*same as top menu ph*/
     margin:0.1em auto;
-    border: 1px solid lime;
+    border: 1px solid rgb(43,165,230);
 }
 .back-all.add.table th,
 .back-all.add.table td,

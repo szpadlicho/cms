@@ -1,5 +1,6 @@
 .back-all.list.table{
-    margin:1em auto;
+    width: 80%;
+    margin:0.1em auto;
     text-align:center;    
 }
 .back-all.list.table tr{
@@ -11,7 +12,7 @@
 .back-all.list.table th,
 .back-all.list.table td{
 	padding:1em 1em 1em 1em;    
-    border:1px solid lime;
+    border:1px solid rgb(43,165,230);
 }
 .back-all.list.mini-image{
     width:5em;

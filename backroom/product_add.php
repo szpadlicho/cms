@@ -490,10 +490,12 @@ if (isset($_POST['save'])) {
                             <td><input  id="max_item_in_package" class="back-all shipping text" type="text" name="max_item_in_package" /></td>
                         </tr>
                         <tr class="suppliers-tr-two">
-                            <th class="max_item_in_package">Zasady łączenia</th>
+                            <th class="max_item_in_package">Łącz sztuki między paczkami:</th>
                             <td colspan="3" class="max_item_in_package">
-                                <label><input id="connect_one" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
-                                <label><input id="connect_two" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                                <select id="connect_one" class="back-all shipping select" name="connect_package">
+                                    <option value="1">Tak</option>
+                                    <option value="0">Nie</option>
+                                </select>
                             </td>
                         </tr>
                         <!-- SHIPPING -->

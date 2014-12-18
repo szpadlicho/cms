@@ -341,7 +341,7 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
             <form method="POST" >
                 <table class="back-all shipping table">
                     <tr>
-                        <th>tryb konfiguracji</th>
+                        <th>Tryb konfiguracji:</th>
                         <script type="text/javascript">
                             $(function(){
                                 $( '.weight_mod, .price_mod' ).hide();
@@ -360,10 +360,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                             });
                         </script>
                         <!-- Configuration mode -->
-                        <th class="weight_mod">waga od</th>
-                        <th class="weight_mod">waga do</th>
-                        <th class="price_mod">cena od</th>
-                        <th class="price_mod">cena do</th>
+                        <th class="weight_mod">Waga od:</th>
+                        <th class="weight_mod">Waga do:</th>
+                        <th class="price_mod">Cena od:</th>
+                        <th class="price_mod">Cena do:</th>
                         <!-- Configuration mode -->
                         <script type="text/javascript">
                             $(function(){
@@ -380,13 +380,13 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 });
                             });
                         </script>
-                        <th>Osobne paczki</th>
+                        <th>Osobne paczki:</th>
                         <!-- package share -->
-                        <th class="max_item_in_package">maksymalnie w paczce</th>
-                        <th class="max_item_in_package">zasady łączenia</th>
+                        <th class="max_item_in_package">Max w paczce:</th>
+                        <th class="max_item_in_package">Łącz sztuki między paczkami:</th>
                         <!-- package share -->
-                        <th>cena z przedpłata</th>
-                        <th>dopuszczać za pobraniem</th>
+                        <th>Cena przelewem</th>
+                        <th>Dopuszczać za pobraniem</th>
                         <script type="text/javascript">
                             $(function(){
                                 $( '.price_ondelivery' ).show();
@@ -400,8 +400,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 });
                             });
                         </script>
-                        <th class="price_ondelivery">cena za pobraniem</th>
-                        <th>darmowa od</th>
+                        <th class="price_ondelivery">Cena za pobraniem</th>
+                        <th>Darmowa od</th>
                         <th>
                             <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" checked="checked" value="title_false" /></label>
                             <label><input id="" class="back-all shipping radio seo-radio" type="radio" name="shipping" value="title_true" /></label>
@@ -430,8 +430,10 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                         <!-- package share -->
                         <td class="max_item_in_package"><input id="max_item_in_package" class="back-all shipping text" type="text" name="max_item_in_package" /></td>
                         <td class="max_item_in_package">
-                            <label><input id="connect_one" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" value="1" />Łącz z innymi produktami w paczki</label>
-                            <label><input id="connect_two" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                            <select id="connect_one" class="back-all shipping select" name="connect_package">
+                                <option value="1">Tak</option>
+                                <option value="0">Nie</option>
+                            </select>
                         </td>
                         <!-- package share -->
                         <td><input id="" class="back-all shipping text" type="text" name="price_prepaid" /></td>
@@ -511,8 +513,8 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 </script>
                                 <th>Osobne paczki</th>
                                 <!-- package share -->
-                                <th class="max_item_in_package_<?php echo $row['id']; ?>">maksymalnie w paczce</th>
-                                <th class="max_item_in_package_<?php echo $row['id']; ?>">zasady łączenia</th>
+                                <th class="max_item_in_package_<?php echo $row['id']; ?>">Max w paczce</th>
+                                <th class="max_item_in_package_<?php echo $row['id']; ?>">Łącz sztuki między paczkami:</th>
                                 <!-- package share -->
                                 <th>cena z przedpłata</th>
                                 <th>dopuszczać za pobraniem</th>
@@ -568,8 +570,15 @@ if (isset($_SESSION['this_supplier'])) { // must be last !important
                                 <!-- package share -->
                                 <td class="max_item_in_package_<?php echo $row['id']; ?>"><input id="max_item_in_package_<?php echo $row['id']; ?>" class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $row['max_item_in_package'] ;?>" /></td>
                                 <td class="max_item_in_package_<?php echo $row['id']; ?>">
-                                    <label><input id="connect_one_<?php echo $row['id']; ?>" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" <?php echo $row['connect_package'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz z innymi produktami w paczki</label>
-                                        <label><input id="connect_two_<?php echo $row['id']; ?>" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" <?php echo $row['only_if_the_same'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                                    
+                                    <!--<label><input id="connect_one_<?php //echo $row['id']; ?>" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" <?php //echo $row['connect_package'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Jeśli cena przesyłki jest taka sama</label>->
+                                        <!--<label><input id="connect_two_<?php //echo $row['id']; ?>" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" <?php //echo $row['only_if_the_same'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>-->
+                                        
+                                    <?php $con = $row['connect_package'] ;?>
+                                    <select id="connect_one_<?php echo $row['id']; ?>" class="back-all shipping select" name="connect_package">
+                                        <option <?php if ($con == '1') { echo 'selected'; } ?> value="1">Tak</option>
+                                        <option <?php if ($con == '0') { echo 'selected'; } ?> value="0">Nie</option>
+                                    </select>
                                 </td>
                                 <!-- package share -->
                                 <td><input id="" class="back-all shipping text" type="text" name="price_prepaid" value="<?php echo $row['price_prepaid'] ;?>" /></td>

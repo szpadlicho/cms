@@ -531,10 +531,13 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $_SESSION['id_post'] + 1 : '' ;
                             <td><input  id="max_item_in_package" class="back-all shipping text" type="text" name="max_item_in_package" value="<?php echo $wyn['max_item_in_package']; ?>" /></td>
                         </tr>
                         <tr class="suppliers-tr-two">
-                            <th class="max_item_in_package">Zasady łączenia</th>
+                            <th class="max_item_in_package">Łącz sztuki między paczkami:</th>
                             <td colspan="3" class="max_item_in_package">
-                                <label><input id="connect_one" class="back-all shipping checkbox seo-radio" type="checkbox" name="connect_package" <?php echo $wyn['connect_package'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz z innymi produktami w paczki</label>
-                                <label><input id="connect_two" class="back-all shipping checkbox seo-radio" type="checkbox" name="only_if_the_same" <?php echo $wyn['only_if_the_same'] == 1 ? 'checked="checked"' : '' ; ?> value="1" />Łącz tylko jeśli dostawca i cena są takie same.</label>
+                                <?php $con = $row['connect_package'] ;?>
+                                <select id="connect_one_<?php echo $row['id']; ?>" class="back-all shipping select" name="connect_package">
+                                    <option <?php if ($con == '1') { echo 'selected'; } ?> value="1">Tak</option>
+                                    <option <?php if ($con == '0') { echo 'selected'; } ?> value="0">Nie</option>
+                                </select>
                             </td>
                         </tr>
                         <!-- SHIPPING -->
