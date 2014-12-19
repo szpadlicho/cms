@@ -35,6 +35,6 @@
              </li>
           </ul>
        </li>
-       <li class='last'><a id="a-delete" href='#'><span>Usuń</span></a></li>
+       <li id="a-del" class='last'><a id="a-delete" href='#'><span>Usuń</span></a></li>
     </ul>
 </div>

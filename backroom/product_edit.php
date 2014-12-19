@@ -296,6 +296,29 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
 	<?php include ("meta5.html"); ?>
     <link  rel="stylesheet" href="../upload/uploadfile.css" />    
     <script type="text/javascript" src="../upload/jquery.uploadfile.js"></script>
+    <script type="text/javascript" src="../js/backroom-right-menu.js"></script>
+    <script>
+    $(function(){
+    //$( '#backroom-top-menu' ).draggable();
+    var elements2 = function(){
+        $( '#backroom-right-menu' ).each(function(index){
+            $( '#backroom-right-menu' ).draggable({
+                //containment: 'parent', 
+                drag: function(event, ui){
+                    var xPos = ui.position.left;
+                    var yPos = ui.position.top;
+                },
+                stop: function(event, ui) {
+                    localStorage.setItem('backroom-right-menu-left', ui.position.left);
+                    localStorage.setItem('backroom-right-menu-top', ui.position.top);
+                }
+            });
+            $( '#backroom-right-menu' ).css({left : parseInt(localStorage.getItem('backroom-right-menu-left')), top : parseInt(localStorage.getItem('backroom-right-menu-top'))});
+        });
+    };
+    elements2();
+    });
+    </script>
 </head>
 <body>
 	<section id="place-holder">
@@ -308,6 +331,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
                         $( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
                         $( '#a-next' ).click(function(){$( '#i-next' ).click();});
                         $( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
+                        $( '#a-del' ).click(function(){$( '#i-del' ).click();});
                         });
                     </script>
                     <?php include ('backroom-right-menu.php'); ?>
@@ -350,7 +374,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
                         <tr>    
                             <th>Usuń Produkt:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit delete" type="submit" name="delete" value="delete" />
+                                <input id="i-del" class="back-all edit submit delete" type="submit" name="delete" value="delete" />
                             </td>
 						</tr>
 						<tr>
