@@ -31,7 +31,7 @@
   float: right;
 }
 #backroom-top-menu > ul > li > a {
-  padding: 15px 20px;
+/*   padding: 15px 20px;
   border-left: 1px solid #1682ba;
   border-right: 1px solid #1682ba;
   border-top: 1px solid #1682ba;
@@ -48,18 +48,43 @@
   background: -o-linear-gradient(#36aae7, #1fa0e4);
   background: -ms-linear-gradient(#36aae7, #1fa0e4);
   background: linear-gradient(#36aae7, #1fa0e4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15); */
+  padding: 15px 20px;
+  border-left: 1px solid #006ad1;
+  border-right: 1px solid #006ad1;
+  border-top: 1px solid #006ad1;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  background: #1e90ff;
+  background: -webkit-linear-gradient(#1e90ff, #0483ff);
+  background: -moz-linear-gradient(#1e90ff, #0483ff);
+  background: -o-linear-gradient(#1e90ff, #0483ff);
+  background: -ms-linear-gradient(#1e90ff, #0483ff);
+  background: linear-gradient(#1e90ff, #0483ff);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 #backroom-top-menu > ul > li > a:hover,
 #backroom-top-menu > ul > li.active > a,
 #backroom-top-menu > ul > li.open > a {
-  color: #eeeeee;
+/*   color: #eeeeee;
   background: #1fa0e4;
   background: -webkit-linear-gradient(#1fa0e4, #1992d1);
   background: -moz-linear-gradient(#1fa0e4, #1992d1);
   background: -o-linear-gradient(#1fa0e4, #1992d1);
   background: -ms-linear-gradient(#1fa0e4, #1992d1);
-  background: linear-gradient(#1fa0e4, #1992d1);
+  background: linear-gradient(#1fa0e4, #1992d1); */
+  color: #eeeeee;
+  background: #0483ff;
+  background: -webkit-linear-gradient(#0483ff, #0077ea);
+  background: -moz-linear-gradient(#0483ff, #0077ea);
+  background: -o-linear-gradient(#0483ff, #0077ea);
+  background: -ms-linear-gradient(#0483ff, #0077ea);
+  background: linear-gradient(#0483ff, #0077ea);
 }
 #backroom-top-menu > ul > li.open > a {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.15);

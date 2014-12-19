@@ -156,37 +156,39 @@ class ProductDisplay
     public function showSquare($cat)
     {
         ?>
-        <a class="square-link" href="../product/<?php echo $cat['file_name'].'.php'; ?>">
-            <div class="product-square">
-                <div class="pr-sq img">
-                   <img class="mini-image-pr-list" src="<?php echo $this->showMiniImg($cat['id']); ?>" alt="mini image" />
+        <div class="square-div">
+            <a class="square-link" href="../product/<?php echo $cat['file_name'].'.php'; ?>">
+                <div class="product-square">
+                    <div class="pr-sq img">
+                       <img class="mini-image-pr-list" src="<?php echo $this->showMiniImg($cat['id']); ?>" alt="mini image" />
+                    </div>
+                    <div class="pr-sq price">
+                        Cena: <?php echo $cat['product_price']; ?> PLN
+                    </div>
+                    <div class="pr-sq cat-main">
+                        <?php echo $cat['product_category_main']; ?>
+                    </div>
+                    <div class="pr-sq cat-sub">
+                        <?php echo $cat['product_category_sub']; ?>
+                    </div>
+                    <div class="pr-sq name">
+                        <?php echo $cat['product_name']; ?>
+                    </div>
+                    <div class="pr-sq shipping">
+                        <?php echo $this->showShippingPrice($cat['id']); ?>
+                    </div>
                 </div>
-                <div class="pr-sq price">
-                    Cena: <?php echo $cat['product_price']; ?> PLN
-                </div>
-                <div class="pr-sq cat-main">
-                    <?php echo $cat['product_category_main']; ?>
-                </div>
-                <div class="pr-sq cat-sub">
-                    <?php echo $cat['product_category_sub']; ?>
-                </div>
-                <div class="pr-sq name">
-                    <?php echo $cat['product_name']; ?>
-                </div>
-                <?php if (isset($_SESSION['user_id'])) { ?>
-                <div class="pr-sq add">
-                    <form method="POST">
-                        <input class="basket-field text" type="text" name="amount" value="1" />
-                        <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
-                        <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
-                    </form>
-                </div>
-                <?php } ?>
-                <div class="pr-sq shipping">
-                    <?php echo $this->showShippingPrice($cat['id']); ?>
-                </div>
+            </a>
+            <?php if (isset($_SESSION['user_id'])) { ?>
+            <div class="pr-sq add-amount">
+                <form method="POST">
+                    <input class="basket-field text" type="text" name="amount" value="1" />
+                    <input class="basket-field text" type="hidden" name="pr_id" value="<?php echo $cat['id']; ?>" />
+                    <input class="basket-field button" type="submit" name="add_to_basket" value="Dodaj" />
+                </form>
             </div>
-        </a>
+            <?php } ?>
+        </div>
         <?php
     }
     public function showFullSquare($cat)
@@ -448,11 +450,19 @@ class Connect_Basket extends Connect
     // public function __getSumShipping(){
         // return $this->sum_shipping;
     // }
+    // public function __getM(){
+        // return $this->maxis;
+    // }
     public function __getMaxis(){
-        $count = count($this->maxis);
-        $sum = array_sum($this->maxis);
-        $ret = $sum / $count;
-        return (int)$ret;
+        if (! empty($this->maxis)) {
+            $count = count($this->maxis);
+            $sum = array_sum($this->maxis);
+            $ret = $sum / $count;
+            return (int)$ret;
+        } else {
+            return 0;
+        }
+        
         //return $this->maxis;
     }
     public function __getNoPre(){
@@ -474,31 +484,39 @@ class Connect_Basket extends Connect
     public function __getShConPre(){
         $max = $this->__getMaxis();
         //$max = 5;
-        foreach ($this->shConPre as $price => $amount) {
-            $a = 0;
-            while( $amount > 0) {
-                $amount = $amount - $max;
-                $a++;
+        if (! empty($this->shConPre)) {
+            foreach ($this->shConPre as $price => $amount) {
+                $a = 0;
+                while( $amount > 0) {
+                    $amount = $amount - $max;
+                    $a++;
+                }
+                (int)$am = $a;
+                $thiss[] = (float)$price * $am;//cena w sumie with share
             }
-            (int)$am = $a;
-            $thiss[] = (float)$price * $am;//cena w sumie with share
+            return array_sum($thiss);
+        } else {
+            return 0;
         }
-        return array_sum($thiss);
         //return $this->shConPre; //5
     }
     public function __getShConOn(){
         $max = $this->__getMaxis();
         //$max = 5;
-        foreach ($this->shConOn as $price => $amount) {
-            $a = 0;
-            while( $amount > 0) {
-                $amount = $amount - $max;
-                $a++;
+        if (! empty($this->shConOn)) {
+            foreach ($this->shConOn as $price => $amount) {
+                $a = 0;
+                while( $amount > 0) {
+                    $amount = $amount - $max;
+                    $a++;
+                }
+                (int)$am = $a;
+                $thiss[] = (float)$price * $am;//cena w sumie with share
             }
-            (int)$am = $a;
-            $thiss[] = (float)$price * $am;//cena w sumie with share
+            return array_sum($thiss);
+        } else {
+            return 0;
         }
-        return array_sum($thiss);
         //return $this->shConOn; //6
     }
     // public function __getConFixPre(){
@@ -1127,29 +1145,29 @@ $get_setting = $obj_gen->__getRow(1);
 			</nav>
 			<div id="wrapper4">    
                 <script type="text/javascript">
-                    $(function(){
-                        /**
-                        * behawior when product-square basket-field click in home position
-                        **/
-                        // $( '.basket-field' ).click(function(e){//stop follow link when amount click
-                            // $( '.square-link' ).click(function(e){
-                                // e.preventDefault();
-                                // //alert('sdf');
-                                // //console.log('a follow blocked');
-                            // });
-                        // });
-                        $(".square-link").on('click', '.basket-field.text', function(e) {//stop follow link when amount click
-                            e.preventDefault();
-                            //console.log('a follow blocked');
-                        });
-                        // $(".square-link").on('click', '.basket-field.button', function(e) {//stop follow link when add click
+                    // $(function(){
+                        // /**
+                        // * behawior when product-square basket-field click in home position
+                        // **/
+                        // // $( '.basket-field' ).click(function(e){//stop follow link when amount click
+                            // // $( '.square-link' ).click(function(e){
+                                // // e.preventDefault();
+                                // // //alert('sdf');
+                                // // //console.log('a follow blocked');
+                            // // });
+                        // // });
+                        // $(".square-link").on('click', '.basket-field.text', function(e) {//stop follow link when amount click
                             // e.preventDefault();
                             // //console.log('a follow blocked');
                         // });
-                        $(".basket-field.text").mousedown(function () { //set cursor on the end text input !important
-                            this.setSelectionRange(this.value.length, this.value.length);    
-                        });
-                    });
+                        // // $(".square-link").on('click', '.basket-field.button', function(e) {//stop follow link when add click
+                            // // e.preventDefault();
+                            // // //console.log('a follow blocked');
+                        // // });
+                        // $(".basket-field.text").mousedown(function () { //set cursor on the end text input !important
+                            // this.setSelectionRange(this.value.length, this.value.length);    
+                        // });
+                    // });
                 </script>
                 <?php
                 //echo $_SERVER['PHP_SELF'];
@@ -1232,6 +1250,8 @@ $get_setting = $obj_gen->__getRow(1);
                     $noOn = $obj_shipping_get->__getNoOn();
                     $shPre = $obj_shipping_get->__getShPre();
                     $shOn = $obj_shipping_get->__getShOn();
+                    //$mm = $obj_shipping_get->__getM();
+                    //var_dump($mm);
                     $shConPre = $obj_shipping_get->__getShConPre();
                     $shConOn = $obj_shipping_get->__getShConOn();
                     //

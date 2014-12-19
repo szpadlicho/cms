@@ -1,5 +1,7 @@
 /*mini square*/
-.square-link{
+.square-div{
+    display: inline-block;
+    position: relative;
 }
 .product-square{
     display:inline-block;
@@ -37,4 +39,9 @@
     bottom:0.0em;
     font-weight:600;
     padding:0.5em;
+}
+.pr-sq.add-amount{
+    position: absolute;
+    bottom: 2.5em;
+    right: 0em;
 }

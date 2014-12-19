@@ -213,6 +213,24 @@ class ProduktSetCls
         //$res = $res->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
+    public function copyFiles($src, $dst)
+    {
+        $src = '../data/'.$src;
+        $dst = '../data/'.$dst;
+        $dir = opendir($src); 
+        @mkdir($dst); 
+        while(false !== ( $file = readdir($dir)) ) { 
+            if (( $file != '.' ) && ( $file != '..' )) { 
+                if ( is_dir($src . '/' . $file) ) { 
+                    $this->copyFiles($src . '/' . $file, $dst . '/' . $file); 
+                } 
+                else { 
+                    copy($src . '/' . $file, $dst . '/' . $file); 
+                } 
+            } 
+        } 
+        closedir($dir); 
+    }
 }
 $next_id_is = new ProduktSetCls();
 $next_id_is->__setTable('product_tab');
@@ -224,9 +242,18 @@ if (isset($_POST['save'])) {
 	$product->__setTable('product_tab');
 	$success = $product->createREC($next_id);
 	$product->createFile($next_id);
+    
+    if (isset($_POST['copy'])) {
+        $src = $_POST['copy'];
+        $dst = $next_id;
+        $product->copyFiles($src, $dst);
+    }
+    
+    
     header('Location: product_list.php');
     //echo("<script>location.href = 'product_list.php';</script>");
 }
+
 //echo 'next id is: '.$next_id;
 ?>
 <!DOCTYPE HTML>

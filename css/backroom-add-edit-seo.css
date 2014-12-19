@@ -118,6 +118,9 @@ table, th, td {
     width:80%;
     margin: 0 auto;
     text-align:center;
+    /* hide for right menu*/
+    visibility:hidden; 
+    position: absolute;
 }
 .back-all.add.submit.cancel{
     background: DodgerBlue !important;

@@ -302,10 +302,23 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
 		<?php include ('backroom-top-menu.php'); ?>
         <div class="back-all edit placeholder">
             <?php foreach ($product->showOne() as $wyn) { ?>
-                <form enctype="multipart/form-data" method="POST">
+                <form enctype="multipart/form-data" method="POST" name="f1" action="product_edit.php">
+                    <script type="text/javascript">
+                        $(function(){
+                        $( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
+                        $( '#a-next' ).click(function(){$( '#i-next' ).click();});
+                        $( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
+                        });
+                    </script>
+                    <?php include ('backroom-right-menu.php'); ?>
+                    <!--<input type='submit' name="update" value='update' onclick="this.form.target='_blank';return true;">-->
+                    
                     <div class="back-all edit div nav">
-                        <input class="back-all edit submit nav" type="submit" name="prev" value="prev"/>
-                        <input class="back-all edit submit nav"type="submit" name="next" value="next"/>
+                        <input id="i-copy" type="submit" name="save" value="copy" onclick="f1.action='product_add.php'; return true;">
+                        <input type="hidden" name="copy" value="<?php echo $wyn['id'] ?>" />
+                        <br />
+                        <input id="i-prev" class="back-all edit submit nav" type="submit" name="prev" value="prev"/>
+                        <input id="i-next" class="back-all edit submit nav"type="submit" name="next" value="next"/>
                     </div>
                     <table class="back-all edit table">
                         <tr>
