@@ -1,0 +1,84 @@
+.lightbox{
+    position: absolute;
+    top: 0em;
+    left: 0em;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);         
+}
+.lightbox-in{
+    display:table;
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+.lightbox-in-in{
+    display:table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.lightbox-button{
+    position:relative;
+    display: inline-block;
+}
+.now-displayed-image{
+    max-width: 50em;
+    margin: 0 auto;
+}
+.close{
+    position:absolute;
+
+    cursor: default;
+    cursor: pointer;
+    z-index: 100;
+    
+    top: -25px;
+    right: -25px;
+    float: right;
+    display: block;
+    height: 50px;
+    width: 50px;
+    background: url("../images/close.png") no-repeat scroll 0% 0% transparent;
+
+}
+.next{
+    position:absolute;
+    top:50%;
+    right:-0.5em;
+    font-size: 3em;
+    cursor: default;
+    cursor: pointer;
+    z-index: 100;
+    color:pink;
+    float: right;
+    display: block;
+    height: 50px;
+    width: 50px;
+    background: url("../images/next.png") no-repeat scroll 0% 0% transparent;
+    background-size: 50px 50px;
+}
+.prev{
+    position:absolute;
+    top:50%;
+    left:-0.5em;
+    font-size: 3em;
+    cursor: default;
+    cursor: pointer;
+    z-index: 100;
+    color:pink;
+    float: right;
+    display: block;
+    height: 50px;
+    width: 50px;
+    background: url("../images/prev.png") no-repeat scroll 0% 0% transparent;
+    background-size: 50px 50px;
+}
+.image-pr-list{
+    max-width:10em;
+    max-height:10em;
+    display:inline-block;
+    border: 1px solid black;
+    padding: 0.5em;
+}

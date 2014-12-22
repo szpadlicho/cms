@@ -223,9 +223,9 @@ class ProductDisplay
                     if ($img_tab) {
                         foreach ($img_tab as $img) {
                             ?>
-                            <div class="full-img-gallery">
-                                <img class="mini-image-pr-list" src="<?php echo $img; ?>" alt="<?php echo $cat['product_name']; ?>" />
-                            </div>
+                            <!--<div class="full-img-gallery">-->
+                                <img class="image-pr-list" src="<?php echo $img; ?>" alt="<?php echo $cat['product_name']; ?>" />
+                            <!--</div>-->
                             <?php
                         }
                     }
@@ -234,6 +234,7 @@ class ProductDisplay
                 <div class="full-other-button color full-click">Inne</div>
                 <div class="full-other-container color"><?php echo $cat['product_description_small']; ?></div>
             </div>
+            <div class="lightbox"><div class="lightbox-in"><div class="lightbox-in-in"></div></div></div>
         </div>        
         <?php
     }
