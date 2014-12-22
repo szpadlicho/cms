@@ -1301,8 +1301,8 @@ $get_setting = $obj_gen->__getRow(1);
             </script>
 			<h1 id="titi" >WELCOME TO MY GREAT WORLD OF PROGRAMMING</h1>	
 		</div>
-        <div class="lightbox"><div class="lightbox-in"><div class="lightbox-in-in"></div></div></div>
 	</section>
+    <div class="lightbox"><div class="lightbox-in"><div class="lightbox-in-in"></div></div></div>
 	<footer>
 	<!--<div id="count"></div><div id="count2"></div>-->
 	</footer>
