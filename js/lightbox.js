@@ -1,4 +1,12 @@
 $(function(){
+    function disableScrolling(){
+        var x=window.scrollX;
+        var y=window.scrollY;
+        window.onscroll=function(){window.scrollTo(x, y);};
+    }
+    function enableScrolling(){
+        window.onscroll=function(){};
+    }
     var con = '<div class="lightbox-button" ><img class="now-displayed-image" src="';
     var tent = '" /><div class="prev"></div><div class="close"></div><div class="next"></div></div>';
     $( '.image-pr-list' ).click(function(){
@@ -11,17 +19,17 @@ $(function(){
         $( this ).addClass('current');
         $( this ).next('img.image-pr-list').addClass('next-img');
         $( this ).prev('img.image-pr-list').addClass('prev-img');
+        //
+        //$( 'body' ).css( 'overflow','hidden' );
+        disableScrolling();
     });
     $( '.full-mini-img .mini-image-pr-list' ).click(function(){
         var src = $( this ).attr('src');// zwraca sciezke wzglwdna
-        //var src = $( this ).prop('src');// zwraca sciezke bezwzgledna
-        //console.log(src);
         $( '.lightbox' ).show();
         $( '.lightbox-in-in' ).html( con+src+tent );
-        //$( '.image-pr-list' ).removeClass('current').removeClass('next-img').removeClass('prev-img');
-        //$( this ).addClass('current');
-        //$( this ).next('img.image-pr-list').addClass('next-img');
-        //$( this ).prev('img.image-pr-list').addClass('prev-img');
+        //
+        //$( 'body' ).css( 'overflow','hidden' );
+        disableScrolling();
     });
     $( document ).on('click', '.next', function(event){
         $( '.current' ).removeClass('current');
@@ -52,9 +60,13 @@ $(function(){
     });
     $( document ).on('click', '.close', function(){
         $( '.lightbox' ).hide();
+        //
+        //$( 'body' ).css( 'overflow','auto' );
+        enableScrolling();
     });
-    // $( document ).on('click', '.lightbox', function(){
-        // $( '.lightbox' ).hide();
+    // $( '.lightbox-in' ).on('click', '.lightbox-in-in', function(){
+        // //$( '.lightbox' ).hide();
+        // console.log('in');
     // });
     // $( document ).on('click', '.now-displayed-image', function(event){
         // //event.preventDefault();
