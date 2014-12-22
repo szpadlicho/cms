@@ -194,28 +194,131 @@ $work = new asd();
         }
         .close{
             position:absolute;
-            top:1em;
-            right:1em;
+
+            cursor: default;
+            cursor: pointer;
+            z-index: 100;
+            
+            top: -25px;
+            right: -25px;
+            float: right;
+            display: block;
+            height: 50px;
+            width: 50px;
+            background: url("../images/close.png") no-repeat scroll 0% 0% transparent;
+
+        }
+        .next{
+            position:absolute;
+            top:50%;
+            right:-0.5em;
             font-size: 3em;
             cursor: default;
             cursor: pointer;
             z-index: 100;
-            color:white;
-            background-color:white;
+            color:pink;
+            float: right;
+            display: block;
+            height: 50px;
+            width: 50px;
+            background: url("../images/next.png") no-repeat scroll 0% 0% transparent;
+            background-size: 50px 50px;
         }
+        .prev{
+            position:absolute;
+            top:50%;
+            left:-0.5em;
+            font-size: 3em;
+            cursor: default;
+            cursor: pointer;
+            z-index: 100;
+            color:pink;
+            float: right;
+            display: block;
+            height: 50px;
+            width: 50px;
+            background: url("../images/prev.png") no-repeat scroll 0% 0% transparent;
+            background-size: 50px 50px;
+        }
+        .mini-image-pr-list{
+            max-width:10em;
+            max-height:10em;
+            display:inline-block;
+            border: 1px solid black;
+            padding: 0.5em;
+        }
+        /*
+        .current{
+            position:absolute;
+            top: 50%;
+            left: 50%;
+            max-width:20em;
+            max-height:20em;
+        }
+        */
+        /*
+        .next-img{
+            border: 1px solid blue;
+        }
+        .prev-img{
+            border: 1px solid green;
+        }
+        */
     </style>
     <script type="text/javascript">
     $(function(){
+
+        var con = '<div class="lightbox-button" ><img class="now-displayed-image" src="';
+        var tent = '" /><div class="prev"></div><div class="close"></div><div class="next"></div></div>';
         $( '.mini-image-pr-list' ).click(function(){
             var src = $( this ).attr('src');// zwraca sciezke wzglwdna
-            var src = $( this ).prop('src');// zwraca sciezke bezwzgledna
-            console.log(src);
+            //var src = $( this ).prop('src');// zwraca sciezke bezwzgledna
+            //console.log(src);
             $( '.lightbox' ).show();
-            $( '.lightbox-in-in' ).html( '<div class="lightbox-button" ><img class="now-displayed-image" src="'+src+'" /><div class="close">x</div></div>' );
+            $( '.lightbox-in-in' ).html( con+src+tent );
+            $( '.mini-image-pr-list' ).removeClass('current').removeClass('next-img').removeClass('prev-img');
+            $( this ).addClass('current');
+            $( this ).next('img.mini-image-pr-list').addClass('next-img');
+            $( this ).prev('img.mini-image-pr-list').addClass('prev-img');
+        });
+        $( document ).on('click', '.next', function(event){
+            $( '.current' ).removeClass('current');
+            $( '.next-img' ).addClass('current').removeClass('next-img');
+            if ( $( '.current' ).length == 0 ) {
+                $( 'img.mini-image-pr-list' ).first().addClass('current');
+            }
+            $( '.prev-img').removeClass('prev-img');
+            $( '.current' ).next('img.mini-image-pr-list').addClass('next-img');
+            $( '.current' ).prev('img.mini-image-pr-list').addClass('prev-img');
+            //var lkl = $( '.current' ).length;
+            //console.log(lkl);
+            var src = $( '.current' ).attr('src');
+            $( '.lightbox-in-in' ).html( con+src+tent );
+            
+        });
+        $( document ).on('click', '.prev', function(event){
+            $( '.current' ).removeClass('current');
+            $( '.prev-img' ).addClass('current').removeClass('prev-img');
+            if ( $( '.current' ).length == 0 ) {
+                $( 'img.mini-image-pr-list' ).last().addClass('current');
+            }
+                $( '.next-img').removeClass('next-img');
+                $( '.current' ).prev('img.mini-image-pr-list').addClass('prev-img');
+                $( '.current' ).next('img.mini-image-pr-list').addClass('next-img');
+                var src = $( '.current' ).attr('src');
+                $( '.lightbox-in-in' ).html( con+src+tent );
         });
         $( document ).on('click', '.close', function(){
             $( '.lightbox' ).hide();
         });
+        // $( document ).on('click', '.lightbox', function(){
+            // $( '.lightbox' ).hide();
+        // });
+        // $( document ).on('click', '.now-displayed-image', function(event){
+            // //event.preventDefault();
+            // event.isDefaultPrevented();
+            // return false;
+        // });
     });
     </script>
 </head>
@@ -227,9 +330,9 @@ $work = new asd();
         if ($img_tab) {
             foreach ($img_tab as $img) {
                 ?>
-                <div class="full-img-gallery">
+                <!--<div class="full-img-gallery">-->
                     <img class="mini-image-pr-list" src="<?php echo $img; ?>" alt="" />
-                </div>
+                <!--</div>-->
                 <?php
             }
         }
