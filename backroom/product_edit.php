@@ -70,10 +70,18 @@ class ProduktEditCls
 	public function updateREC($what)
     {
 		/*zapis do tablei tylko raz*/
+        isset($_POST['product_name']) ? $product_name = $_POST['product_name'] : $product_name = 'Nowy';
+        isset($_POST['product_price']) ? $product_price = $_POST['product_price'] : $product_price = 0;
+        isset($_POST['amount']) ? $amount = $_POST['amount'] : $amount = 0;
+        //isset($_POST['']) ? $ = $_POST[''] : $ = ;
+        //isset($_POST['']) ? $ = $_POST[''] : $ = ;
+        /*SEO*/
         $_POST['seo_setting']=='title_true' ? $mod=1 : $mod=0 ;
-        isset($_POST['title']) ? $title = $_POST['title'] : $title = null ;
-        isset($_POST['description']) ? $description = substr($_POST['description'], 0, 200) : $description = null ;
-        isset($_POST['keywords']) ? $keywords = $_POST['keywords'] : $keywords = null ;
+        isset($_POST['title']) ? $title = $_POST['title'] : $title = $product_name.' '.$_POST['product_category_main'].' '.$_POST['product_category_sub'] ;// mozna dodac substr i ograniczyc max znaków tu
+        isset($_POST['description']) ? $description = substr($_POST['description'], 0, 200) : $description = substr($_POST['product_description_small'], 0, 200) ;
+        $getKeyWords = explode (' ', $_POST['product_name']);
+        $getKeyWords = implode (',', $getKeyWords);
+        isset($_POST['keywords']) ? $keywords = $_POST['keywords'] : $keywords = $getKeyWords ;
         /*SHIPPING*/
         if (isset($_POST['shipping_mod'])) {
             if ($_POST['shipping_mod'] == 'suppliers_false') {
@@ -107,9 +115,9 @@ class ProduktEditCls
                 UPDATE 
                 `".$this->table."`   
                 SET 
-                `product_name` = '".$_POST['product_name']."', 
-                `product_price` = '".str_replace(",",".",$_POST['product_price'])."', 
-                `amount` = '".(int)$_POST['amount']."',
+                `product_name` = '".trim($product_name)."', 
+                `product_price` = '".str_replace(",",".",$product_price)."', 
+                `amount` = '".(int)$amount."',
                 `product_category_main` = '".$_POST['product_category_main']."',
                 `product_category_sub` = '".$_POST['product_category_sub']."',
                 `product_description_small` = '".$_POST['product_description_small']."',
