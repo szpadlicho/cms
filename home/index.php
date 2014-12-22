@@ -234,7 +234,6 @@ class ProductDisplay
                 <div class="full-other-button color full-click">Inne</div>
                 <div class="full-other-container color"><?php echo $cat['product_description_small']; ?></div>
             </div>
-            <div class="lightbox"><div class="lightbox-in"><div class="lightbox-in-in"></div></div></div>
         </div>        
         <?php
     }
@@ -1302,6 +1301,7 @@ $get_setting = $obj_gen->__getRow(1);
             </script>
 			<h1 id="titi" >WELCOME TO MY GREAT WORLD OF PROGRAMMING</h1>	
 		</div>
+        <div class="lightbox"><div class="lightbox-in"><div class="lightbox-in-in"></div></div></div>
 	</section>
 	<footer>
 	<!--<div id="count"></div><div id="count2"></div>-->
