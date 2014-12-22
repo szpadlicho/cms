@@ -12,6 +12,17 @@ $(function(){
         $( this ).next('img.image-pr-list').addClass('next-img');
         $( this ).prev('img.image-pr-list').addClass('prev-img');
     });
+    $( '.full-mini-img .mini-image-pr-list' ).click(function(){
+        var src = $( this ).attr('src');// zwraca sciezke wzglwdna
+        //var src = $( this ).prop('src');// zwraca sciezke bezwzgledna
+        //console.log(src);
+        $( '.lightbox' ).show();
+        $( '.lightbox-in-in' ).html( con+src+tent );
+        //$( '.image-pr-list' ).removeClass('current').removeClass('next-img').removeClass('prev-img');
+        //$( this ).addClass('current');
+        //$( this ).next('img.image-pr-list').addClass('next-img');
+        //$( this ).prev('img.image-pr-list').addClass('prev-img');
+    });
     $( document ).on('click', '.next', function(event){
         $( '.current' ).removeClass('current');
         $( '.next-img' ).addClass('current').removeClass('next-img');

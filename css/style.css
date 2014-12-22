@@ -60,7 +60,7 @@ h2{
     height: 6.78em;
     position: absolute;
     width: 8.714em;
-	z-index:100;
+	#z-index:10;
     #display:none;
 }
 #wrapper2 {/*szare cz1*/
