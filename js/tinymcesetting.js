@@ -32,7 +32,8 @@ $(function(){
         save_enablewhendirty: true,
         save_onsavecallback: function() {
             console.log("TinyMCE Save");
-            $('form input[name=update]').click();
+            $('form#saveupdate').append('<input type="submit" name="mceSave" value="Zapisz" />');
+            $('form input[name=mceSave]').click();
             //$('form input[name=save]').click();
             //$('#saveupdate').submit();
         }

@@ -245,7 +245,7 @@ $next_id_is->__setTable('product_tab');
 $next_is = $next_id_is->_getLastId();
 $next_id = $next_is['AUTO_INCREMENT'];
 $id = $next_id;//for upload system
-if (isset($_POST['save'])) {
+if (isset($_POST['save']) || isset($_POST['mceSave'])) {
 	$product = new ProduktSetCls();
 	$product->__setTable('product_tab');
 	$success = $product->createREC($next_id);
@@ -293,7 +293,7 @@ if (isset($_POST['save'])) {
 	<section id="place-holder">				
 		<?php include ('backroom-top-menu.php'); ?>
 		<div class="back-all add placeholder">
-            <form enctype="multipart/form-data" action="" method="POST" >
+            <form id="saveupdate" enctype="multipart/form-data" action="" method="POST" >
                 <table class="back-all add table">
                     <tr>
                         <th>ID:</th>
