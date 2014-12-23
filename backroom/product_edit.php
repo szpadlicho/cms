@@ -276,7 +276,7 @@ class ProduktEditCls
 }
 $product = new ProduktEditCls();
 $product->__setTable('product_tab');
-if (isset($_POST['update'])) {
+if (isset($_POST['update']) || isset($_POST['mceSave'])) {
     $product->deleteOldFile();
 	$success = $product->updateREC($_SESSION['id_post']);
     $product->createFile($_SESSION['id_post']);
@@ -330,13 +330,27 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
     elements2();
     });
     </script>
+    <script>
+    $(function(){
+        /**
+        * Save Form alt+s
+        **/
+        $(window).keypress(function(event) 
+        {
+            if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
+            $('form input[name=update]').click();
+            event.preventDefault();
+            return false;
+        });
+    });
+    </script>
 </head>
 <body>
 	<section id="place-holder">
 		<?php include ('backroom-top-menu.php'); ?>
         <div class="back-all edit placeholder">
             <?php foreach ($product->showOne() as $wyn) { ?>
-                <form enctype="multipart/form-data" method="POST" name="f1" action="product_edit.php">
+                <form id="saveupdate" enctype="multipart/form-data" method="POST" name="f1" action="product_edit.php">
                     <script type="text/javascript">
                         $(function(){
                         $( '#a-prev' ).click(function(){$( '#i-prev' ).click();});

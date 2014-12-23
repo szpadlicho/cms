@@ -274,6 +274,20 @@ if (isset($_POST['save'])) {
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../js/tinymce/plugins/improvedcode/plugin.min.js"></script>
     <script type="text/javascript" src="../js/tinymcesetting.js"></script>
+    <script>
+    $(function(){
+        /**
+        * Save Form alt+s
+        **/
+        $(window).keypress(function(event) 
+        {
+            if (!(event.which == 115 && event.ctrlKey) && !(event.which == 19)) return true;
+            $('form input[name=save]').click();
+            event.preventDefault();
+            return false;
+        });
+    });
+    </script>
 </head>
 <body>
 	<section id="place-holder">				

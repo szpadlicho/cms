@@ -20,14 +20,21 @@ $(function(){
             {title: 'Test template 1', content: '<b>Test 1</b>'},
             {title: 'Test template 2', content: '<em>Test 2</em>'}
         ],
-        autosave_ask_before_unload: false,
+        autosave_ask_before_unload: true,
         improvedcode_options : {
-         height: 580
-         ,indentUnit: 4
-         ,tabSize: 4
-         ,lineNumbers: true
-         ,autoIndent: true
-         ,theme: 'monokai'
-         }
+            height: 580
+            ,indentUnit: 4
+            ,tabSize: 4
+            ,lineNumbers: true
+            ,autoIndent: true
+            ,theme: 'monokai'
+        },
+        save_enablewhendirty: true,
+        save_onsavecallback: function() {
+            console.log("TinyMCE Save");
+            $('form input[name=update]').click();
+            //$('form input[name=save]').click();
+            //$('#saveupdate').submit();
+        }
     });
 });
