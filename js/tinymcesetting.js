@@ -11,8 +11,9 @@ $(function(){
             "insertdatetime media nonbreaking save table contextmenu directionality",
             "emoticons template paste textcolor colorpicker textpattern improvedcode"
         ],
-        toolbar1: "newdocument print fullscreen improvedcode code | undo redo | cut copy paste | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | subscript superscript | table | searchreplace",
-        toolbar2: "link unlink anchor image media  | insertdatetime preview | hr removeformat | charmap emoticons | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft | styleselect | formatselect | fontselect | fontsizeselect",
+        toolbar1: "newdocument print fullscreen improvedcode code | undo redo | cut copy paste | styleselect | formatselect | fontselect | fontsizeselect",
+        toolbar2: "bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent blockquote | subscript superscript | table | searchreplace",
+        toolbar3: "link unlink anchor image media  | insertdatetime preview | hr removeformat | charmap emoticons | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft ",
         //menubar: false,
         toolbar_items_size: 'small',
         image_advtab: true,
