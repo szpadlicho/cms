@@ -1,3 +1,7 @@
 strong{
-   font-weight: bold;
+    font-weight: bold;
+}
+
+code {
+    font-family:courier, monospace;
 }
