@@ -271,6 +271,9 @@ if (isset($_POST['save'])) {
 	<?php include ("meta5.html"); ?>
     <link href="../upload/uploadfile.css" rel="stylesheet">    
     <script src="../upload/jquery.uploadfile.js"></script>
+    <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="../js/tinymce/plugins/improvedcode/plugin.min.js"></script>
+    <script type="text/javascript" src="../js/tinymcesetting.js"></script>
 </head>
 <body>
 	<section id="place-holder">				
@@ -353,7 +356,13 @@ if (isset($_POST['save'])) {
                     <tr>
                         <th>Opis:</th>
                         <td colspan="3">
-                            <textarea id="" class="back-all add textarea" name="product_description_large" ></textarea>
+                            <textarea id="pr-des-large" class="back-all add textarea" name="product_description_large" ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Zapisz:</th>
+                        <td  colspan="3">
+                            <input id="" class="back-all add submit save" type="submit" name="update" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>

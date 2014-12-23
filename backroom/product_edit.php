@@ -305,6 +305,9 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
     <link  rel="stylesheet" href="../upload/uploadfile.css" />    
     <script type="text/javascript" src="../upload/jquery.uploadfile.js"></script>
     <script type="text/javascript" src="../js/backroom-right-menu.js"></script>
+    <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript" src="../js/tinymce/plugins/improvedcode/plugin.min.js"></script>
+    <script type="text/javascript" src="../js/tinymcesetting.js"></script>
     <script>
     $(function(){
     //$( '#backroom-top-menu' ).draggable();
@@ -444,7 +447,13 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
 						<tr>
 							<th>Opis:</th>
 							<td  colspan="3">
-                                <textarea id="" class="back-all edit textarea" name="product_description_large" ><?php echo $wyn['product_description_large'] ?></textarea>
+                                <textarea id="pr-des-large" class="back-all edit textarea" name="product_description_large" ><?php echo $wyn['product_description_large'] ?></textarea>
+                            </td>
+						</tr>
+                        <tr>
+							<th>Zapisz:</th>
+							<td colspan="3">
+                                <input id="" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
                             </td>
 						</tr>
 						<tr>

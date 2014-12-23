@@ -218,6 +218,9 @@ input[type=radio]{
 .back-all.all.table textarea{
     height:10em;
 }
+#pr-des-large{
+    height:25em;
+}
 .back-all.add.table .back-all.add.div,
 .back-all.edit.table .back-all.edit.div{
     min-height:5.5em;
