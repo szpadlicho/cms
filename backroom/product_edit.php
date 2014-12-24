@@ -302,9 +302,10 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
 <head>
 	<title>Edycja</title>
 	<?php include ("meta5.html"); ?>
-    <link  rel="stylesheet" href="../upload/uploadfile.css" />    
+    <link  rel="stylesheet" href="../upload/uploadfile.css" />
+    <link title="deafult" rel="stylesheet" type="text/css" href="../css/backroom-edit-menu.css"/>
     <script type="text/javascript" src="../upload/jquery.uploadfile.js"></script>
-    <script type="text/javascript" src="../js/backroom-right-menu.js"></script>
+    <script type="text/javascript" src="../js/backroom-edit-menu.js"></script>
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../js/tinymce/plugins/improvedcode/plugin.min.js"></script>
     <script type="text/javascript" src="../js/tinymcesetting.js"></script>
@@ -312,19 +313,19 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
     $(function(){
     //$( '#backroom-top-menu' ).draggable();
     var elements2 = function(){
-        $( '#backroom-right-menu' ).each(function(index){
-            $( '#backroom-right-menu' ).draggable({
+        $( '#backroom-edit-menu' ).each(function(index){
+            $( '#backroom-edit-menu' ).draggable({
                 //containment: 'parent', 
                 drag: function(event, ui){
                     var xPos = ui.position.left;
                     var yPos = ui.position.top;
                 },
                 stop: function(event, ui) {
-                    localStorage.setItem('backroom-right-menu-left', ui.position.left);
-                    localStorage.setItem('backroom-right-menu-top', ui.position.top);
+                    localStorage.setItem('backroom-edit-menu-left', ui.position.left);
+                    localStorage.setItem('backroom-edit-menu-top', ui.position.top);
                 }
             });
-            $( '#backroom-right-menu' ).css({left : parseInt(localStorage.getItem('backroom-right-menu-left')), top : parseInt(localStorage.getItem('backroom-right-menu-top'))});
+            $( '#backroom-edit-menu' ).css({left : parseInt(localStorage.getItem('backroom-edit-menu-left')), top : parseInt(localStorage.getItem('backroom-edit-menu-top'))});
         });
     };
     elements2();
@@ -353,13 +354,14 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
                 <form id="saveupdate" enctype="multipart/form-data" method="POST" name="f1" action="product_edit.php">
                     <script type="text/javascript">
                         $(function(){
-                        $( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
-                        $( '#a-next' ).click(function(){$( '#i-next' ).click();});
-                        $( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
-                        $( '#a-del' ).click(function(){$( '#i-del' ).click();});
+                            $( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
+                            $( '#a-next' ).click(function(){$( '#i-next' ).click();});
+                            $( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
+                            $( '#a-del' ).click(function(){$( '#i-del' ).click();});
+                            $( '#a-save' ).click(function(){$( '#i-save' ).click();});
                         });
                     </script>
-                    <?php include ('backroom-right-menu.php'); ?>
+                    <?php include ('backroom-edit-menu.php'); ?>
                     <!--<input type='submit' name="update" value='update' onclick="this.form.target='_blank';return true;">-->
                     
                     <div class="back-all edit div nav">
@@ -393,7 +395,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
 						<tr>
 							<th>Zapisz:</th>
 							<td colspan="3">
-                                <input id="" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
+                                <input id="i-save" class="back-all edit submit save" type="submit" name="update" value="Zapisz" />
                             </td>
                         </tr>                        
                         <tr>    

@@ -1,8 +1,8 @@
 (function($){
 $(document).ready(function(){
 
-$('#backroom-right-menu li.active').addClass('open').children('ul').show();	
-$('#backroom-right-menu li.has-sub>a').on('click', function(){
+$('#backroom-edit-menu li.active').addClass('open').children('ul').show();	
+$('#backroom-edit-menu li.has-sub>a').on('click', function(){
 		$(this).removeAttr('href');
 		var element = $(this).parent('li');
 		if (element.hasClass('open')) {
@@ -20,11 +20,11 @@ $('#backroom-right-menu li.has-sub>a').on('click', function(){
 		}
 	});
 
-	$('#backroom-right-menu>ul>li.has-sub>a').append('<span class="holder"></span>');
+	$('#backroom-edit-menu>ul>li.has-sub>a').append('<span class="holder"></span>');
 
 	(function getColor() {
 		var r, g, b;
-		var textColor = $('#backroom-right-menu').css('color');
+		var textColor = $('#backroom-edit-menu').css('color');
 		textColor = textColor.slice(4);
 		r = textColor.slice(0, textColor.indexOf(','));
 		textColor = textColor.slice(textColor.indexOf(' ') + 1);
@@ -33,13 +33,13 @@ $('#backroom-right-menu li.has-sub>a').on('click', function(){
 		b = textColor.slice(0, textColor.indexOf(')'));
 		var l = rgbToHsl(r, g, b);
 		if (l > 0.7) {
-			$('#backroom-right-menu>ul>li>a').css('text-shadow', '0 1px 1px rgba(0, 0, 0, .35)');
-			$('#backroom-right-menu>ul>li>a>span').css('border-color', 'rgba(0, 0, 0, .35)');
+			$('#backroom-edit-menu>ul>li>a').css('text-shadow', '0 1px 1px rgba(0, 0, 0, .35)');
+			$('#backroom-edit-menu>ul>li>a>span').css('border-color', 'rgba(0, 0, 0, .35)');
 		}
 		else
 		{
-			$('#backroom-right-menu>ul>li>a').css('text-shadow', '0 1px 0 rgba(255, 255, 255, .35)');
-			$('#backroom-right-menu>ul>li>a>span').css('border-color', 'rgba(255, 255, 255, .35)');
+			$('#backroom-edit-menu>ul>li>a').css('text-shadow', '0 1px 0 rgba(255, 255, 255, .35)');
+			$('#backroom-edit-menu>ul>li>a>span').css('border-color', 'rgba(255, 255, 255, .35)');
 		}
 	})();
 

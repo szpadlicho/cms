@@ -95,6 +95,13 @@ table, th, td {
     width:99% !important;
     background: YellowGreen !important;    
 }
+.back-all.submit{
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
 .back-all.shipping.submit.update{background: DodgerBlue !important;}
 .back-all.shipping.submit.delete{background: Crimson !important;}
 .back-all.shipping.submit.add{background: YellowGreen !important;}
@@ -123,7 +130,7 @@ table, th, td {
     position: absolute;
 }
 .back-all.add.submit.cancel{
-    background: DodgerBlue !important;
+    background: Crimson !important;
 }
 .back-all.add.submit.save{
     background: YellowGreen !important; 

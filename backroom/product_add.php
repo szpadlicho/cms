@@ -269,11 +269,35 @@ if (isset($_POST['save']) || isset($_POST['mceSave'])) {
 <head>
 	<title>Nowy</title>
 	<?php include ("meta5.html"); ?>
-    <link href="../upload/uploadfile.css" rel="stylesheet">    
+    <link href="../upload/uploadfile.css" rel="stylesheet">
+    <link title="deafult" rel="stylesheet" type="text/css" href="../css/backroom-add-menu.css"/>
     <script src="../upload/jquery.uploadfile.js"></script>
+    <script type="text/javascript" src="../js/backroom-add-menu.js"></script>
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../js/tinymce/plugins/improvedcode/plugin.min.js"></script>
     <script type="text/javascript" src="../js/tinymcesetting.js"></script>
+    <script>
+    $(function(){
+    //$( '#backroom-top-menu' ).draggable();
+    var elements2 = function(){
+        $( '#backroom-add-menu' ).each(function(index){
+            $( '#backroom-add-menu' ).draggable({
+                //containment: 'parent', 
+                drag: function(event, ui){
+                    var xPos = ui.position.left;
+                    var yPos = ui.position.top;
+                },
+                stop: function(event, ui) {
+                    localStorage.setItem('backroom-add-menu-left', ui.position.left);
+                    localStorage.setItem('backroom-add-menu-top', ui.position.top);
+                }
+            });
+            $( '#backroom-add-menu' ).css({left : parseInt(localStorage.getItem('backroom-add-menu-left')), top : parseInt(localStorage.getItem('backroom-add-menu-top'))});
+        });
+    };
+    elements2();
+    });
+    </script>
     <script>
     $(function(){
         /**
@@ -294,6 +318,16 @@ if (isset($_POST['save']) || isset($_POST['mceSave'])) {
 		<?php include ('backroom-top-menu.php'); ?>
 		<div class="back-all add placeholder">
             <form id="saveupdate" enctype="multipart/form-data" action="" method="POST" >
+                <script type="text/javascript">
+                    $(function(){
+                        //$( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
+                        //$( '#a-next' ).click(function(){$( '#i-next' ).click();});
+                        //$( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
+                        //$( '#a-del' ).click(function(){$( '#i-del' ).click();});
+                        //$( '#a-save' ).click(function(){$( '#i-save' ).click();});
+                    });
+                </script>
+                <?php include ('backroom-add-menu.php'); ?>
                 <table class="back-all add table">
                     <tr>
                         <th>ID:</th>

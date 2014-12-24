@@ -37,7 +37,8 @@
       </ul>
    </li>
    <li><a href='product_list.php'><span>Product list</span></a></li>
-   <li><a href='db_update_index.php'><span>Update index</span></a></li>
+   <li class='last'><a href='db_update_index.php'><span>Update index</span></a></li>
+   <!--
    <li class='has-sub'><a href='#'><span>Menu</span></a>
       <ul>
          <li><a href='#'><span>one</span></a></li>
@@ -59,6 +60,7 @@
          </li>
       </ul>
    </li>
+   -->
 </ul>
 </div>
 <!--

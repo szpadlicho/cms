@@ -1,7 +1,7 @@
-#backroom-right-menu,
-#backroom-right-menu ul,
-#backroom-right-menu ul li,
-#backroom-right-menu ul li a {
+#backroom-edit-menu,
+#backroom-edit-menu ul,
+#backroom-edit-menu ul li,
+#backroom-edit-menu ul li a {
   margin: 0;
   padding: 0;
   border: 0;
@@ -13,7 +13,7 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-#backroom-right-menu {
+#backroom-edit-menu {
   position:fixed;
   top:0.5em;
   right: 0.5em;
@@ -21,16 +21,16 @@
   font-family: Helvetica, Arial, sans-serif;
   color: #ffffff;
 }
-#backroom-right-menu ul ul {
+#backroom-edit-menu ul ul {
   display: none;
 }
-#backroom-right-menu > ul > li.active > ul {
+#backroom-edit-menu > ul > li.active > ul {
   display: block;
 }
 .align-right {
   float: right;
 }
-#backroom-right-menu > ul > li > a {
+#backroom-edit-menu > ul > li > a {
   padding: 15px 20px;
   border-left: 1px solid #006ad1;
   border-right: 1px solid #006ad1;
@@ -50,9 +50,9 @@
   background: linear-gradient(#1e90ff, #0483ff);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
-#backroom-right-menu > ul > li > a:hover,
-#backroom-right-menu > ul > li.active > a,
-#backroom-right-menu > ul > li.open > a {
+#backroom-edit-menu > ul > li > a:hover,
+#backroom-edit-menu > ul > li.active > a,
+#backroom-edit-menu > ul > li.open > a {
   color: #eeeeee;
   background: #0483ff;
   background: -webkit-linear-gradient(#0483ff, #0077ea);
@@ -61,14 +61,13 @@
   background: -ms-linear-gradient(#0483ff, #0077ea);
   background: linear-gradient(#0483ff, #0077ea);
 }
-#backroom-right-menu > ul > li.open > a {
+#backroom-edit-menu > ul > li.open > a {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.15);
   border-bottom: 1px solid #006ad1;
 }
-#backroom-right-menu > ul > li:last-child > a,
-#backroom-right-menu > ul > li.last > a {
-  #border-bottom: 1px solid #006ad1;
-  border-bottom: 1px solid #960e29;
+#backroom-edit-menu > ul > li:last-child > a,
+#backroom-edit-menu > ul > li.last > a {
+  border-bottom: 1px solid #006ad1;
 }
 .holder {
   width: 0;
@@ -97,9 +96,9 @@
   border-top: 2px solid #ffffff;
   border-left: 2px solid #ffffff;
 }
-#backroom-right-menu > ul > li > a:hover > span::after,
-#backroom-right-menu > ul > li.active > a > span::after,
-#backroom-right-menu > ul > li.open > a > span::after {
+#backroom-edit-menu > ul > li > a:hover > span::after,
+#backroom-edit-menu > ul > li.active > a > span::after,
+#backroom-edit-menu > ul > li.open > a > span::after {
   border-color: #eeeeee;
 }
 .holder::before {
@@ -109,7 +108,7 @@
   border-top-color: inherit;
   border-left-color: inherit;
 }
-#backroom-right-menu ul ul li a {
+#backroom-edit-menu ul ul li a {
   cursor: pointer;
   border-bottom: 1px solid #32373e;
   border-left: 1px solid #32373e;
@@ -122,33 +121,33 @@
   background: #49505a;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
-#backroom-right-menu ul ul li:hover > a,
-#backroom-right-menu ul ul li.open > a,
-#backroom-right-menu ul ul li.active > a {
+#backroom-edit-menu ul ul li:hover > a,
+#backroom-edit-menu ul ul li.open > a,
+#backroom-edit-menu ul ul li.active > a {
   background: #424852;
   color: #ffffff;
 }
-#backroom-right-menu ul ul li:first-child > a {
+#backroom-edit-menu ul ul li:first-child > a {
   box-shadow: none;
 }
-#backroom-right-menu ul ul ul li:first-child > a {
+#backroom-edit-menu ul ul ul li:first-child > a {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
-#backroom-right-menu ul ul ul li a {
+#backroom-edit-menu ul ul ul li a {
   padding-left: 30px;
 }
-#backroom-right-menu > ul > li > ul > li:last-child > a,
-#backroom-right-menu > ul > li > ul > li.last > a {
+#backroom-edit-menu > ul > li > ul > li:last-child > a,
+#backroom-edit-menu > ul > li > ul > li.last > a {
   border-bottom: 0;
 }
-#backroom-right-menu > ul > li > ul > li.open:last-child > a,
-#backroom-right-menu > ul > li > ul > li.last.open > a {
+#backroom-edit-menu > ul > li > ul > li.open:last-child > a,
+#backroom-edit-menu > ul > li > ul > li.last.open > a {
   border-bottom: 1px solid #32373e;
 }
-#backroom-right-menu > ul > li > ul > li.open:last-child > ul > li:last-child > a {
+#backroom-edit-menu > ul > li > ul > li.open:last-child > ul > li:last-child > a {
   border-bottom: 0;
 }
-#backroom-right-menu ul ul li.has-sub > a::after {
+#backroom-edit-menu ul ul li.has-sub > a::after {
   display: block;
   position: absolute;
   content: "";
@@ -165,13 +164,17 @@
   -o-transform: rotate(-135deg);
   transform: rotate(-135deg);
 }
-#backroom-right-menu ul ul li.active > a::after,
-#backroom-right-menu ul ul li.open > a::after,
-#backroom-right-menu ul ul li > a:hover::after {
+#backroom-edit-menu ul ul li.active > a::after,
+#backroom-edit-menu ul ul li.open > a::after,
+#backroom-edit-menu ul ul li > a:hover::after {
   border-color: #ffffff;
 }
-
-#backroom-right-menu  > ul > li:last-child > a {
+/*Czerwone ostatnie*/
+#backroom-edit-menu > ul > li:last-child > a,
+#backroom-edit-menu > ul > li.last > a {
+  border-bottom: 1px solid #960e29;
+}
+#backroom-edit-menu  > ul > li:last-child > a {
   padding: 15px 20px;
   border-left: 1px solid #960e29;
   border-right: 1px solid #960e29;
@@ -191,9 +194,9 @@
   background: linear-gradient(#dc143c, #c51236);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
-#backroom-right-menu  > ul > li:last-child > a:hover,
-#backroom-right-menu  > ul > li:last-child.active > a,
-#backroom-right-menu  > ul > li:last-child.open > a {
+#backroom-edit-menu  > ul > li:last-child > a:hover,
+#backroom-edit-menu  > ul > li:last-child.active > a,
+#backroom-edit-menu  > ul > li:last-child.open > a {
   color: #eeeeee;
   background: #c51236;
   background: -webkit-linear-gradient(#c51236, #ad102f);
@@ -201,4 +204,34 @@
   background: -o-linear-gradient(#c51236, #ad102f);
   background: -ms-linear-gradient(#c51236, #ad102f);
   background: linear-gradient(#c51236, #ad102f);
+}
+/*zielone przedostatnie*/
+#backroom-edit-menu > ul > li:nth-last-child(2) > a{
+  padding: 15px 20px;
+  border-left: 1px solid #6c9023;
+  border-right: 1px solid #6c9023;
+  border-top: 1px solid #6c9023;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #ffffff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  background: #9acd32;
+  background: -webkit-linear-gradient(#9acd32, #8bb92d);
+  background: -moz-linear-gradient(#9acd32, #8bb92d);
+  background: -o-linear-gradient(#9acd32, #8bb92d);
+  background: -ms-linear-gradient(#9acd32, #8bb92d);
+  background: linear-gradient(#9acd32, #8bb92d);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+#backroom-edit-menu > ul > li:nth-last-child(2) > a:hover{
+  color: #eeeeee;
+  background: #8bb92d;
+  background: -webkit-linear-gradient(#8bb92d, #7ba428);
+  background: -moz-linear-gradient(#8bb92d, #7ba428);
+  background: -o-linear-gradient(#8bb92d, #7ba428);
+  background: -ms-linear-gradient(#8bb92d, #7ba428);
+  background: linear-gradient(#8bb92d, #7ba428);
 }
