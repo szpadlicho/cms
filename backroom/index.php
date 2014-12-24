@@ -76,6 +76,15 @@ if (isset($_POST['update_amount'])) {
                 // var_dump($llol);
             // }
         ?>
+        <script type="text/javascript">
+            $(function(){
+                $(document).on('click', '#CLS', function() {
+                    localStorage.clear();
+                    console.log('success');
+                });
+            });
+        </script>
+        <a id="CLS" href="#">Clear LS</a>
         <div class="back-all index placeholder">
                 <!--<form enctype="multipart/form-data" method="POST">-->
                     <table class="back-all index table">

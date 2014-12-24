@@ -1,8 +1,3 @@
-<script type="text/javascript">
-    jQuery(document).ready(function(){
-        jQuery('#backroom-top-menu').appendTo("body"); // skipping position relative of place holder
-    });
-</script>
 <div id='backroom-top-menu'>
 <ul>
    <li><a href='../home/index.php'><span>Strona</span></a></li>

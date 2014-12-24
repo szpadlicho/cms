@@ -1,6 +1,6 @@
 <div id='backroom-add-menu'>
     <ul>
-       <li class=''><a href='#'><span>Dodaj</span></a></li>
-       <li class='last'><a href='#'><span>Anuluj</span></a></li>
+       <li class=''><a id="a-save" href='#'><span>Dodaj</span></a></li>
+       <li class='last'><a id="a-cancel" href='#'><span>Anuluj</span></a></li>
     </ul>
 </div>

@@ -316,18 +316,20 @@ if (isset($_POST['save']) || isset($_POST['mceSave'])) {
 <body>
 	<section id="place-holder">				
 		<?php include ('backroom-top-menu.php'); ?>
+        <script type="text/javascript">
+            $(function(){
+                //$( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
+                //$( '#a-next' ).click(function(){$( '#i-next' ).click();});
+                //$( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
+                //$( '#a-del' ).click(function(){$( '#i-del' ).click();});
+                $( '#a-save' ).click(function(){$( '#i-save' ).click();});
+                $( '#a-cancel' ).click(function(){$( '#i-cancel' ).click();});
+            });
+        </script>
+        <?php include ('backroom-add-menu.php'); ?>
 		<div class="back-all add placeholder">
             <form id="saveupdate" enctype="multipart/form-data" action="" method="POST" >
-                <script type="text/javascript">
-                    $(function(){
-                        //$( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
-                        //$( '#a-next' ).click(function(){$( '#i-next' ).click();});
-                        //$( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
-                        //$( '#a-del' ).click(function(){$( '#i-del' ).click();});
-                        //$( '#a-save' ).click(function(){$( '#i-save' ).click();});
-                    });
-                </script>
-                <?php include ('backroom-add-menu.php'); ?>
+                
                 <table class="back-all add table">
                     <tr>
                         <th>ID:</th>
@@ -350,7 +352,7 @@ if (isset($_POST['save']) || isset($_POST['mceSave'])) {
                     <tr>
                         <th>Zapisz:</th>
                         <td colspan="3">
-                            <input id="" class="back-all add submit save" type="submit" name="save" value="Zapisz" />
+                            <input id="i-save" class="back-all add submit save" type="submit" name="save" value="Zapisz" />
                         </td>
                     </tr>
                     <tr>
@@ -659,7 +661,7 @@ if (isset($_POST['save']) || isset($_POST['mceSave'])) {
                     <tr>    
                         <th>Anuluj:</th>
                         <td colspan="3">
-                            <input id="" class="back-all add submit cancel" type="submit" name="cancel" value="Anuluj" />
+                            <input id="i-cancel" class="back-all add submit cancel" type="submit" name="cancel" value="Anuluj" />
                         </td>
                     </tr>
                 </table>

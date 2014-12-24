@@ -315,7 +315,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
     var elements2 = function(){
         $( '#backroom-edit-menu' ).each(function(index){
             $( '#backroom-edit-menu' ).draggable({
-                //containment: 'parent', 
+                containment: 'parent', 
                 drag: function(event, ui){
                     var xPos = ui.position.left;
                     var yPos = ui.position.top;
@@ -349,21 +349,20 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
 <body>
 	<section id="place-holder">
 		<?php include ('backroom-top-menu.php'); ?>
+        <script type="text/javascript">
+            $(function(){
+                $( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
+                $( '#a-next' ).click(function(){$( '#i-next' ).click();});
+                $( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
+                $( '#a-del' ).click(function(){$( '#i-del' ).click();});
+                $( '#a-save' ).click(function(){$( '#i-save' ).click();});
+            });
+        </script>
+        <?php include ('backroom-edit-menu.php'); ?>
         <div class="back-all edit placeholder">
             <?php foreach ($product->showOne() as $wyn) { ?>
                 <form id="saveupdate" enctype="multipart/form-data" method="POST" name="f1" action="product_edit.php">
-                    <script type="text/javascript">
-                        $(function(){
-                            $( '#a-prev' ).click(function(){$( '#i-prev' ).click();});
-                            $( '#a-next' ).click(function(){$( '#i-next' ).click();});
-                            $( '#a-copy' ).click(function(){$( '#i-copy' ).click();});
-                            $( '#a-del' ).click(function(){$( '#i-del' ).click();});
-                            $( '#a-save' ).click(function(){$( '#i-save' ).click();});
-                        });
-                    </script>
-                    <?php include ('backroom-edit-menu.php'); ?>
                     <!--<input type='submit' name="update" value='update' onclick="this.form.target='_blank';return true;">-->
-                    
                     <div class="back-all edit div nav">
                         <input id="i-copy" type="submit" name="save" value="copy" onclick="f1.action='product_add.php'; return true;">
                         <input type="hidden" name="copy" value="<?php echo $wyn['id'] ?>" />
