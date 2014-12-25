@@ -272,17 +272,17 @@ if (isset($_POST['save']) || isset($_POST['mceSave'])) {
     <link href="../upload/uploadfile.css" rel="stylesheet">
     <link title="deafult" rel="stylesheet" type="text/css" href="../css/backroom-add-menu.css"/>
     <script src="../upload/jquery.uploadfile.js"></script>
-    <script type="text/javascript" src="../js/backroom-add-menu.js"></script>
+    <!--<script type="text/javascript" src="../js/backroom-add-menu.js"></script>-->
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../js/tinymce/plugins/improvedcode/plugin.min.js"></script>
     <script type="text/javascript" src="../js/tinymcesetting.js"></script>
     <script>
     $(function(){
     //$( '#backroom-top-menu' ).draggable();
-    var elements2 = function(){
+    var elements3 = function(){
         $( '#backroom-add-menu' ).each(function(index){
             $( '#backroom-add-menu' ).draggable({
-                //containment: 'parent', 
+                containment: 'parent', 
                 drag: function(event, ui){
                     var xPos = ui.position.left;
                     var yPos = ui.position.top;
@@ -295,7 +295,7 @@ if (isset($_POST['save']) || isset($_POST['mceSave'])) {
             $( '#backroom-add-menu' ).css({left : parseInt(localStorage.getItem('backroom-add-menu-left')), top : parseInt(localStorage.getItem('backroom-add-menu-top'))});
         });
     };
-    elements2();
+    elements3();
     });
     </script>
     <script>

@@ -194,7 +194,14 @@
 #backroom-top-menu ul ul li > a:hover::after {
   border-color: #ffffff;
 }
-
+.handle-drag{
+    width:1em;
+    height:1em;
+    background-image: url('../images/move2.png');
+    #background-attachment: cover;
+    background-size: 100%;
+    cursor: grab;
+}
 
 /*
 #backroom-top-menu{

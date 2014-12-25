@@ -305,7 +305,7 @@ isset($_POST['next']) ? $_SESSION['id_post'] = $product->nextId() : '' ;
     <link  rel="stylesheet" href="../upload/uploadfile.css" />
     <link title="deafult" rel="stylesheet" type="text/css" href="../css/backroom-edit-menu.css"/>
     <script type="text/javascript" src="../upload/jquery.uploadfile.js"></script>
-    <script type="text/javascript" src="../js/backroom-edit-menu.js"></script>
+    <!--<script type="text/javascript" src="../js/backroom-edit-menu.js"></script>-->
     <script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
     <script type="text/javascript" src="../js/tinymce/plugins/improvedcode/plugin.min.js"></script>
     <script type="text/javascript" src="../js/tinymcesetting.js"></script>
