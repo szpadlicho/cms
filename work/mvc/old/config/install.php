@@ -1,5 +1,4 @@
 <?php
-//header('Content-Type: text/html; charset=utf-8');
 class install
 {
     protected $pdo;
@@ -14,7 +13,7 @@ class install
 
             unset($this->pdo);
 
-            $this->pdo=new PDO('mysql:host='.$host.';dbname='.$dbase."; charset=".$charset, $user, $pass);
+            $this->pdo=new PDO('mysql:host='.$host.';dbname='.$dbase, $user, $pass);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(DBException $e) {

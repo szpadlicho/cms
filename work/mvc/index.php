@@ -1,15 +1,13 @@
 <?php
- 
-if($_GET['task']=='categories') {
+$_GET['controller'] = null;
+if($_GET['controller']=='categories') {
     include 'controller/categories.php';
     $ob = new CategoriesController();
     $ob->$_GET['action']();
-} else if($_GET['task']=='articles') {
+} else if($_GET['controller']=='articles') {
     include 'controller/articles.php';
     $ob = new ArticlesController();
     $ob->$_GET['action']();
 } else {
-    include 'controller/articles.php';
-    $ob = new ArticlesController();
-    $ob->index();
+    include 'controller/controller.php';
 }
