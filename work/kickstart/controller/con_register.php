@@ -33,13 +33,7 @@ if (isset($_POST['register'])) {
     } elseif($_GET['action'] == 'register') {
         include_once 'view/vie_register.php';
         $view = new View_Register_Connect();
-        $view = new View_Register_Connect();
-        $ret = $view->registerFacebook();
-        if (is_array($ret)) {
-            var_dump($ret);
-        } else {
-            echo $ret;
-        }
+        $view->registerForm();
     } elseif($_GET['action'] == 'facebook') {
         // include_once 'model/mod_register.php';
         // $activation = new Model_Register_Connect();
