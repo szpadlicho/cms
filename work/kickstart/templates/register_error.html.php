@@ -34,6 +34,6 @@ switch ($data[1]) {
 
 <?php include 'register_form_correct.html.php'; ?>
 
-<?php var_dump($data); ?>
+<?php //var_dump($data); ?>
 
 <?php include_once 'footer.html.php'; ?>

@@ -28,7 +28,7 @@ FacebookSession::setDefaultApplication('336607323190430', '5c5992964eab69ea089f1
 
 // login helper with redirect_uri
 
-$helper = new FacebookRedirectLoginHelper('http://localhost/htdocs/cms/work/kickstart/index.php?con=register&action=facebook&request=add' );// do edit
+$helper = new FacebookRedirectLoginHelper('http://localhost/htdocs/cms/work/kickstart/index.php?con=register&action=facebook' );// do edit
 
 try {
   $session = $helper->getSessionFromRedirect();
@@ -46,7 +46,43 @@ if ( isset( $session ) ) {
   $response = $request->execute();
   // get response
   $graphObject = $response->getGraphObject()->asArray();
-  var_dump($graphObject);
+  //var_dump($graphObject);
+  $graphObject['verified'] == true ? $active = 1 : $active = 0;
+  include_once 'mod_register.php';
+  $register = new Model_Register_Connect();
+    $arr_val = array(
+        'first_name'    => $graphObject['first_name'],
+        'last_name'     => $graphObject['last_name'],
+        'email'         => $graphObject['email'],
+        /*
+        'password'      =>'VARCHAR(50)',
+        'phone'         =>'VARCHAR(50)',
+        'country'       =>'VARCHAR(50)',
+        'post_code'     =>'VARCHAR(50)',
+        'town'          =>'VARCHAR(50)',    
+        'street'        =>'VARCHAR(50)',
+        */
+        'active'        => $active,
+        /*
+        'pref'          =>'VARCHAR(50)',
+        'create_data'   =>'DATETIME NOT NULL',
+        'update_data'   =>'DATETIME NOT NULL',
+        */
+        'facebook_id'   => $graphObject['id'],
+        'facebook_link' => $graphObject['link']
+    );
+  $arr_res = $register->addUserFromFacebook('users', $arr_val);
+  if ($arr_res[0] === true) {
+        include_once 'view/vie_register.php';
+        $view = new View_Register_Connect();
+        $view->successShow($arr_res);
+    } else {
+        include_once 'view/vie_register.php';
+        $view = new View_Register_Connect();
+        $view->errorShow($arr_res);
+    }
+  //header ('Location: index.php');
+  
   //return $graphObject;
   // print data
   //echo '<pre>' . print_r( $graphObject, 1 ) . '</pre>';

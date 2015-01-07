@@ -33,11 +33,29 @@ if (isset($_POST['register'])) {
     } elseif($_GET['action'] == 'register') {
         include_once 'view/vie_register.php';
         $view = new View_Register_Connect();
-        $view->registerForm();
-    } elseif($_GET['action'] == 'facebook') {
-        include_once 'view/vie_register.php';
         $view = new View_Register_Connect();
-        $view->registerFacebook();
+        $ret = $view->registerFacebook();
+        if (is_array($ret)) {
+            var_dump($ret);
+        } else {
+            echo $ret;
+        }
+    } elseif($_GET['action'] == 'facebook') {
+        // include_once 'model/mod_register.php';
+        // $activation = new Model_Register_Connect();
+        // $res = $activation->facebookSetting();
+        // include_once 'view/vie_register.php';
+        // $view = new View_Register_Connect();
+        // $view->registerFacebook();
+        // if (isset($_GET['reguest'])) {
+            // if ($_GET['reguest'] == 'add') {
+                // include_once 'model/mod_register.php';
+                // $activation = new Model_Register_Connect();
+            // }
+        // } else {
+
+        // }
+        include 'model/mod_facebook.php';
     }
 } else {
     include_once 'view/vie_register.php';
