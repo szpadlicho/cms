@@ -24,7 +24,8 @@ use Facebook\HttpClients\FacebookHttpable;
 // start session
 //unset($session);
 // init app with app id and secret
-FacebookSession::setDefaultApplication('336607323190430', '5c5992964eab69ea089f1c62f8b69328');
+//FacebookSession::setDefaultApplication('336607323190430', '5c5992964eab69ea089f1c62f8b69328');
+FacebookSession::setDefaultApplication('336602646524231', '05b6c7811be542c1a18e036b3c4c24e6');
 
 // login helper with redirect_uri
 
@@ -88,8 +89,31 @@ if ( isset( $session ) ) {
   //echo '<pre>' . print_r( $graphObject, 1 ) . '</pre>';
 } else {
   // show login url
-  //echo '<a href="' . $helper->getLoginUrl(array( 'email', 'user_hometown' )) . '">Login</a>';//'user_friends', 'public_profile', 'user_likes', 'user_location',
-  header ('Location: '.$helper->getLoginUrl(array( 'email', 'user_hometown' )));
+  echo '<a href="' . $helper->getLoginUrl(array( 'email', 'user_hometown' )) . '">Login</a>';//'user_friends', 'public_profile', 'user_likes', 'user_location',
+  //header ('Location: '.$helper->getLoginUrl(array( 'email', 'user_hometown' )));
 }
 
 ?>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '336602646524231',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
