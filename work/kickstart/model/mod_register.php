@@ -242,4 +242,67 @@ class Model_Register_Connect extends Connect
             return $update ? true : false ;
         }
     }
+    public function addUserFromFacebook($table, $arr_val)
+    {
+        $con = $this->pdo;
+        // add prefix to table name
+        include 'config/prefix.php';
+        $table = $pref.$table;
+        // check if email exist
+        // if not return false
+        $res = $con->query(
+            "SELECT `email` 
+            FROM ".$table." 
+            WHERE `email` = '".$arr_val['email']."'"
+            );
+        $res = $res->fetch(PDO::FETCH_ASSOC);
+        // save user if email not exist in table
+        if (!empty($arr_val) && ! $res) {
+            $field='';
+            $value='';
+            foreach ($arr_val as $name => $val) {
+                $field .= '`'.$name.'`,';
+                $value .= "'".$val."',";
+            }
+            // Remove last coma from string
+            $field = rtrim($field, ",");
+            $value = rtrim($value, ",");
+            // Create record
+            $res = $con->query(
+                "INSERT INTO `".$table."`(
+                ".$field.",
+                `create_data`,
+                `update_data`
+                ) VALUES (
+                ".$value.",
+                '".date('Y-m-d H:i:s')."',
+                '".date('Y-m-d H:i:s')."'
+                )");
+            if ($res) {
+                // activation email send
+                if ($arr_val['active'] == 0) { // jesli nie zwerykikowany adres email na facebook
+                    $destination_address = $arr_val['email'];
+                    $token = md5($arr_val['email']).'|'.$con->lastInsertId();
+                    /**
+                     * Email activation
+                     * uncomment in finish
+                     */
+                    // include_once 'config/email_activation.php';
+                }
+                // remove password from returning array
+                unset($arr_val['password']);
+                // return true or ID when success
+                return array(true, (int)$con->lastInsertId(), $arr_val);
+            } else {
+                // 5 save in database error
+                unset($arr_val['password']);
+                return array(false, 5, $arr_val = null, $arr_val);
+            }
+        } else {
+            // 4 email exist error
+            // remove password from returning array
+            unset($arr_val['password']);
+            return array(false, 4, $arr_val['email'], $arr_val);
+        }
+    }
 }

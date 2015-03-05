@@ -12,7 +12,11 @@ class View_Register_Connect extends Connect
     }
     function registerFacebook()
     {
-        include 'templates/register_facebook.html.php';
+        include 'model/mod_facebook.php';
+    }
+    function showFacebook($data)
+    {
+        include 'templates/register_facebook_show.html.php';
     }
     function successShow($data)
     {
