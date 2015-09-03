@@ -58,6 +58,7 @@ echo '<div class="catch">';
 include ('cmdcls.php');//class file
 $cmdcls=new CmdCls();
 if (isset($_POST['clear']) || ! isset($_SESSION['cmd'])) {
+	//$cmdcls->set('../../public_html');//folder startowy// miejsce do ograniczania wychodzenie do góry poza wyznaczony folder 1z2
 	$cmdcls->set('data');//folder startowy// miejsce do ograniczania wychodzenie do góry poza wyznaczony folder 1z2
 	unset($_POST);
 }
@@ -429,15 +430,15 @@ echo '</div>';
 		<div id="debugged">
 		<?php
 		//echo "post";
-		//var_dump (@$_POST);
+		var_dump (@$_POST);
 		//echo "session";
-		//var_dump ($_SESSION);
+		var_dump ($_SESSION);
 		// echo "files";
-		// var_dump (@$_FILES);
+		var_dump (@$_FILES);
 		// echo "var2";
 		 // var_dump ($var2);	
 		//echo "cookies";
-		//var_dump ($_COOKIE);
+		var_dump ($_COOKIE);
 		?>
 		</div>
 	</section>
