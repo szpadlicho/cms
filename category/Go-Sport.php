@@ -1,12 +1,12 @@
 <?php
         class ConnectCls
         {
-            private $host='sql.bdl.pl';
+            private $host='localhost';
             private $port='';
             private $dbname='szpadlic_cms';
             private $charset='utf8';
-            private $user='szpadlic_baza';
-            private $pass='haslo';
+            private $user='user';
+            private $pass='user';
             private $table;// ma miec
             private $row;
             private $path;

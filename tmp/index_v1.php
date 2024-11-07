@@ -2,24 +2,26 @@
 <?php
 session_start();
 echo '<div class="catch">';
-class ShowProductCls{
-	private $host='sql.bdl.pl';
-	private $port='';
-	private $dbname='szpadlic_cms';
-	private $charset='utf8';
-	private $user='szpadlic_baza';
-	private $pass='haslo';
+include_once '../../classes/connect.php';
+class ShowProductCls extends Connect
+{
+	// private $host='localhost';
+	// private $port='';
+	// private $dbname='szpadlic_cms';
+	// private $charset='utf8';
+	// private $user='user';
+	// private $pass='user';
 	private $table;// ma miec
 	public function _setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
-	public function connectDB()
-    {
-		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
-		return $con;
-		unset ($con);
-	}
+	// public function connectDB()
+    // {
+		// $con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
+		// return $con;
+		// unset ($con);
+	// }
 	public function showCategoryMain()
     {
 		/**/

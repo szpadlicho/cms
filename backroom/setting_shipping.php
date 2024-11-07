@@ -1,25 +1,26 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
 session_start();
-class Connect_Shipping
+include_once '../classes/connect.php';
+class Connect_Shipping extends Connect
 {
-    private $host='sql.bdl.pl';
-	private $port='';
-	private $dbname='szpadlic_cms';
-	private $charset='utf8';
-	private $user='szpadlic_baza';
-	private $pass='haslo';
+    // private $host='localhost';
+	// private $port='';
+	// private $dbname='szpadlic_cms';
+	// private $charset='utf8';
+	// private $user='user';
+	// private $pass='user';
 	private $table;
 	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
-	public function connectDB()
-    {
-		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
-		return $con;
-		unset ($con);
-	}
+	// public function connectDB()
+    // {
+		// $con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
+		// return $con;
+		// unset ($con);
+	// }
     public function __getAllTablesName()
     {
         $con = $this->connectDB();

@@ -1,6 +1,6 @@
 <?php
-$host='sql.bdl.pl';
+$host='localhost';
 $dbase='szpadlic_mvc';
-$user='szpadlic_baza';
-$pass='haslo';
+$user='user';
+$pass='user';
 $charset='utf8';

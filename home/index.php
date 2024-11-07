@@ -4,25 +4,25 @@ header('Content-Type: text/html; charset=utf-8');
 session_start();
 include_once '../classes/connect.php';
 include_once '../classes/connect/load.php';
-class ProductDisplay
+class ProductDisplay extends Connect
 {
-	private $host='sql.bdl.pl';
-	private $port='';
-	private $dbname='szpadlic_cms';
-	private $charset='utf8';
-	private $user='szpadlic_baza';
-	private $pass='haslo';
+	// private $host='localhost';
+	// private $port='';
+	// private $dbname='szpadlic_cms';
+	// private $charset='utf8';
+	// private $user='user';
+	// private $pass='user';
 	private $table;
 	public function __setTable($tab_name)
     {
 		$this->table=$tab_name;
 	}
-	public function connectDB()
-    {
-		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
-		return $con;
-		unset ($con);
-	}
+	// public function connectDB()
+    // {
+		// $con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
+		// return $con;
+		// unset ($con);
+	// }
 	public function showCategoryMain()
     {
 		$con = $this->connectDB();
@@ -1041,7 +1041,7 @@ $get_setting = $obj_gen->__getRow(1);
 							?>
                             <a id="top-menu-backroom" class="top-menu" href="../backroom/product_list.php">Zaplecze</a>
 							<div id="bottom-line"></div>
-                            <a href="http://localhost/htdocs/cms/backroom/db_update_index.php">update index</a>
+                            <a href="../backroom/db_update_index.php">update index</a>
 					</div>						
 				</div>	
 			</nav>	

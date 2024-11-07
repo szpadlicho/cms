@@ -2,13 +2,13 @@
 header('Content-Type: text/html; charset=utf-8');
 class DatabaseInstall
 {
-	private $host='sql.bdl.pl';
+	private $host='localhost';
 	private $port='';
 	private $dbname='szpadlic_cms';
 	//private $dbname_sh='information_schema';
 	private $charset='utf8';
-	private $user='szpadlic_baza';
-	private $pass='haslo';
+	private $user='user';
+	private $pass='user';
 	private $table;
 	//private $table_sh='SCHEMATA';
 	private $admin;

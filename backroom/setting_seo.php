@@ -3,14 +3,15 @@
 //ini_set('xdebug.var_display_max_children', -1);
 //ini_set('xdebug.var_display_max_data', -1);
 header('Content-Type: text/html; charset=utf-8');
-class GlobalSettingCls
+include_once '../classes/connect.php';
+class GlobalSettingCls extends Connect
 {
-	private $host='sql.bdl.pl';
-	private $port='';
-	private $dbname='szpadlic_cms';
-	private $charset='utf8';
-	private $user='szpadlic_baza';
-	private $pass='haslo';
+	// private $host='localhost';
+	// private $port='';
+	// private $dbname='szpadlic_cms';
+	// private $charset='utf8';
+	// private $user='user';
+	// private $pass='user';
 	private $table;// ma miec
 	private $row;
 	private $path;
@@ -18,12 +19,12 @@ class GlobalSettingCls
     {
 		$this->table=$tab_name;
 	}
-	public function connectDB()
-    {
-		$con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
-		return $con;
-		unset ($con);
-	}
+	// public function connectDB()
+    // {
+		// $con=new PDO("mysql:host=".$this->host."; port=".$this->port."; dbname=".$this->dbname."; charset=".$this->charset,$this->user,$this->pass);
+		// return $con;
+		// unset ($con);
+	// }
     public function __setRow($arr_val, $id)
     {
         $value ='';

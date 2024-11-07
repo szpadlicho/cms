@@ -451,19 +451,19 @@ echo '</div>';
 </body>
 </html>
 <?php
-// $host='sql.bdl.pl';
+// $host='localhost';
 // $port='';
 // $dbname='szpadlic_cms';
 // $charset='utf8';
-// $user='szpadlic_baza';
-// $pass='haslo';
+// $user='user';
+// $pass='user';
 // class spr{
-	// private $host='sql.bdl.pl';
+	// private $host='localhost';
 	// private $port='';
 	// private $dbname='szpadlic_cms';
 	// private $charset='utf8';
-	// private $user='szpadlic_baza';
-	// private $pass='haslo';
+	// private $user='user';
+	// private $pass='user';
 	// private $table;
 	// private $admin;
 	// private $autor;
